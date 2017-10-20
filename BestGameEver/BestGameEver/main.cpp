@@ -1,29 +1,62 @@
 #include <SFML/Graphics.hpp>
 
+using namespace sf;
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600),
-		"Hello SFML", sf::Style::Default);
 
-	sf::Font font;
+	RenderWindow window(VideoMode(800, 600), "FFFFF", Style::Default);
+
+	Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 
-	sf::Text text;
+	Text text;
 	text.setFont(font);
-	text.setPosition(200, 200);
-	text.setString("Hello Garrett");
+
+	char mander = '>';
+	//mander = getchar();
+
+	uint32_t x=200, y=200;
 
 	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+		Event evnt;
+		text.setPosition(x, y);
+		text.setString(mander);
 		window.clear();
 		window.draw(text);
 		window.display();
+		while (window.pollEvent(evnt))
+		{
+
+			switch (evnt.type) 
+			{
+			
+			case Event::KeyPressed:
+
+				if (evnt.key.code == sf::Keyboard::Escape) {
+					window.close();
+				}
+				else if (evnt.key.code == sf::Keyboard::A) {
+					x -= 10;
+					mander = '<';
+
+				}
+				else if (evnt.key.code == sf::Keyboard::D) {
+					x += 10;
+					mander = '>';
+				}
+				else if (evnt.key.code == sf::Keyboard::W) {
+					y -= 10;
+					mander = '^';
+				}
+				else if (evnt.key.code == sf::Keyboard::S) {
+					y += 10;
+					mander = 'v';
+				}
+				break;
+			}
+		}
 	}
 
 	return 0;
