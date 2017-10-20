@@ -9,7 +9,7 @@ int main()
 
 	Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
-
+	sf::Clock deltaClock;
 	Text text;
 	text.setFont(font);
 
@@ -20,12 +20,17 @@ int main()
 
 	while (window.isOpen())
 	{
+
+		sf::Time deltaTime = deltaClock.restart();
+
 		Event evnt;
 		text.setPosition(x, y);
 		text.setString(mander);
 		window.clear();
 		window.draw(text);
 		window.display();
+		
+	//	printf("%d", deltaTime.asMilliseconds());
 		while (window.pollEvent(evnt))
 		{
 
