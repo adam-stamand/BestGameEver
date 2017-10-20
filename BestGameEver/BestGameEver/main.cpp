@@ -1,10 +1,9 @@
 #include <SFML/Graphics.hpp>
 
+
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600),
-		"Hello SFML", sf::Style::Default);
-
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Hello SFML1", sf::Style::Default);
 	sf::Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 
@@ -15,11 +14,13 @@ int main()
 
 	while (window.isOpen())
 	{
-		sf::Event event;
-		while (window.pollEvent(event))
+		sf::Event evnt;
+		while (window.pollEvent(evnt))
 		{
-			if (event.type == sf::Event::Closed)
-				window.close();
+			if ((evnt.type == sf::Event::KeyPressed) && (evnt.key.code == sf::Keyboard::Escape))
+				printf("asdf");
+
+			                                                                                                                                                                                  
 		}
 		window.clear();
 		window.draw(text);
