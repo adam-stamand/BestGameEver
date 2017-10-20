@@ -1,0 +1,9 @@
+
+*.o
+*.txt
+dist*
+.hsenv*
+.cabal*
+cabal.sandbox.config
+*.exe
+
