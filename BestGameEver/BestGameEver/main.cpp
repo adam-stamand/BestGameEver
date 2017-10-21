@@ -4,9 +4,10 @@ using namespace sf;
 
 
 
-#define VEL_MAX 0.1
+#define VEL_MAX 1
 #define FRICTION 0.0005 // must be less than 1... or else you get like negative friction
 #define ACCEL	0.0001
+#define GRAVITY 0.00007
 
 int main()
 {
@@ -100,9 +101,21 @@ int main()
 			y_vel -= y_vel*FRICTION;
 		}
 		
+		// If above the "ground", apply gravity to velocity
+		if (y_pos > 0) {
+			y_vel -= GRAVITY;
+		}
+
+
 		// Change position using velocity
 		x_pos += x_vel;
 		y_pos += y_vel;
+
+
+		// Prevent player from floating off screen
+		if (y_pos < 0) {
+			y_pos = 0;
+		}
 
 		// Print character to screen 
 		text.setPosition(x_pos, y_pos);
