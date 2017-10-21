@@ -8,6 +8,9 @@ using namespace sf;
 #define FRICTION 0.0005 // must be less than 1... or else you get like negative friction
 #define ACCEL	0.0001
 #define GRAVITY 0.00007
+#define JUMP	0.15
+#define JET_MAX	20000
+#define JET_ACCEL 0.00009
 
 int main()
 {
@@ -22,7 +25,7 @@ int main()
 
 	char mander = '>';
 
-	double x_pos=200.0, y_pos=200.0, x_vel=0, y_vel=0;
+	double x_pos=200.0, y_pos=200.0, x_vel=0, y_vel=0, jetpack = JET_MAX, jet_intr = 2;
 
 	while (window.isOpen())
 	{
@@ -80,8 +83,16 @@ int main()
 			mander = '>';
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			y_vel += ACCEL;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && jetpack > 0) {
+			y_vel += JET_ACCEL;
+			y_vel = abs(y_vel) > VEL_MAX ? VEL_MAX : y_vel;
+			jetpack -= jet_intr;
+			mander = 'v';
+		}
+
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && y_pos <= 0) {
+			y_vel += JUMP;
 			y_vel = abs(y_vel) > VEL_MAX ? VEL_MAX : y_vel;
 			mander = 'v';
 		}
@@ -106,6 +117,10 @@ int main()
 			y_vel -= GRAVITY;
 		}
 
+
+		if (y_pos <= 0 && jetpack < JET_MAX) {
+			jetpack += jet_intr;
+		}
 
 		// Change position using velocity
 		x_pos += x_vel;
