@@ -7,16 +7,19 @@ using namespace sf;
 #define FRICTION	0.0005  // must be less than 1... or else you get like negative friction
 #define FORCE		0.0001
 #define GRAVITY		0.00009
-#define JUMP_FORCE	0.25
-#define JET_MAX		100000
+#define JUMP_FORCE	0.1
+#define JET_MAX		5000
 #define JET_FORCE	0.00025
 #define MASS		1.4
 
 
+//This morning I had a thought that maybe it would be better to have a class above Movement, like Entity. 
+//the reason being is that I'd like to have stationary objects that you can jump on. so Entity would have getxpos, xpos, etc. but wouldn't have velocity or mass, since it would never move.
+//I also think that for the sake of the game, jetpack duration should be nerfed quite substantially so the player has to rely on jumping on stationary (and non stationary, like moving platforms or enemies) objects
 
 
-class Movement {
-public:
+
+class Movement { public:
 	Movement(float mass, float max_vel);
 	~Movement();
 
@@ -29,6 +32,7 @@ public:
 
 	void Push(Direction dir, float force);
 	void UpdatePosition();
+	bool CanJump(Movement &object);
 	float GetXPos();
 	float GetYPos();
 	float GetXVel();
@@ -41,6 +45,7 @@ public:
 	float max_vel;
 	int Xsize; //delete; just temporary
 	int Ysize; //delete
+
 private:
 	void ApplyFriction();
 	void ApplyGravity();
@@ -132,6 +137,12 @@ void Movement::UpdatePosition() {
 	this->x_pos += this->x_vel;
 	this->y_pos += this->y_vel;
 }
+//need to add a jump cooldown when deltaTime is implemented. atm a jump will have the force of many.
+bool Movement::CanJump(Movement &object) { //object needs to be a list of objects
+	if (this->GetYPos() < 1) return true;
+	if (this->GetYPos() - object.GetYPos() < 20 && abs(this->GetXPos() - object.GetXPos()) < 20) return true;//super temporary. this will eventually work with a list (or tree) of objects and hopefully use variables based on objects size rather than "20"
+	return false;
+}
 
 // Ellastic Collision
 template <typename T1, typename T2>
@@ -163,11 +174,12 @@ void ObjectCollision(T1 &object1, T2 &object2) {
 		(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetXVel())
 	);
 
-
-	object2.SetYVel(
-		(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetYVel()) +
-		(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetYVel())
-	);
+	if (object1.GetYPos() <= object2.GetYPos()) { //i had to add this conditional. without it, the object would follow the player when he jumped
+		object2.SetYVel(
+			(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetYVel()) +
+			(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetYVel())
+		);
+	}
 	
 }
 
@@ -295,7 +307,7 @@ int main()
 		}
 
 		// Allows player to jump
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && mover.GetYPos() <= 0) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && mover.CanJump(box_mover)) {//box_mover needs to be replaced with an array of all entities. i was thinking of having the array be a binary search tree, that way every time we need to check for collisions (which will probably be every frame) we don't need to iterate through the ENTIRE list.
 			mover.Push(Movement::Direction::UP, JUMP_FORCE);
 			mander = 'v';
 		}
@@ -312,6 +324,7 @@ int main()
 		if (abs(temp_x_pos) < 20 && abs(temp_y_pos) < 20) {
 			ObjectCollision(mover, box_mover);
 		}
+		
 
 		// If either object gets close to border, call boundary collision
 		if (((box_mover.GetXPos() <= 0) && (box_mover.GetXVel() < 0)) || ((box_mover.GetXPos() >= 780) && (box_mover.GetXVel() > 0)) ) {
@@ -363,7 +376,7 @@ int main()
 		window.draw(jet_status);
 		window.display();
 
-		if (mover.GetYPos() <= 0) {
+		if (mover.CanJump(box_mover)) { // changed from mover.GetYPos == 0. this way you can recharge while standing on a dudes head (or a platform).
 			jet_flag = false;
 		}
 
