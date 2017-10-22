@@ -39,7 +39,8 @@ public:
 	void SetYVel(float y);
 	float mass;
 	float max_vel;
-
+	int Xsize; //delete; just temporary
+	int Ysize; //delete
 private:
 	void ApplyFriction();
 	void ApplyGravity();
@@ -136,27 +137,38 @@ void Movement::UpdatePosition() {
 template <typename T1, typename T2>
 void ObjectCollision(T1 &object1, T2 &object2) {
 
-	{
-		object1.SetXVel(
-			(((object1.mass - object2.mass) / (object1.mass + object2.mass)) * object1.GetXVel()) +
-			(((2 * object2.mass) / (object1.mass + object2.mass)) * object2.GetXVel())
-		);
+	int deltax = object1.GetXPos() - object2.GetXPos();
+	int deltay = object1.GetYPos() - object2.GetYPos();
 
-		object2.SetXVel(
-			(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetXVel()) +
-			(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetXVel())
-		);
-
-		object1.SetYVel(
-			(((object1.mass - object2.mass) / (object1.mass + object2.mass)) * object1.GetYVel()) +
-			(((2 * object2.mass) / (object1.mass + object2.mass)) * object2.GetYVel())
-		);
-
-		object2.SetYVel(
-			(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetYVel()) +
-			(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetYVel())
-		);
+	if (abs(deltax) > abs(deltay)) {
+		object2.SetXPos(object2.GetXPos() - ((deltax > 0) - (deltax < 0)) * (object2.Xsize - abs(deltax) + 1) );
 	}
+	else {
+		object2.SetYPos(object2.GetYPos() - ((deltay > 0) - (deltay < 0)) * (object2.Ysize - abs(deltay) + 1) );
+	}
+
+	object1.SetXVel(
+		(((object1.mass - object2.mass) / (object1.mass + object2.mass)) * object1.GetXVel()) +
+		(((2 * object2.mass) / (object1.mass + object2.mass)) * object2.GetXVel())
+	);
+
+	object1.SetYVel(
+		(((object1.mass - object2.mass) / (object1.mass + object2.mass)) * object1.GetYVel()) +
+		(((2 * object2.mass) / (object1.mass + object2.mass)) * object2.GetYVel())
+	);
+
+
+	object2.SetXVel(
+		(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetXVel()) +
+		(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetXVel())
+	);
+
+
+	object2.SetYVel(
+		(((object2.mass - object1.mass) / (object1.mass + object2.mass)) * object2.GetYVel()) +
+		(((2 * object1.mass) / (object1.mass + object2.mass)) * object1.GetYVel())
+	);
+	
 }
 
 
@@ -164,10 +176,39 @@ void ObjectCollision(T1 &object1, T2 &object2) {
 template <typename T1>
 void BoundaryXCollision(T1 &object) {
 	object.SetXVel(-object.GetXVel() * 0.8);
+	if (object.GetXPos() < 0) {
+		object.SetXPos(0);
+	}
+	else if (object.GetXPos() > 780) {
+		object.SetXPos(780);
+	}
 }
+
 template <typename T1>
 void BoundaryYCollision(T1 &object) {
 	object.SetYVel(-object.GetYVel() * 0.8);
+	if (object.GetYPos() < 0) {
+		object.SetYPos(0);
+	}
+	else if (object.GetYPos() > 580) {
+		object.SetYPos(580);
+	}
+}
+
+template <typename T1>
+void CheckBoundary(T1 &object) {
+	if (object.GetYPos() < 0) {
+		object.SetYPos(0);
+	}
+	else if (object.GetYPos() > 580) {
+		object.SetYPos(580);
+	}
+	if (object.GetXPos() < 0) {
+		object.SetXPos(0);
+	}
+	else if (object.GetXPos() > 780) {
+		object.SetXPos(780);
+	}
 }
 
 
@@ -194,6 +235,8 @@ int main()
 	Movement box_mover(.25, 10);
 	box_mover.SetYPos(0);
 	box_mover.SetXPos(200);
+	box_mover.Xsize = 20;
+	box_mover.Ysize = 20;
 	Movement mover(MASS, VEL_MAX);
 	mover.SetYPos(0);
 	mover.SetXPos(0);
@@ -266,61 +309,27 @@ int main()
 		// If two objects are close, call a collision
 		int temp_x_pos = mover.GetXPos() - box_mover.GetXPos();
 		int temp_y_pos = mover.GetYPos() - box_mover.GetYPos();
-		int temp;
 		if (abs(temp_x_pos) < 20 && abs(temp_y_pos) < 20) {
 			ObjectCollision(mover, box_mover);
-
-			// Workaround to prevent objects from getting stuck inside eachother
-			if (temp_y_pos > 15) {
-				
-
-				if (temp_y_pos <= 0) { // if player below
-					temp = std::min((int)box_mover.GetYPos() + (20 - abs(temp_y_pos)), 580);
-					box_mover.SetYPos(temp);
-					if (temp == 580) {
-						mover.SetYPos(560);
-					}
-
-				}
-				else {
-					temp = std::max((int)box_mover.GetYPos() - (20 - abs(temp_y_pos)), 0);
-					box_mover.SetYPos(temp); 
-					if (temp == 0) {
-						mover.SetYPos(21);
-					}
-				}
-			}
-			else {
-				if (temp_x_pos <= 0) { // if player on left
-					temp = std::min((int)box_mover.GetXPos() + (20 - abs(temp_x_pos)), 780);
-					box_mover.SetXPos(temp); // push box to right 
-					if (temp == 780) {
-						mover.SetXPos(760);
-					}
-				}
-				else {
-					temp = std::max((int)box_mover.GetXPos() - (20 - abs(temp_x_pos)), 0);
-					box_mover.SetXPos(temp); // else push box to left
-					if (temp == 0) {
-						mover.SetXPos(20);
-					}
-				}
-			}
 		}
 
 		// If either object gets close to border, call boundary collision
-		if ((box_mover.GetXPos() < 0 && box_mover.GetXVel() < 0) || (box_mover.GetXPos() > 780 && box_mover.GetXVel() > 0)) {
+		if (((box_mover.GetXPos() <= 0) && (box_mover.GetXVel() < 0)) || ((box_mover.GetXPos() >= 780) && (box_mover.GetXVel() > 0)) ) {
 			BoundaryXCollision(box_mover);
 		}
-		if ((mover.GetXPos() <= 0 && mover.GetXVel() < 0) || (mover.GetXPos() >= 780 && mover.GetXVel() > 0)) {
-			BoundaryXCollision(mover);
-		}
-		if ((mover.GetYPos() <= 0 && mover.GetYVel() < 0) || (mover.GetYPos() >= 580 && mover.GetYVel() > 0)) {
-			BoundaryYCollision(mover);
-		}
-		if ((box_mover.GetYPos() <= 0 && box_mover.GetYVel() < 0) || (box_mover.GetYPos() >= 580 && box_mover.GetYVel() > 0)) {
+		if (((box_mover.GetYPos() <= 0) && (box_mover.GetYVel() < 0)) || (box_mover.GetYPos() >= 580)) {
 			BoundaryYCollision(box_mover);
 		}
+		if (((mover.GetXPos() <= 0) && (mover.GetXVel() < 0)) || ((mover.GetXPos() >= 780) && (mover.GetXVel() > 0)) ) {
+			BoundaryXCollision(mover);
+		}
+		if (((mover.GetYPos() <= 0) && (mover.GetYVel() < 0)) || (mover.GetYPos() >= 580)) {
+			BoundaryYCollision(mover);
+		}
+
+		// Check that objects are within bounds
+		CheckBoundary(mover);
+		CheckBoundary(box_mover);
 
 		// Recharge Jetpack: Only if jet not used and jetpack isn't fully charged
 		if (jetpack < JET_MAX && jet_flag == false) {
