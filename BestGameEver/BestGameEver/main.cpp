@@ -6,7 +6,7 @@ using namespace sf;
 #define VEL_MAX		.1
 #define FRICTION	0.0005  // must be less than 1... or else you get like negative friction
 #define FORCE		0.0001
-#define GRAVITY		0.00008
+#define GRAVITY		0.00009
 #define JUMP_FORCE	0.25
 #define JET_MAX		100000
 #define JET_FORCE	0.00025
@@ -122,7 +122,7 @@ void Movement::ApplyFriction() {
 
 
 void Movement::ApplyGravity() {
-	this->y_vel -= GRAVITY * this->mass; // mathematically incorrect
+	this->y_vel -= GRAVITY;
 }
 
 void Movement::UpdatePosition() {
@@ -132,7 +132,7 @@ void Movement::UpdatePosition() {
 	this->y_pos += this->y_vel;
 }
 
-
+// Ellastic Collision
 template <typename T1, typename T2>
 void ObjectCollision(T1 &object1, T2 &object2) {
 
@@ -159,6 +159,8 @@ void ObjectCollision(T1 &object1, T2 &object2) {
 	}
 }
 
+
+// Inelastic Collision (20% Velocity loss)
 template <typename T1>
 void BoundaryXCollision(T1 &object) {
 	object.SetXVel(-object.GetXVel() * 0.8);
@@ -206,16 +208,6 @@ int main()
 		
 	//	printf("%d", deltaTime.asMilliseconds());
 
-		// This is why we should use a loop for polling. Makes sure the queue doesn't fill up with events
-		/// \brief Pop the event on top of the event queue, if any, and return it
-		///
-		/// This function is not blocking: if there's no pending event then
-		/// it will return false and leave \a event unmodified.
-		/// Note that more than one event may be present in the event queue,
-		/// thus you should always call this function in a loop
-		/// to make sure that you process every pending event.
-		///
-		/// \return True if an event was returned, or false if the event queue was empty
 		while (window.pollEvent(evnt))
 		{
 
@@ -271,26 +263,61 @@ int main()
 		//------------------------
 
 
+		// If two objects are close, call a collision
 		int temp_x_pos = mover.GetXPos() - box_mover.GetXPos();
 		int temp_y_pos = mover.GetYPos() - box_mover.GetYPos();
+		int temp;
 		if (abs(temp_x_pos) < 20 && abs(temp_y_pos) < 20) {
 			ObjectCollision(mover, box_mover);
+
+			// Workaround to prevent objects from getting stuck inside eachother
+			if (temp_y_pos > 15) {
+				
+
+				if (temp_y_pos <= 0) { // if player below
+					temp = std::min((int)box_mover.GetYPos() + (20 - abs(temp_y_pos)), 580);
+					box_mover.SetYPos(temp);
+					if (temp == 580) {
+						mover.SetYPos(560);
+					}
+
+				}
+				else {
+					temp = std::max((int)box_mover.GetYPos() - (20 - abs(temp_y_pos)), 0);
+					box_mover.SetYPos(temp); 
+					if (temp == 0) {
+						mover.SetYPos(21);
+					}
+				}
+			}
+			else {
+				if (temp_x_pos <= 0) { // if player on left
+					temp = std::min((int)box_mover.GetXPos() + (20 - abs(temp_x_pos)), 780);
+					box_mover.SetXPos(temp); // push box to right 
+					if (temp == 780) {
+						mover.SetXPos(760);
+					}
+				}
+				else {
+					temp = std::max((int)box_mover.GetXPos() - (20 - abs(temp_x_pos)), 0);
+					box_mover.SetXPos(temp); // else push box to left
+					if (temp == 0) {
+						mover.SetXPos(20);
+					}
+				}
+			}
 		}
 
-
-		
+		// If either object gets close to border, call boundary collision
 		if ((box_mover.GetXPos() < 0 && box_mover.GetXVel() < 0) || (box_mover.GetXPos() > 780 && box_mover.GetXVel() > 0)) {
 			BoundaryXCollision(box_mover);
 		}
-
 		if ((mover.GetXPos() <= 0 && mover.GetXVel() < 0) || (mover.GetXPos() >= 780 && mover.GetXVel() > 0)) {
 			BoundaryXCollision(mover);
 		}
-
 		if ((mover.GetYPos() <= 0 && mover.GetYVel() < 0) || (mover.GetYPos() >= 580 && mover.GetYVel() > 0)) {
 			BoundaryYCollision(mover);
 		}
-
 		if ((box_mover.GetYPos() <= 0 && box_mover.GetYVel() < 0) || (box_mover.GetYPos() >= 580 && box_mover.GetYVel() > 0)) {
 			BoundaryYCollision(box_mover);
 		}
@@ -300,29 +327,20 @@ int main()
 			jetpack += 2;
 		}
 
+		// Update positions
+		mover.UpdatePosition();
+		box_mover.UpdatePosition();
+
 
 		//------------------------
 		//Windows managment
 		//------------------------
 
-		mover.UpdatePosition();
-		box_mover.UpdatePosition();
-
-
 
 		// Print character to screen 
 		jetstring = std::to_string((int)jetpack);
+
 		text.setString(mander);
-
-		if (abs(temp_x_pos) < 20 && abs(temp_y_pos) < 20) {
-			if (temp_x_pos <= 0) {
-				box_mover.SetXPos(box_mover.GetXPos() + 20 - abs(temp_x_pos));
-			}
-			else {
-				box_mover.SetXPos(box_mover.GetXPos() - (20 - abs(temp_x_pos)));
-			}
-		}
-
 		text.setPosition(mover.GetXPos(), mover.GetYPos());
 		box_text.setPosition(box_mover.GetXPos(), box_mover.GetYPos());
 
@@ -336,17 +354,9 @@ int main()
 		window.draw(jet_status);
 		window.display();
 
-		// Edge Case: Prevent player from floating off screen; Reset jet used flag
-		
 		if (mover.GetYPos() <= 0) {
-			mover.SetYPos(0);
 			jet_flag = false;
 		}
-
-		if (box_mover.GetYPos() <= 0) {
-			box_mover.SetYPos(0);
-		}
-
 
 	}
 
