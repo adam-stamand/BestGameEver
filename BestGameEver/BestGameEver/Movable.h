@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #define AIR_RESISTANCE	0.0005  // must be less than 1... or else you get like negative friction
-#define GRAVITY		0.00009
+#define GRAVITY		0.000009
 class Movable : public Entity
 {
 public:
@@ -29,6 +29,7 @@ public:
 	void ObjectCollision(Movable &object1, Movable &object2);
 	void ObjectCollision(Movable &object1, Immovable &object2);
 	bool DetectCollision(Movable &object1, Movable &object2);
+	bool DetectCollision(Movable &object1, Immovable &object2);
 
 private:
 	void ApplyAirResistance();

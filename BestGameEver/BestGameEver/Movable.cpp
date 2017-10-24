@@ -1,5 +1,5 @@
 #include "Movable.h"
-
+#include "math.h"
 
 Movable::Movable() :
 	gravity(GRAVITY),
@@ -75,7 +75,7 @@ void Movable::ApplyGravity() {
 
 
 void Movable::UpdatePosition() {
-	//this->ApplyGravity();
+	this->ApplyGravity();
 	this->ApplyAirResistance();
 	this->SetXPos(GetXPos() + this->x_vel);
 	this->SetYPos(GetYPos() + this->y_vel);
@@ -140,39 +140,22 @@ void Movable::ObjectCollision(Movable &object1, Movable &object2) {
 
 // Inelastic Collision (20% Velocity loss)
 void Movable::ObjectCollision(Movable &object1, Immovable &object2) {
+	int xDiff = object1.GetXPos() - object2.GetXPos() + object1.GetXSize();
+	int yDiff = object1.GetYPos() - object2.GetYPos() + object1.GetYSize();
 
-
-
-	object1.SetXVel(-object1.GetXVel() * 0.8);
-	if (object1.GetXPos() < 0) {
-		object1.SetXPos(0);
+	if (abs(xDiff) > object2.GetXSize()) {
+		if (fabs(object1.GetXVel()) <= .01) {
+			object1.SetXVel((object1.GetXPos() >= object2.GetXPos() + object2.GetXSize() / 2) ? .001 : -.001);
+		}
+		else object1.SetXVel(-object1.GetXVel() * 0.8);
 	}
-	else if (object1.GetXPos() > 780) {
-		object1.SetXPos(780);
-	}
-
-
-	object1.SetYVel(-object1.GetYVel() * 0.8);
-	if (object1.GetYPos() < 0) {
-		object1.SetYPos(0);
-	}
-	else if (object1.GetYPos() > 580) {
-		object1.SetYPos(580);
+	if (abs(yDiff) > object2.GetYSize()) {
+		if (fabs(object1.GetYVel()) <= .01) {
+			object1.SetYVel((object1.GetYPos() >= object2.GetYPos() + object2.GetYSize() / 2)? .001 : -.001);
+		}
+		else object1.SetYVel(-object1.GetYVel() * 0.8);
 	}
 
-
-	if (object1.GetYPos() < 0) {
-		object1.SetYPos(0);
-	}
-	else if (object1.GetYPos() > 580) {
-		object1.SetYPos(580);
-	}
-	if (object1.GetXPos() < 0) {
-		object1.SetXPos(0);
-	}
-	else if (object1.GetXPos() > 780) {
-		object1.SetXPos(780);
-	}
 }
 
 
@@ -181,3 +164,11 @@ bool Movable::DetectCollision(Movable &object1, Movable &object2) {
 	int temp_y_pos = object1.GetYPos() - object2.GetYPos();
 	return (abs(temp_x_pos) < object2.GetXSize() && abs(temp_y_pos) < object2.GetYSize());
 }
+
+bool Movable::DetectCollision(Movable &object1, Immovable &object2) {
+	int x_distance = object1.GetXPos() - object2.GetXPos();
+	int y_distance = object1.GetYPos() - object2.GetYPos();
+	return (abs(x_distance) < object2.GetXSize() && abs(y_distance) < object2.GetYSize());
+}
+
+

@@ -5,7 +5,7 @@
 
 using namespace sf;
 
-#define VEL_MAX		.1
+#define VEL_MAX		.1 
 #define FORCE		.0001f
 #define JUMP_FORCE	0.1f
 #define MASS		1.4f
@@ -69,10 +69,17 @@ int main()
 	box2.SetXSize(20);
 	box2.SetYSize(20);
 
+	Immovable ceiling(0, -20, 800, 20);
+	Immovable floor(0, 580, 800, 20);
+	Immovable leftWall(-20, 0, 20, 600);
+	Immovable rightWall(780, 0, 20, 800);
+
 	Controllable player;
 	player.SetMass(1.9);
-	box.SetXSize(20);
-	box.SetYSize(20);
+	player.SetXSize(20);
+	player.SetYSize(20);
+	player.SetXPos(60);
+	player.SetYPos(60);
 
 	std::vector <Movable::Direction>player_dirs = {
 		Movable::Direction::LEFT,
@@ -110,7 +117,12 @@ int main()
 
 	while (window.isOpen())
 	{
-		sf::Time deltaTime = deltaClock.restart();
+		//sf::Time deltaTime = deltaClock.restart();
+		//while (deltaClock.getElapsedTime().asMilliseconds() < 17) {
+		//	printf("%d\n", deltaClock.getElapsedTime().asMilliseconds());
+	//	}
+	//	deltaClock.restart();
+	//	printf("%d", deltaTime.asMilliseconds());
 		Event evnt;
 
 	//	printf("%d", deltaTime.asMilliseconds());
@@ -143,6 +155,24 @@ int main()
 		}
 		if (player.DetectCollision(box, box2)) {
 			player.ObjectCollision(box, box2);
+		}
+		if (player.DetectCollision(player, floor)) {
+			player.ObjectCollision(player, floor);
+		}
+		if (player.DetectCollision(box, floor)) {
+			player.ObjectCollision(box, floor);
+		}
+		if (player.DetectCollision(player, ceiling)) {
+			player.ObjectCollision(player, ceiling);
+		}
+		if (player.DetectCollision(player, leftWall)) {
+			player.ObjectCollision(player, leftWall);
+		}
+		if (player.DetectCollision(player, rightWall)) {
+			player.ObjectCollision(player, rightWall);
+		}
+		if (player.DetectCollision(box, ceiling)) {
+			player.ObjectCollision(box, ceiling);
 		}
 
 		
