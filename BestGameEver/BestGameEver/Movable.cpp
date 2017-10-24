@@ -2,7 +2,7 @@
 #include "math.h"
 
 Movable::Movable() :
-	gravity(GRAVITY),
+	gravity(-GRAVITY),
 	air_resistance(AIR_RESISTANCE)
 {
 
@@ -140,6 +140,7 @@ void Movable::ObjectCollision(Movable &object1, Movable &object2) {
 
 // Inelastic Collision (20% Velocity loss)
 void Movable::ObjectCollision(Movable &object1, Immovable &object2) {
+
 	int xDiff = object1.GetXPos() - object2.GetXPos() + object1.GetXSize();
 	int yDiff = object1.GetYPos() - object2.GetYPos() + object1.GetYSize();
 
@@ -159,16 +160,5 @@ void Movable::ObjectCollision(Movable &object1, Immovable &object2) {
 }
 
 
-bool Movable::DetectCollision(Movable &object1, Movable &object2) {
-	int temp_x_pos = object1.GetXPos() - object2.GetXPos();
-	int temp_y_pos = object1.GetYPos() - object2.GetYPos();
-	return (abs(temp_x_pos) < object2.GetXSize() && abs(temp_y_pos) < object2.GetYSize());
-}
-
-bool Movable::DetectCollision(Movable &object1, Immovable &object2) {
-	int x_distance = object1.GetXPos() - object2.GetXPos();
-	int y_distance = object1.GetYPos() - object2.GetYPos();
-	return (abs(x_distance) < object2.GetXSize() && abs(y_distance) < object2.GetYSize());
-}
 
 

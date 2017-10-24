@@ -6,29 +6,10 @@
 using namespace sf;
 
 #define VEL_MAX		.1 
-#define FORCE		.0001f
+#define FORCE		.0003f
 #define JUMP_FORCE	0.1f
 #define MASS		1.4f
 
-
-// Put together Entity, Movable/Immovable, and Controllable/Uncontrollable
-
-// I commented out Gravity since we're not doing any boundary detection. It's pretty fun without gravity though
-
-// I put collission stuff inside movable. This implies that immovable entities don't collide with movable, rather
-// movable entities collide with immovable. I'm fine with that implication if you are.
-
-// The next big step is implementing Immovable entities. That will allow us to start creating actual boundaries.
-// There's a method inside Movable for handling collisions with Immovables, but I just copied pasted, so it needs to be looked at.
-// Much like Uncontrollable, I expect Immovable to be pretty much empty.
-
-// Also, I found a bug in the ellastic collision math, so the fix you made may not be necessary, even when we start using gravity again
-
-// Lastly, in the main, I've added two objects, just to see how easy it is to create new entities. The initializing process is a little hefty,
-// but we can wrap it up in some init function. Everything I did is either straight forward or the same as it was, with the exception of the 
-// Controllable. I wanted to let a user define multiple keys for an action instead of just one (i.e. "shift" and "W" could be run, just "W" could be walk)
-// So I started using vectors. This is my first time using them, and the only reason I did is because, unlike arrays, they change size dynamically
-// behind the scenes, so we don't have to deal with it. Anyway, good luck.
 
 int main()
 {
@@ -69,10 +50,10 @@ int main()
 	box2.SetXSize(20);
 	box2.SetYSize(20);
 
-	Immovable ceiling(0, -20, 800, 20);
-	Immovable floor(0, 580, 800, 20);
-	Immovable leftWall(-20, 0, 20, 600);
-	Immovable rightWall(780, 0, 20, 800);
+	Immovable ceiling(400, -20, 800, 20);
+	Immovable floor(400, 560, 800, 20);
+	Immovable leftWall(-20, 300, 20, 600);
+	Immovable rightWall(780, 300, 20, 600);
 
 	Controllable player;
 	player.SetMass(1.9);
@@ -153,55 +134,55 @@ int main()
 		if (player.DetectCollision(player, box2)) {
 			player.ObjectCollision(player, box2);
 		}
-		if (player.DetectCollision(box, box2)) {
-			player.ObjectCollision(box, box2);
-		}
-		if (player.DetectCollision(player, floor)) {
-			player.ObjectCollision(player, floor);
-		}
-		if (player.DetectCollision(box, floor)) {
-			player.ObjectCollision(box, floor);
-		}
+
 		if (player.DetectCollision(player, ceiling)) {
 			player.ObjectCollision(player, ceiling);
 		}
 		if (player.DetectCollision(player, leftWall)) {
 			player.ObjectCollision(player, leftWall);
 		}
+		if (player.DetectCollision(player, floor)) {
+			player.ObjectCollision(player, floor);
+		}
 		if (player.DetectCollision(player, rightWall)) {
 			player.ObjectCollision(player, rightWall);
 		}
+
+		if (player.DetectCollision(box, box2)) {
+			player.ObjectCollision(box, box2);
+		}
+
 		if (player.DetectCollision(box, ceiling)) {
 			player.ObjectCollision(box, ceiling);
 		}
 
-		
-		/*
-		// If either object gets close to border, call boundary collision
-		if (((box_mover.GetXPos() <= 0) && (box_mover.GetXVel() < 0)) || ((box_mover.GetXPos() >= 780) && (box_mover.GetXVel() > 0)) ) {
-			BoundaryXCollision(box_mover);
-		}
-		if (((box_mover.GetYPos() <= 0) && (box_mover.GetYVel() < 0)) || (box_mover.GetYPos() >= 580)) {
-			BoundaryYCollision(box_mover);
-		}
-		if (((mover.GetXPos() <= 0) && (mover.GetXVel() < 0)) || ((mover.GetXPos() >= 780) && (mover.GetXVel() > 0)) ) {
-			BoundaryXCollision(mover);
-		}
-		if (((mover.GetYPos() <= 0) && (mover.GetYVel() < 0)) || (mover.GetYPos() >= 580)) {
-			BoundaryYCollision(mover);
+		if (player.DetectCollision(box, floor)) {
+			player.ObjectCollision(box, floor);
 		}
 
-		// Check that objects are within bounds
-		CheckBoundary(mover);
-		CheckBoundary(box_mover);
-		*/
+		if (player.DetectCollision(box, leftWall)) {
+			player.ObjectCollision(box, leftWall);
+		}
 
+		if (player.DetectCollision(box, rightWall)) {
+			player.ObjectCollision(box, rightWall);
+		}
 
-		// Recharge Jetpack: Only if jet not used and jetpack isn't fully charged
-		//if (jetpack < JET_MAX && jet_flag == false) {
-		//	jetpack += 2;
-		//}
+		if (player.DetectCollision(box2, ceiling)) {
+			player.ObjectCollision(box2, ceiling);
+		}
 
+		if (player.DetectCollision(box2, floor)) {
+			player.ObjectCollision(box2, floor);
+		}
+
+		if (player.DetectCollision(box2, leftWall)) {
+			player.ObjectCollision(box2, leftWall);
+		}
+
+		if (player.DetectCollision(box2, rightWall)) {
+			player.ObjectCollision(box2, rightWall);
+		}
 
 
 		// Update Positions and check controls
