@@ -4,6 +4,7 @@
 #include "Uncontrollable.h"
 #include "LinkedList.h"
 #include "Node.h"
+#include "ImmovableTable.h"
 
 using namespace sf;
 
@@ -33,12 +34,11 @@ int main()
 	char box_char = '0';
 	char box2_char = 'O';
 	LinkedList<Immovable> ll;
-
 	Immovable j(5,5,5,5);
 	Immovable i(6,6,6,6);
 	Node<Immovable> n(&i);
 	Node<Immovable> m(&j);
-	ImmovableTable<LinkedList<Immovable>> it(50);
+	ImmovableTable it(50);
 	ll.add(n.element);
 	ll.add(m.element);
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "ImmovableTable.h"
 #include "Node.h"
 template <class T>
 class LinkedList
@@ -15,7 +14,7 @@ public:
 	
 };
 
-template <typename T>
+template <class T>
 void LinkedList<T>::add(T *object) { //add node to end of linkedlist
 	Node<T> * n = this->head;
 	Node<T> *newNode = new Node<T>[1];
