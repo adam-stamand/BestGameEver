@@ -32,15 +32,15 @@ int main()
 	char mander = '>';
 	char box_char = '0';
 	char box2_char = 'O';
-	LinkedList ll;
+	LinkedList<Immovable> ll;
 
-	Immovable j;
-	Immovable i;
-	Node n(i);
-	Node m(j);
-	j.SetMass(5);
-	ll.add(&n);
-	ll.add(&m);
+	Immovable j(5,5,5,5);
+	Immovable i(6,6,6,6);
+	Node<Immovable> n(&i);
+	Node<Immovable> m(&j);
+	ImmovableTable<LinkedList<Immovable>> it(50);
+	ll.add(n.element);
+	ll.add(m.element);
 
 	Uncontrollable box;
 	box.SetMass(1);
@@ -117,7 +117,7 @@ int main()
 		Event evnt;
 
 	//	printf("%d", deltaTime.asMilliseconds());
-		printf("%d", (int) ll.getNode(1)->element.GetMass());
+	//	printf("%d", (int) ll.getNode(1)->element.GetXSize());
 		while (window.pollEvent(evnt))
 		{
 
