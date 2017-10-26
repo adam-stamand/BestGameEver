@@ -1,7 +1,9 @@
 #include "Immovable.h"
 
 
-
+Immovable::Immovable()
+{
+}
 Immovable::Immovable(float x, float y, float x_size, float y_size)
 {
 	this->SetXPos(x);

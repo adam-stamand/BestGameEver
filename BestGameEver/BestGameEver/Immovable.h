@@ -6,6 +6,7 @@
 class Immovable : public Entity
 {
 public:
+	Immovable();
 	Immovable(float x, float y, float x_size, float y_size);
 	~Immovable();
 };

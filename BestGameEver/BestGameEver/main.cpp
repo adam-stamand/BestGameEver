@@ -2,6 +2,8 @@
 #include <string> 
 #include "Controllable.h"
 #include "Uncontrollable.h"
+#include "LinkedList.h"
+#include "Node.h"
 
 using namespace sf;
 
@@ -30,7 +32,15 @@ int main()
 	char mander = '>';
 	char box_char = '0';
 	char box2_char = 'O';
+	LinkedList ll;
 
+	Immovable j;
+	Immovable i;
+	Node n(i);
+	Node m(j);
+	j.SetMass(5);
+	ll.add(&n);
+	ll.add(&m);
 
 	Uncontrollable box;
 	box.SetMass(1);
@@ -107,7 +117,7 @@ int main()
 		Event evnt;
 
 	//	printf("%d", deltaTime.asMilliseconds());
-
+		printf("%d", (int) ll.getNode(1)->element.GetMass());
 		while (window.pollEvent(evnt))
 		{
 
@@ -128,6 +138,9 @@ int main()
 
 		
 		// If two objects are close, call a collision
+
+
+
 		if (player.DetectCollision(player, box)) {
 			player.ObjectCollision(player, box);
 		}
