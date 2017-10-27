@@ -1,14 +1,14 @@
-#include "Controllable.h"
+
 #include <stdio.h>
 
-Controllable::Controllable()
-{
-}
 
 
-Controllable::~Controllable()
-{
-}
+
+
+
+
+
+/*
 
 void Controllable::RegisterControl(std::vector<sf::Keyboard::Key> keys, Direction dir, float force)
 {
@@ -48,4 +48,4 @@ void Controllable::CheckControl() {
 	}
 
 
-}
+*/

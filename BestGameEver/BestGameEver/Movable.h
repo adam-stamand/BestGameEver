@@ -1,11 +1,16 @@
 #pragma once
 #include "Entity.h"
 #include "Immovable.h"
+
+#include "Controllable.h"
 #include <stdlib.h>
 #include <stdio.h>
 #define AIR_RESISTANCE	0.0005  // must be less than 1... or else you get like negative friction
 #define GRAVITY		0.00003
-class Movable : public Entity
+#define FORCE		.0003f
+
+
+class Movable : public Entity, public Controllable<Movable>
 {
 public:
 	Movable();
@@ -31,6 +36,11 @@ public:
 	void ObjectCollision(Movable &object1, Immovable &object2);
 	template <typename T1, typename T2>
 	bool DetectCollision(T1 &object1, T2 &object2);
+	void MoveUp();
+	void MoveRight();
+	void MoveLeft();
+	void MoveDown();
+	void Quit(sf::Event &evnt);
 
 private:
 	void ApplyAirResistance();

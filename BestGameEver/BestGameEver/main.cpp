@@ -1,45 +1,53 @@
 #include <SFML/Graphics.hpp>
 #include <string> 
-#include "Controllable.h"
 #include "Uncontrollable.h"
 #include "LinkedList.h"
 #include "Node.h"
+#include "EventHandler.h"
 #include "ImmovableTable.h"
+#include "screen_temp.h"
 
 using namespace sf;
 
 #define VEL_MAX		.1 
-#define FORCE		.0003f
+
 #define JUMP_FORCE	0.1f
 #define MASS		1.4f
+
 
 
 int main()
 {
 	RenderWindow window(VideoMode(800, 600), "FFFFF", Style::Default);
 
-	Font font;
-	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+
 	sf::Clock deltaClock;
-	Text box_text, box2_text, text;
 
 	//------------------------
 	// Init
 	//------------------------
 
-	box_text.setFont(font);
-	box2_text.setFont(font);
-	text.setFont(font);
-	char mander = '>';
-	char box_char = '0';
-	char box2_char = 'O';
+	sf::Font font;
+	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+
+
 	LinkedList<Immovable> ll;
-	Immovable j(50,50,5,5);
-	Immovable i(60,60,6,6);
+	Immovable j(50, 50, 5, 5);
+	Immovable i(60, 60, 6, 6);
 
 	ImmovableTable it(50);
 	it.add(i);
 	it.add(j);
+
+
+
+	Movable player;
+	player.SetMass(1.9);
+	player.SetXSize(20);
+	player.SetYSize(20);
+	player.SetXPos(60);
+	player.SetYPos(60);
+
 
 	Uncontrollable box;
 	box.SetMass(1);
@@ -59,47 +67,85 @@ int main()
 	box2.SetXSize(20);
 	box2.SetYSize(20);
 
+
+	sf::Text player_text;
+	player_text.setString(">");
+	player_text.setCharacterSize(50);
+	player_text.setPosition(40, 40);
+	player_text.setFont(font);
+
+	sf::Text box2_text;
+	box2_text.setString("0");
+	box2_text.setCharacterSize(20);
+	box2_text.setPosition(140, 140);
+	box2_text.setFont(font);
+
+	sf::Text box1_text;
+	box1_text.setString("O");
+	box1_text.setCharacterSize(30);
+	box1_text.setPosition(240, 240);
+	box1_text.setFont(font);
+
+	screen_temp::text_objects.push_back(player_text);
+	screen_temp::text_objects.push_back(box1_text);
+	screen_temp::text_objects.push_back(box2_text);
+
+	screen_temp::level_objects.push_back(player);
+	screen_temp::level_objects.push_back(box);
+	screen_temp::level_objects.push_back(box2);
+
+
+
+
 	Immovable ceiling(400, -20, 800, 20);
 	Immovable floor(400, 560, 800, 20);
 	Immovable leftWall(-20, 300, 20, 600);
 	Immovable rightWall(780, 300, 20, 600);
 
-	Controllable player;
-	player.SetMass(1.9);
-	player.SetXSize(20);
-	player.SetYSize(20);
-	player.SetXPos(60);
-	player.SetYPos(60);
 
-	std::vector <Movable::Direction>player_dirs = {
-		Movable::Direction::LEFT,
-		Movable::Direction::RIGHT,
-		Movable::Direction::UP,
-		Movable::Direction::DOWN
-	};
 
-	std::vector<std::vector<sf::Keyboard::Key>>player_keys = { 
-		{sf::Keyboard::A},
-		{sf::Keyboard::D},
-		{sf::Keyboard::S},
-		{ sf::Keyboard::W }
-	};
-
-	std::vector<float>player_forces = {
-		{ FORCE },
-		{ FORCE },
-		{ FORCE },
-		{ FORCE }
-	};
-
+	std::vector<sf::Keyboard::Key> key_vec;
+	Movable::KeyPressAction key_event;
 	
-	//Initialize player controls
-	for (int i = 0; i < player_keys.size(); i++) {
-		player.RegisterControl(player_keys.at(i), player_dirs.at(i), player_forces.at(i));
-	}
-	player_keys.clear();
+	key_vec.push_back(sf::Keyboard::W);
+	key_event.func_ptr = &Movable::MoveUp;
+	key_event.ID = 1;
+	key_event.keys_pressed = key_vec;
+	screen_temp::level_objects.at(0).RegisterKeyPressAction(key_event);
+	key_vec.clear();
+	key_event.keys_pressed.clear();
 	
+	key_vec.push_back(sf::Keyboard::S);
+	key_event.func_ptr = &Movable::MoveDown;
+	key_event.ID = 2;
+	key_event.keys_pressed = key_vec;
+	screen_temp::level_objects.at(0).RegisterKeyPressAction(key_event);
+	key_vec.clear();
+	key_event.keys_pressed.clear();
 	
+	key_vec.push_back(sf::Keyboard::D); 
+	key_event.func_ptr = &Movable::MoveRight;
+	key_event.ID = 3;
+	key_event.keys_pressed = key_vec;
+	screen_temp::level_objects.at(0).RegisterKeyPressAction(key_event);
+	key_vec.clear();
+	key_event.keys_pressed.clear();
+
+	key_vec.push_back(sf::Keyboard::A); 
+	key_event.func_ptr = &Movable::MoveLeft;
+	key_event.ID = 4;
+	key_event.keys_pressed = key_vec;
+	screen_temp::level_objects.at(0).RegisterKeyPressAction(key_event);
+	key_vec.clear();
+	key_event.keys_pressed.clear();
+	
+	screen_temp screen;
+	screen_temp::EventAction evnt_action;
+	evnt_action.func_ptr = &screen_temp::SpawnBox;
+	key_event.ID = 6;
+	evnt_action.evnt_type = sf::Event::MouseButtonPressed;
+	screen.RegisterEventAction(evnt_action);
+
 
 	//------------------------
 	// Main Loop
@@ -113,117 +159,125 @@ int main()
 	//	}
 	//	deltaClock.restart();
 	//	printf("%d", deltaTime.asMilliseconds());
-		Event evnt;
 
 	//	printf("%d", deltaTime.asMilliseconds());
 	//	printf("%d", (int) ll.getNode(1)->element.GetXSize());
-		while (window.pollEvent(evnt))
-		{
-
-			switch (evnt.type) 
-			{
-			case Event::KeyPressed:
-
-				if (evnt.key.code == sf::Keyboard::Escape) {
-					window.close();
-				}
-			}
-		}
-
-
+	
 		//------------------------
 		// Player Environment
 		//------------------------
 
 		
 		// If two objects are close, call a collision
+		for (int i = 0; i <screen_temp::level_objects.size(); i++) {
+			if (screen_temp::level_objects.at(i).DetectCollision(screen_temp::level_objects.at(i), ceiling)) {
+				screen_temp::level_objects.at(i).ObjectCollision(screen_temp::level_objects.at(i), ceiling);
+			}
+			if (screen_temp::level_objects.at(i).DetectCollision(screen_temp::level_objects.at(i), rightWall)) {
+				screen_temp::level_objects.at(i).ObjectCollision(screen_temp::level_objects.at(i), rightWall);
+			}
 
-		if (player.DetectCollision(player, box)) {
-			player.ObjectCollision(player, box);
-		}
-		if (player.DetectCollision(player, box2)) {
-			player.ObjectCollision(player, box2);
-		}
+			if (screen_temp::level_objects.at(i).DetectCollision(screen_temp::level_objects.at(i), leftWall)) {
+				screen_temp::level_objects.at(i).ObjectCollision(screen_temp::level_objects.at(i), leftWall);
+			}
 
-		if (player.DetectCollision(player, ceiling)) {
-			player.ObjectCollision(player, ceiling);
-		}
-		if (player.DetectCollision(player, leftWall)) {
-			player.ObjectCollision(player, leftWall);
-		}
-		if (player.DetectCollision(player, floor)) {
-			player.ObjectCollision(player, floor);
-		}
-		if (player.DetectCollision(player, rightWall)) {
-			player.ObjectCollision(player, rightWall);
-		}
+			if (screen_temp::level_objects.at(i).DetectCollision(screen_temp::level_objects.at(i), floor)) {
+				screen_temp::level_objects.at(i).ObjectCollision(screen_temp::level_objects.at(i), floor);
+			}
+			for (int j = i+1; j < screen_temp::level_objects.size(); j++) {
+				if (screen_temp::level_objects.at(i).DetectCollision(screen_temp::level_objects.at(i), screen_temp::level_objects.at(j))) {
+					screen_temp::level_objects.at(i).ObjectCollision(screen_temp::level_objects.at(i), screen_temp::level_objects.at(j));
+				}
+			}
 
-		if (player.DetectCollision(box, box2)) {
-			player.ObjectCollision(box, box2);
 		}
 
-		if (player.DetectCollision(box, ceiling)) {
-			player.ObjectCollision(box, ceiling);
+		/*
+
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), box)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), box);
+		}
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), box2)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), box2);
 		}
 
-		if (player.DetectCollision(box, floor)) {
-			player.ObjectCollision(box, floor);
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), ceiling)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), ceiling);
+		}
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), leftWall)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), leftWall);
+		}
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), floor)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), floor);
+		}
+		if (level_objects.at(0).DetectCollision(level_objects.at(0), rightWall)) {
+			level_objects.at(0).ObjectCollision(level_objects.at(0), rightWall);
 		}
 
-		if (player.DetectCollision(box, leftWall)) {
-			player.ObjectCollision(box, leftWall);
+		if (level_objects.at(0).DetectCollision(level_objects.at(1), level_objects.at(2))) {
+			level_objects.at(0).ObjectCollision(box, level_objects.at(2));
 		}
 
-		if (player.DetectCollision(box, rightWall)) {
-			player.ObjectCollision(box, rightWall);
+		if (level_objects.at(0).DetectCollision(box, ceiling)) {
+			level_objects.at(0).ObjectCollision(box, ceiling);
 		}
 
-		if (player.DetectCollision(box2, ceiling)) {
-			player.ObjectCollision(box2, ceiling);
+		if (level_objects.at(0).DetectCollision(box, floor)) {
+			level_objects.at(0).ObjectCollision(box, floor);
 		}
 
-		if (player.DetectCollision(box2, floor)) {
-			player.ObjectCollision(box2, floor);
+		if (level_objects.at(0).DetectCollision(box, leftWall)) {
+			level_objects.at(0).ObjectCollision(box, leftWall);
 		}
 
-		if (player.DetectCollision(box2, leftWall)) {
-			player.ObjectCollision(box2, leftWall);
+		if (level_objects.at(0).DetectCollision(box, rightWall)) {
+			level_objects.at(0).ObjectCollision(box, rightWall);
 		}
 
-		if (player.DetectCollision(box2, rightWall)) {
-			player.ObjectCollision(box2, rightWall);
+		if (level_objects.at(0).DetectCollision(box2, ceiling)) {
+			level_objects.at(0).ObjectCollision(box2, ceiling);
 		}
 
+		if (level_objects.at(0).DetectCollision(box2, floor)) {
+			level_objects.at(0).ObjectCollision(box2, floor);
+		}
+
+		if (level_objects.at(0).DetectCollision(box2, leftWall)) {
+			level_objects.at(0).ObjectCollision(box2, leftWall);
+		}
+
+		if (level_objects.at(0).DetectCollision(box2, rightWall)) {
+			level_objects.at(0).ObjectCollision(box2, rightWall);
+		}
+
+		*/
 
 		// Update Positions and check controls
 
-		player.CheckControl();
-		player.UpdatePosition();
+		EventHandler::GetEvents(window);
 
-		box.UpdatePosition();
-		box2.UpdatePosition();
+		screen.CheckEventActions(screen);
+		screen_temp::level_objects.at(0).CheckKeyPressActions(screen_temp::level_objects.at(0));
 
+		EventHandler::ClearEvents();
+
+		for (int i = 0; i < screen_temp::text_objects.size(); i++) {
+			screen_temp::level_objects.at(i).UpdatePosition();
+		}
 
 
 
 		//------------------------
 		// Windows managment
 		//------------------------
-
+		
 		window.clear();
-
-
-		text.setString(mander);
-		text.setPosition(player.GetXPos(), player.GetYPos());
-		window.draw(text);
-
-		box_text.setString(box_char);
-		box_text.setPosition(box.GetXPos(), box.GetYPos());
-		window.draw(box_text);
-
-		box2_text.setString(box2_char);
-		box2_text.setPosition(box2.GetXPos(), box2.GetYPos());
-		window.draw(box2_text);
+		for (int i = 0; i < screen_temp::text_objects.size(); i++) {
+			screen_temp::text_objects.at(i).setFont(font);
+			(screen_temp::text_objects.at(i)).setPosition((screen_temp::level_objects.at(i)).GetXPos(), (screen_temp::level_objects.at(i)).GetYPos());
+			window.draw(screen_temp::text_objects.at(i));
+		}
+		
 
 
 		window.display();

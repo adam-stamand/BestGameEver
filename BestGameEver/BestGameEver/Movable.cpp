@@ -41,6 +41,14 @@ void Movable::SetAirResistance(float resist) {
 	this->air_resistance = resist;
 }
 
+void Movable::MoveUp()		{ this->Accelerate(Movable::Direction::UP, -FORCE); }
+void Movable::MoveDown()	{ this->Accelerate(Movable::Direction::DOWN, -FORCE); }
+void Movable::MoveRight()	{ this->Accelerate(Movable::Direction::RIGHT, FORCE); }
+void Movable::MoveLeft()	{ this->Accelerate(Movable::Direction::LEFT, FORCE); }
+void Movable::Quit(sf::Event &evnt) { if (evnt.key.code == sf::Keyboard::Escape) puts("WUIT"); }
+
+
+
 void Movable::Accelerate(Direction dir, float force) {
 	switch (dir) {
 	case UP:

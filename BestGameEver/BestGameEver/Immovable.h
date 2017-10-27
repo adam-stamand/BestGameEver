@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "Entity.h"
 #include <stdlib.h>
 #include <stdio.h>

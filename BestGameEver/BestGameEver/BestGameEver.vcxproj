@@ -79,7 +79,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Controllable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Immovable.cpp" />
     <ClCompile Include="ImmovableTable.cpp" />
@@ -87,16 +86,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Movable.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="screen_temp.cpp" />
     <ClCompile Include="Uncontrollable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controllable.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Immovable.h" />
     <ClInclude Include="ImmovableTable.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Movable.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="screen_temp.h" />
     <ClInclude Include="Uncontrollable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
