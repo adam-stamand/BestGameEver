@@ -30,7 +30,6 @@ void LinkedList<T>::add(T *object) { //add node to end of linkedlist
 	}
 	n->element = object;
 	this->listSize++;
-	printf("listsize %d", listSize);
 }
 
 template <class T>

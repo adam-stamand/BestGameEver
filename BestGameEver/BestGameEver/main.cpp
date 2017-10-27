@@ -34,13 +34,12 @@ int main()
 	char box_char = '0';
 	char box2_char = 'O';
 	LinkedList<Immovable> ll;
-	Immovable j(5,5,5,5);
-	Immovable i(6,6,6,6);
-	Node<Immovable> n(&i);
-	Node<Immovable> m(&j);
+	Immovable j(50,50,5,5);
+	Immovable i(60,60,6,6);
+
 	ImmovableTable it(50);
-	ll.add(n.element);
-	ll.add(m.element);
+	it.add(i);
+	it.add(j);
 
 	Uncontrollable box;
 	box.SetMass(1);
@@ -138,8 +137,6 @@ int main()
 
 		
 		// If two objects are close, call a collision
-
-
 
 		if (player.DetectCollision(player, box)) {
 			player.ObjectCollision(player, box);
