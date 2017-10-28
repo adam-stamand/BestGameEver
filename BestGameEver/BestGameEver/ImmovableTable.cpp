@@ -10,7 +10,7 @@ ImmovableTable::~ImmovableTable()
 {
 }
 
-void ImmovableTable::add(Immovable i) {
+void ImmovableTable::add(Entity i) {
 	int x = i.GetXPos() / granularity;
 	int y = i.GetYPos() / granularity;
 	underlyingArray[x][y].add(&i);
@@ -20,10 +20,10 @@ void ImmovableTable::printCellSize(int x, int y) { //this was for testing and wi
 	printf("%d" , underlyingArray[x][y].listSize);
 }
 
-void ImmovableTable::checkCollision(Movable *m) { //todo: make a method before this that finds all cells that Movable m is touching and call this method for each one.
+void ImmovableTable::checkCollision(Entity *m) { //todo: make a method before this that finds all cells that Movable m is touching and call this method for each one.
 	int x = m->GetXPos() / granularity;
 	int y = m->GetYPos() / granularity;
-	Node<Immovable> *n = underlyingArray[x][y].head;
+	Node<Entity> *n = underlyingArray[x][y].head;
 	while (n->next != NULL) {
 		//actually check if the sprites collide here
 		n = n->next;

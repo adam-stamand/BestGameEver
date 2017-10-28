@@ -1,11 +1,10 @@
 #include "Movable.h"
-#include "math.h"
+
 
 Movable::Movable() :
 	gravity(-GRAVITY),
 	air_resistance(AIR_RESISTANCE)
 {
-
 }
 
 Movable::Movable(float grav, float resist) {
@@ -41,30 +40,24 @@ void Movable::SetAirResistance(float resist) {
 	this->air_resistance = resist;
 }
 
-void Movable::MoveUp()		{ this->Accelerate(Movable::Direction::UP, -FORCE); }
-void Movable::MoveDown()	{ this->Accelerate(Movable::Direction::DOWN, -FORCE); }
-void Movable::MoveRight()	{ this->Accelerate(Movable::Direction::RIGHT, FORCE); }
-void Movable::MoveLeft()	{ this->Accelerate(Movable::Direction::LEFT, FORCE); }
-void Movable::Quit(sf::Event &evnt) { if (evnt.key.code == sf::Keyboard::Escape) puts("WUIT"); }
 
 
-
-void Movable::Accelerate(Direction dir, float force) {
+void Movable::Accelerate(Direction dir, float force, Entity &entity) {
 	switch (dir) {
 	case UP:
-		this->y_vel += force / GetMass();
+		this->y_vel += force / entity.GetMass();
 		break;
 
 	case DOWN:
-		this->y_vel -= force / GetMass();
+		this->y_vel -= force / entity.GetMass();
 		break;
 
 	case LEFT:
-		this->x_vel -= force / GetMass();
+		this->x_vel -= force / entity.GetMass();
 		break;
 
 	case RIGHT:
-		this->x_vel += force / GetMass();
+		this->x_vel += force / entity.GetMass();
 		break;
 	}
 
@@ -82,91 +75,10 @@ void Movable::ApplyGravity() {
 }
 
 
-void Movable::UpdatePosition() {
+void Movable::UpdatePosition(Entity &entity) {
 	this->ApplyGravity();
 	this->ApplyAirResistance();
-	this->SetXPos(GetXPos() + this->x_vel);
-	this->SetYPos(GetYPos() + this->y_vel);
-}
-/*
-//need to add a jump cooldown when deltaTime is implemented. atm a jump will have the force of many.
-bool Movable::CanJump(Movable &object) { //object needs to be a list of objects
-	if (this->GetYPos() < 1) return true;
-	if (this->GetYPos() - object.GetYPos() < 20 && abs(this->GetXPos() - object.GetXPos()) < 20) return true;//super temporary. this will eventually work with a list (or tree) of objects and hopefully use variables based on objects size rather than "20"
-	return false;
-}
-*/
-
-
-// Ellastic Collision
-void Movable::ObjectCollision(Movable &object1, Movable &object2) {
-
-	int deltax = object1.GetXPos() - object2.GetXPos();
-	int deltay = object1.GetYPos() - object2.GetYPos();
-
-	if (abs(deltax) > abs(deltay)) {
-		object2.SetXPos(object2.GetXPos() - ((deltax > 0) - (deltax < 0)) * (object2.GetXSize() - abs(deltax) + 1));
-	}
-	else {
-		object2.SetYPos(object2.GetYPos() - ((deltay > 0) - (deltay < 0)) * (object2.GetYSize() - abs(deltay) + 1));
-	}
-
-	float vx1i = object1.GetXVel();
-	float vy1i = object1.GetYVel();
-	float vx2i = object2.GetXVel();
-	float vy2i = object2.GetYVel();
-
-
-	object1.SetXVel(
-		(((object1.GetMass() - object2.GetMass()) / (object1.GetMass() + object2.GetMass())) * vx1i) +
-		(((2 * object2.GetMass()) / (object1.GetMass() + object2.GetMass())) * vx2i)
-	);
-
-	object1.SetYVel(
-		(((object1.GetMass() - object2.GetMass()) / (object1.GetMass() + object2.GetMass())) * vy1i) +
-		(((2 * object2.GetMass()) / (object1.GetMass() + object2.GetMass())) * vy2i)
-	);
-
-
-	object2.SetXVel(
-		(((object2.GetMass() - object1.GetMass()) / (object1.GetMass() + object2.GetMass())) * vx2i ) +
-		(((2 * object1.GetMass()) / (object1.GetMass() + object2.GetMass())) * vx1i)
-	);
-
-	// The above math was incorrect. Fixed now, so we'll see if this condition is still necessary
-	//if (object1.GetYPos() <= object2.GetYPos()) { //i had to add this conditional. without it, the object would follow the player when he jumped
-	object2.SetYVel(
-		(((object2.GetMass() - object1.GetMass()) / (object1.GetMass() + object2.GetMass())) * vy2i) +
-		(((2 * object1.GetMass()) / (object1.GetMass() + object2.GetMass())) * vy1i)
-	);
 	
-
+	entity.SetXPos(entity.GetXPos() + this->x_vel);
+	entity.SetYPos(entity.GetYPos() + this->y_vel);
 }
-
-
-
-
-// Inelastic Collision (20% Velocity loss)
-void Movable::ObjectCollision(Movable &object1, Immovable &object2) {
-
-	int xDiff = object1.GetXPos() - object2.GetXPos() + object1.GetXSize();
-	int yDiff = object1.GetYPos() - object2.GetYPos() + object1.GetYSize();
-
-	if (abs(xDiff) > object2.GetXSize()) {
-		if (fabs(object1.GetXVel()) <= .01) {
-			object1.SetXVel((object1.GetXPos() >= object2.GetXPos() + object2.GetXSize() / 2) ? .001 : -.001);
-		}
-		else object1.SetXVel(-object1.GetXVel() * 0.8);
-	}
-	if (abs(yDiff) > object2.GetYSize()) {
-		if (fabs(object1.GetYVel()) <= .01) {
-			object1.SetYVel((object1.GetYPos() >= object2.GetYPos() + object2.GetYSize() / 2)? .001 : -.001);
-		}
-		else object1.SetYVel(-object1.GetYVel() * 0.8);
-	}
-
-}
-
-
-
-

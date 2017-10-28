@@ -12,11 +12,11 @@ public:
 	ImmovableTable(int granularity);
 	~ImmovableTable();
 	void printCellSize(int x, int y);
-	void add(Immovable i);
+	void add(Entity i);
 
-	void checkCollision(Movable *m);
+	void checkCollision(Entity *m);
 	int granularity;
-	LinkedList<Immovable> underlyingArray[100][100]; //eventually 100's will be replaced by (level size / granularity)
+	LinkedList<Entity> underlyingArray[100][100]; //eventually 100's will be replaced by (level size / granularity)
 };
 
 

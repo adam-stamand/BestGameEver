@@ -1,9 +1,14 @@
 #include "Entity.h"
 
-
+sf::Font Entity::font;
 
 Entity::Entity()
 {
+	text.setString(">");
+	text.setCharacterSize(50);
+	text.setPosition(40, 40);
+	Entity::font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
+	text.setFont(Entity::font);
 }
 
 
@@ -14,6 +19,10 @@ Entity::~Entity()
 
 
 // Setters
+void Entity::SetText(char text) {
+	this->text.setString(text);
+}
+
 void Entity::SetXPos(float x) {
 	this->x_pos = x;
 }
