@@ -4,6 +4,7 @@
 #include "EventHandler.h"
 #include "ImmovableTable.h"
 #include "LevelManager.h"
+#include "MainCharacter.h"
 
 
 using namespace sf;
@@ -34,7 +35,7 @@ int main()
 	it.add(j);
 	*/
 
-	Player player;
+	MainCharacter player;
 	player.SetText('>');
 	player.SetMass(1.9);
 	player.SetXSize(20);
@@ -43,10 +44,10 @@ int main()
 	player.SetYPos(60);
 
 	std::vector<sf::Keyboard::Key> key_vec;
-	Player::KeyPressAction key_event;
+	MainCharacter::KeyPressAction key_event;
 
 	key_vec.push_back(sf::Keyboard::W);
-	key_event.func_ptr = &Player::MoveUp;
+	key_event.func_ptr = &MainCharacter::MoveUp;
 	key_event.ID = 1;
 	key_event.keys_pressed = key_vec;
 	player.RegisterKeyPressAction(key_event);
@@ -54,7 +55,7 @@ int main()
 	key_event.keys_pressed.clear();
 
 	key_vec.push_back(sf::Keyboard::S);
-	key_event.func_ptr = &Player::MoveDown;
+	key_event.func_ptr = &MainCharacter::MoveDown;
 	key_event.ID = 2;
 	key_event.keys_pressed = key_vec;
 	player.RegisterKeyPressAction(key_event);
@@ -62,7 +63,7 @@ int main()
 	key_event.keys_pressed.clear();
 
 	key_vec.push_back(sf::Keyboard::D);
-	key_event.func_ptr = &Player::MoveRight;
+	key_event.func_ptr = &MainCharacter::MoveRight;
 	key_event.ID = 3;
 	key_event.keys_pressed = key_vec;
 	player.RegisterKeyPressAction(key_event);
@@ -70,7 +71,7 @@ int main()
 	key_event.keys_pressed.clear();
 
 	key_vec.push_back(sf::Keyboard::A);
-	key_event.func_ptr = &Player::MoveLeft;
+	key_event.func_ptr = &MainCharacter::MoveLeft;
 	key_event.ID = 4;
 	key_event.keys_pressed = key_vec;
 	player.RegisterKeyPressAction(key_event);
@@ -115,8 +116,8 @@ int main()
 
 	
 	LevelManager::RegisterPlayer(&player);
-	LevelManager::RegisterItem(&box1);
-	LevelManager::RegisterItem(&box2);
+	LevelManager::RegisterItem(box1);
+	LevelManager::RegisterItem(box2);
 	LevelManager::RegisterStructure(&ceiling);
 	LevelManager::RegisterStructure(&floor);
 	LevelManager::RegisterStructure(&leftWall);
@@ -126,13 +127,13 @@ int main()
 
 
 
-/*
-	Player::EventAction evnt_action;
-	evnt_action.func_ptr = &Player::SpawnBox;
+
+	MainCharacter::EventAction evnt_action;
+	evnt_action.func_ptr = &MainCharacter::SpawnBox;
 	key_event.ID = 6;
 	evnt_action.evnt_type = sf::Event::MouseButtonPressed;
 	player.RegisterEventAction(evnt_action);
-*/
+
 
 	//------------------------
 	// Main Loop

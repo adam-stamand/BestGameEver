@@ -16,7 +16,7 @@ public:
 
 	static void LevelManager::RegisterPlayer(Player *object);
 	static void LevelManager::RegisterGhost(Ghost *object);
-	static void LevelManager::RegisterItem(Item *object);
+	static void LevelManager::RegisterItem(Item object);
 	static void LevelManager::RegisterStructure(Structure *object);
 
 
@@ -28,5 +28,5 @@ public:
 	static std::vector<Ghost*> ghosts;
 	static std::vector<Player*> players;
 	static std::vector<Structure*> structures;
-	static std::vector<Item*> items;
+	static std::vector<Item> items;
 };

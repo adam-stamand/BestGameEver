@@ -87,6 +87,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="LinkedList.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainCharacter.cpp" />
     <ClCompile Include="Movable.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="EventHandler.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="ImmovableTable.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="MainCharacter.h" />
     <ClInclude Include="Movable.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />

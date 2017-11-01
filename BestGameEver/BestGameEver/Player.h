@@ -4,7 +4,8 @@
 #include "Entity.h"
 #include "Collidable.h"
 
-class Player : public Movable, public Entity, public Controllable<Player>, public Collidable
+
+class Player : public Movable, public Entity, public Collidable, public Controllable<Player>
 {
 public:
 	Player();
@@ -14,11 +15,5 @@ public:
 	void Collision(T &object) { this->ObjectCollision(*this, object); };
 	template <typename T>
 	bool CheckCollision(T &object) { return this->DetectCollision(*this, object); };
-	void MoveUp();
-	void MoveRight();
-	void MoveLeft();
-	void MoveDown();
-	void Quit(sf::Event &evnt);
-	
 };
 

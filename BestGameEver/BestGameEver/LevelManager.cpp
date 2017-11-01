@@ -1,7 +1,7 @@
 #include "LevelManager.h"
 
 std::vector<Ghost*> LevelManager::ghosts;
-std::vector<Item*> LevelManager::items;
+std::vector<Item> LevelManager::items;
 std::vector<Structure*> LevelManager::structures;
 std::vector<Player*> LevelManager::players;
 
@@ -23,7 +23,7 @@ void LevelManager::RegisterGhost(Ghost *object) {
 	LevelManager::ghosts.push_back(object);
 }
 
-void LevelManager::RegisterItem(Item *object) {
+void LevelManager::RegisterItem(Item object) {
 	LevelManager::items.push_back(object);
 }
 
@@ -44,8 +44,8 @@ void LevelManager::CheckCollisions() {
 		}
 
 		for (int j = 0; j < LevelManager::items.size(); j++) {
-			if ((*LevelManager::players.at(i)).CheckCollision((*LevelManager::items.at(j)))) {
-				(*LevelManager::players.at(i)).Collision((*LevelManager::items.at(j)));
+			if ((*LevelManager::players.at(i)).CheckCollision((LevelManager::items.at(j)))) {
+				(*LevelManager::players.at(i)).Collision((LevelManager::items.at(j)));
 			}
 		}
 
@@ -59,14 +59,14 @@ void LevelManager::CheckCollisions() {
 	for (int i = 0; i < LevelManager::items.size(); i++) {
 
 		for (int j = i+1; j < LevelManager::items.size(); j++) {
-			if ((*LevelManager::items.at(i)).CheckCollision((*LevelManager::items.at(j)))) {
-				(*LevelManager::items.at(i)).Collision((*LevelManager::items.at(j)));
+			if ((LevelManager::items.at(i)).CheckCollision((LevelManager::items.at(j)))) {
+				(LevelManager::items.at(i)).Collision((LevelManager::items.at(j)));
 			}
 		}
 
 		for (int j = 0; j < LevelManager::structures.size(); j++) {
-			if ((*LevelManager::items.at(i)).CheckCollision((*LevelManager::structures.at(j)))) {
-				(*LevelManager::items.at(i)).Collision((*LevelManager::structures.at(j)));
+			if ((LevelManager::items.at(i)).CheckCollision((*LevelManager::structures.at(j)))) {
+				(LevelManager::items.at(i)).Collision((*LevelManager::structures.at(j)));
 			}
 		}
 
@@ -100,7 +100,7 @@ void LevelManager::UpdatePositions() {
 
 	}
 	for (int i = 0; i < LevelManager::items.size(); i++) {
-		(*LevelManager::items.at(i)).UpdatePosition((*LevelManager::items.at(i)));
+		(LevelManager::items.at(i)).UpdatePosition((LevelManager::items.at(i)));
 
 	}
 
@@ -117,8 +117,8 @@ void LevelManager::UpdateScreen(sf::RenderWindow &window) {
 		window.draw((*LevelManager::ghosts.at(i)).text);
 	}
 	for (int i = 0; i < LevelManager::items.size(); i++) {
-		(*LevelManager::items.at(i)).text.setPosition(((*LevelManager::items.at(i)).GetXPos()), ((*LevelManager::items.at(i)).GetYPos()));
-		window.draw((*LevelManager::items.at(i)).text);
+		(LevelManager::items.at(i)).text.setPosition(((LevelManager::items.at(i)).GetXPos()), ((LevelManager::items.at(i)).GetYPos()));
+		window.draw((LevelManager::items.at(i)).text);
 	}
 	window.display();
 }
