@@ -1,13 +1,13 @@
 #pragma once
 #include "Entity.h"
-
+#include "MovableComponent.h"
 
 #define AIR_RESISTANCE	0.0005  // must be less than 1... or else you get like negative friction
 #define GRAVITY		0.00003
 #define FORCE		.0003f
 
 
-class Movable
+class Movable : public MovableComponent
 {
 public:
 	Movable();
@@ -20,23 +20,26 @@ public:
 		LEFT,
 		RIGHT
 	};
-	void UpdatePosition(Entity &entity);
+
+	void Update(Entity &entity);
 	void Accelerate(Direction dir, float force, Entity &entity);
-	float GetXVel();
-	float GetYVel();
-	void SetXVel(float x);
-	void SetYVel(float y);
-	void SetGravity(float grav);
-	void SetAirResistance(float resist);
+
+
+
+
 	//TODO SetSurfaceFriction
 
 
 private:
-	void ApplyAirResistance();
-	void ApplyGravity();
+	float GetGravity();
+	float GetAirResistance();
+	void SetGravity(float grav);
+	void SetAirResistance(float resist);
+	void ApplyAirResistance(Entity &entity);
+	void ApplyGravity(Entity &entity);
 	float gravity;
 	float air_resistance;
-	float y_vel;
-	float x_vel;
+	float surface_friciton;
+
 };
 

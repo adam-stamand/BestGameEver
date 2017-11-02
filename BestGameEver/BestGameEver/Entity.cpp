@@ -18,6 +18,9 @@ Entity::~Entity()
 
 
 
+
+
+
 // Setters
 void Entity::SetText(char text) {
 	this->text.setString(text);
@@ -30,6 +33,27 @@ void Entity::SetXPos(float x) {
 void Entity::SetYPos(float y) {
 	this->y_pos = y;
 }
+
+
+void Entity::SetYVel(float y) {
+	this->y_vel = y;
+}
+
+
+void Entity::SetXVel(float x) {
+	this->x_vel = x;
+}
+
+
+void Entity::SetYAccel(float y) {
+	this->y_accel = y;
+}
+
+
+void Entity::SetXAccel(float x) {
+	this->x_accel = x;
+}
+
 
 void Entity::SetMass(float mass) {
 	this->mass = mass;
@@ -54,6 +78,25 @@ float Entity::GetXPos() {
 float Entity::GetYPos() {
 	return this->y_pos;
 }
+
+float Entity::GetXVel() {
+	return this->x_vel;
+}
+
+
+float Entity::GetYVel() {
+	return this->y_vel;
+}
+
+float Entity::GetXAccel() {
+	return this->x_accel;
+}
+
+
+float Entity::GetYAccel() {
+	return this->y_accel;
+}
+
 
 float Entity::GetXSize() {
 	return this->x_size;

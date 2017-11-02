@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "EventHandler.h"
+#include "ControllableComponent.h"
 
 #define MAX_CONTROLS	50
 #define MAX_KEYS		5
 
 template <class T>
-class Controllable
+class Controllable 
 {
 
 public:
@@ -27,9 +28,11 @@ public:
 		KeyPress_Func_P func_ptr;
 		long int ID;
 	};
+	void Controllable::Update(T &object) {
+		CheckEventActions(object);
+		CheckKeyPressActions(object);
+	};
 
-	void Controllable::CheckEventActions(T &object);
-	void Controllable::CheckKeyPressActions(T &object);
 	void Controllable::DeregisterKeyPressAction(long int ID);
 	void Controllable::DeregisterEventAction(long int ID);
 	void Controllable::RegisterEventAction(EventAction action);
@@ -39,6 +42,8 @@ public:
 private:
 	std::vector<EventAction> event_action_map;
 	std::vector<KeyPressAction> key_action_map;
+	void Controllable::CheckEventActions(T &object);
+	void Controllable::CheckKeyPressActions(T &object);
 };
 
 

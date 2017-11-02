@@ -15,22 +15,7 @@ Movable::Movable(float grav, float resist) {
 Movable::~Movable() {
 }
 
-void Movable::SetYVel(float y) {
-	this->y_vel = y;
-}
 
-void Movable::SetXVel(float x) {
-	this->x_vel = x;
-}
-
-float Movable::GetXVel() {
-	return this->x_vel;
-}
-
-
-float Movable::GetYVel() {
-	return this->y_vel;
-}
 
 void Movable::SetGravity(float grav) {
 	this->gravity = grav;
@@ -40,45 +25,65 @@ void Movable::SetAirResistance(float resist) {
 	this->air_resistance = resist;
 }
 
+float Movable::GetGravity() {
+	return this->gravity;
+}
+
+float Movable::GetAirResistance() {
+	return this->air_resistance;
+}
+
 
 
 void Movable::Accelerate(Direction dir, float force, Entity &entity) {
+	float temp_vel;
+
 	switch (dir) {
 	case UP:
-		this->y_vel += force / entity.GetMass();
+		temp_vel = entity.GetYVel() + force / entity.GetMass();
+		entity.SetYVel(temp_vel);
 		break;
 
 	case DOWN:
-		this->y_vel -= force / entity.GetMass();
+		temp_vel = entity.GetYVel() - force / entity.GetMass();
+		entity.SetYVel(temp_vel);
 		break;
 
 	case LEFT:
-		this->x_vel -= force / entity.GetMass();
+		temp_vel = entity.GetXVel() - force / entity.GetMass();
+		entity.SetXVel(temp_vel);
 		break;
 
 	case RIGHT:
-		this->x_vel += force / entity.GetMass();
+		temp_vel = entity.GetXVel() + force / entity.GetMass();
+		entity.SetXVel(temp_vel);
 		break;
 	}
 
 
 }
 
-void Movable::ApplyAirResistance() {
-	this->y_vel -= this->y_vel * this->air_resistance;
-	this->x_vel -= this->x_vel * this->air_resistance;
+void Movable::ApplyAirResistance(Entity &entity) {
+	float temp_vel;
+
+	temp_vel = entity.GetYVel() - (entity.GetYVel() * this->air_resistance);
+	entity.SetYVel(temp_vel);
+	temp_vel = entity.GetXVel() - (entity.GetXVel() * this->air_resistance);
+	entity.SetYVel(temp_vel);
 }
 
 
-void Movable::ApplyGravity() {
-	this->y_vel -= this->gravity;
+void Movable::ApplyGravity(Entity &entity) {
+	float temp_vel;
+	temp_vel = entity.GetYVel() - this->gravity;
+	entity.SetYVel(temp_vel);
 }
 
 
-void Movable::UpdatePosition(Entity &entity) {
-	this->ApplyGravity();
-	this->ApplyAirResistance();
+void Movable::Update(Entity &entity) {
+	this->ApplyGravity(entity);
+	this->ApplyAirResistance(entity);
 	
-	entity.SetXPos(entity.GetXPos() + this->x_vel);
-	entity.SetYPos(entity.GetYPos() + this->y_vel);
+	entity.SetXPos(entity.GetXPos() + entity.GetXVel());
+	entity.SetYPos(entity.GetYPos() + entity.GetYVel());
 }

@@ -4,7 +4,7 @@
 #include "Collidable.h"
 
 
-class Item : public Movable, public Entity, public Collidable
+class Item : public Entity
 {
 
 public:
