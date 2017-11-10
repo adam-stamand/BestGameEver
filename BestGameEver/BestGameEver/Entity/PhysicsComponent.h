@@ -33,12 +33,12 @@ protected:
 	//virtual void testCollision();
 
 
-	float y_vel;
-	float x_vel;
+	float y_vel = 0;
+	float x_vel = 0;
 	float y_accel;
 	float x_accel;
-	float gravity;
-	float air_resistance;
+	float gravity = 0;
+	float air_resistance = 0;
 	float mass;
 
 
