@@ -15,7 +15,6 @@
     <ClCompile Include="Components\MainGraphicsComponent.cpp" />
     <ClCompile Include="Components\MainPhysicsComponent.cpp" />
     <ClCompile Include="Components\MainPlayerControls.cpp" />
-    <ClCompile Include="Components\MainPositionComponent.cpp" />
     <ClCompile Include="Entity\ControlsBase.cpp" />
     <ClCompile Include="Entity\ControlsComponent.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
@@ -23,9 +22,15 @@
     <ClCompile Include="Entity\GraphicsComponent.cpp" />
     <ClCompile Include="Entity\PhysicsComponent.cpp" />
     <ClCompile Include="Level\EventHandler.cpp" />
-    <ClCompile Include="Level\ImmovableTable.cpp" />
-    <ClCompile Include="Level\LevelManager.cpp" />
-    <ClCompile Include="Utils\LinkedList.cpp" />
+    <ClCompile Include="Level\ImmovableTable.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Level\LevelManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Utils\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,7 +38,6 @@
     <ClInclude Include="Components\MainGraphicsComponent.h" />
     <ClInclude Include="Components\MainPhysicsComponent.h" />
     <ClInclude Include="Components\MainPlayerControls.h" />
-    <ClInclude Include="Components\MainPositionComponent.h" />
     <ClInclude Include="Entity\ComponentMessage.h" />
     <ClInclude Include="Entity\ControlsBase.h" />
     <ClInclude Include="Entity\ControlsComponent.h" />
@@ -43,8 +47,14 @@
     <ClInclude Include="Entity\GraphicsComponent.h" />
     <ClInclude Include="Entity\PhysicsComponent.h" />
     <ClInclude Include="Level\EventHandler.h" />
-    <ClInclude Include="Level\ImmovableTable.h" />
-    <ClInclude Include="Level\LevelManager.h" />
+    <ClInclude Include="Level\ImmovableTable.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Level\LevelManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Utils\LinkedList.h" />
     <ClInclude Include="Utils\Node.h" />
   </ItemGroup>
@@ -81,11 +91,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
+    <IncludePath>$(ProjectDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Library\SFML-2.4.2\lib;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
+    <IncludePath>$(ProjectDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Library\SFML-2.4.2\lib;</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

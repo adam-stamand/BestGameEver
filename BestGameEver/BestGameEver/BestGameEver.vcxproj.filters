@@ -27,9 +27,6 @@
     <ClCompile Include="Components\MainPlayerControls.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Components\MainPositionComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Entity\ControlsBase.cpp">
       <Filter>Entity</Filter>
     </ClCompile>
@@ -57,12 +54,10 @@
     <ClCompile Include="Level\LevelManager.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Utils\LinkedList.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Node.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\MainControlsComponent.h">
@@ -75,9 +70,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\MainPlayerControls.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MainPositionComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Entity\ComponentMessage.h">

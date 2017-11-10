@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <string> 
 
-#include "Entity.h"
-#include "MainControlsComponent.h"
-#include "MainGraphicsComponent.h"
-#include "MainPhysicsComponent.h"
-#include "MainPositionComponent.h"
+#include "Entity/Entity.h"
+#include "Components/MainControlsComponent.h"
+#include "Components/MainGraphicsComponent.h"
+#include "Components/MainPhysicsComponent.h"
 #include <new> 
 
 using namespace sf;
