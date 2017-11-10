@@ -27,24 +27,6 @@
     <ClCompile Include="Components\MainPlayerControls.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\ControlsBase.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\ControlsComponent.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\Entity.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\EntityBase.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\GraphicsComponent.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity\PhysicsComponent.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Level\EventHandler.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -58,6 +40,13 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Entity\PhysicsComponent.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsComponent.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\MainControlsComponent.h">
@@ -78,22 +67,10 @@
     <ClInclude Include="Entity\ControlsBase.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ControlsComponent.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Entity.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\EntityBase.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\EntityMessage.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\GraphicsComponent.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\PhysicsComponent.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Level\EventHandler.h">
@@ -111,5 +88,21 @@
     <ClInclude Include="Utils\Node.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Entity\PhysicsComponent.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\GraphicsComponent.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\EntityBase.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ControlsComponent.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Component.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h" />
   </ItemGroup>
 </Project>

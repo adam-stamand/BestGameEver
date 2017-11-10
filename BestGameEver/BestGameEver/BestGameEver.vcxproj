@@ -11,16 +11,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Components\MainControlsComponent.cpp" />
     <ClCompile Include="Components\MainGraphicsComponent.cpp" />
     <ClCompile Include="Components\MainPhysicsComponent.cpp" />
     <ClCompile Include="Components\MainPlayerControls.cpp" />
-    <ClCompile Include="Entity\ControlsBase.cpp" />
-    <ClCompile Include="Entity\ControlsComponent.cpp" />
-    <ClCompile Include="Entity\Entity.cpp" />
-    <ClCompile Include="Entity\EntityBase.cpp" />
-    <ClCompile Include="Entity\GraphicsComponent.cpp" />
     <ClCompile Include="Entity\PhysicsComponent.cpp" />
+    <ClCompile Include="GraphicsComponent.cpp" />
     <ClCompile Include="Level\EventHandler.cpp" />
     <ClCompile Include="Level\ImmovableTable.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -34,10 +31,12 @@
     <ClCompile Include="Utils\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Components\MainControlsComponent.h" />
     <ClInclude Include="Components\MainGraphicsComponent.h" />
     <ClInclude Include="Components\MainPhysicsComponent.h" />
     <ClInclude Include="Components\MainPlayerControls.h" />
+    <ClInclude Include="Entity\Component.h" />
     <ClInclude Include="Entity\ComponentMessage.h" />
     <ClInclude Include="Entity\ControlsBase.h" />
     <ClInclude Include="Entity\ControlsComponent.h" />

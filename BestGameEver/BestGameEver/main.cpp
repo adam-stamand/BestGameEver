@@ -20,7 +20,17 @@ int main()
 	RenderWindow window(VideoMode(800, 600), "FFFFF", Style::Default);
 	sf::Clock deltaClock;
 	
-	Entity main_ent(new MainControlsComponent, new MainGraphicsComponent, new MainPhysicsComponent(2,-0.00002,0.001));
+	typedef std::vector<Component *> ComponentVec;
+	
+	ComponentVec components;
+	
+	components = { new MainControlsComponent, new MainGraphicsComponent('>'), new MainPhysicsComponent(2, -0.00002, 0.001) };
+	Entity main_ent(components, 50, 50);
+	components.clear();
+
+	components = { new MainGraphicsComponent('0'), new MainPhysicsComponent(4, 0, 0.001) };
+	Entity box(components, 200, 200);
+	components.clear();
 
 
 	/*
@@ -141,7 +151,10 @@ int main()
 	{
 		window.clear();
 		main_ent.Update(window);
+		box.Update(window);
 		window.display();
+
+
 		//sf::Time deltaTime = deltaClock.restart();
 		//while (deltaClock.getElapsedTime().asMilliseconds() < 17) {
 		//	printf("%d\n", deltaClock.getElapsedTime().asMilliseconds());
