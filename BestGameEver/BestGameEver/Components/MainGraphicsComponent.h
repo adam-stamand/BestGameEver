@@ -5,7 +5,7 @@
 class MainGraphicsComponent : public GraphicsComponent
 {
 public:
-	MainGraphicsComponent(char ch) : GraphicsComponent(ch) {};
+	MainGraphicsComponent(std::string path) : GraphicsComponent(path) {};
 	~MainGraphicsComponent() {};
 
 

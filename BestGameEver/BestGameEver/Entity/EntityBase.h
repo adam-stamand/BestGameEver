@@ -19,6 +19,7 @@ public:
 
 	float x_pos;
 	float y_pos;
+	float rotation = 0;
 
 };
 

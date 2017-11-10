@@ -5,17 +5,15 @@ class GraphicsComponent : public Component
 {
 
 public:
-	GraphicsComponent(char ch);
+	GraphicsComponent(std::string path);
 	~GraphicsComponent() {};
 
-	virtual void Update(EntityBase &entity, sf::RenderWindow &window) {
-		this->sprite.setPosition(entity.x_pos, entity.y_pos);
-		window.draw(this->sprite);
-	};
-
-protected:
-	sf::Text text;
-	static sf::Font font;
-	sf::Texture texture;
+	virtual void Update(EntityBase &entity, sf::RenderWindow &window);
+	void setTexture(std::string path);
+private:
 	sf::Sprite sprite;
+	sf::Texture texture;
+
+
 };
+

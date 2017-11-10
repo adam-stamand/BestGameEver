@@ -88,22 +88,22 @@ int main()
 	//------------------------
 
 	RenderWindow window(VideoMode(800, 600), "FFFFF", Style::Default);
-	/*
+
 	sf::Clock deltaClock;
 	
 	typedef std::vector<Component *> ComponentVec;
 	
 	ComponentVec components;
 	
-	components = { new MainControlsComponent, new MainGraphicsComponent('>'), new MainPhysicsComponent(2, -0.00002, 0.001) };
+	components = { new MainControlsComponent, new MainGraphicsComponent("Images/rocket_ship.jpg"), new MainPhysicsComponent(2, -0.00002, 0.001) };
 	Entity main_ent(components, 50, 50);
 	components.clear();
 
-	components = { new MainGraphicsComponent('0'), new MainPhysicsComponent(4, 0, 0.001) };
-	Entity box(components, 200, 200);
-	components.clear();
+//	components = { new MainGraphicsComponent('0'), new MainPhysicsComponent(4, 0, 0.001) };
+//	Entity box(components, 200, 200);
+//	components.clear();
 
-	*/
+
 	/*
 	LinkedList<Immovable> ll;
 	Immovable j(50, 50, 5, 5);
@@ -242,7 +242,7 @@ sf::Font font;
 		text.setPosition(position.x, position.y);
 		text.setRotation(angle*30);
 		//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
-		//main_ent.Update(window);
+		main_ent.Update(window);
 		//box.Update(window);
 		window.draw(text);
 		window.display();
