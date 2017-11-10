@@ -1,17 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <string> 
-#include "LinkedList.h"
-#include "EventHandler.h"
-#include "ImmovableTable.h"
-#include "LevelManager.h"
-#include "MainCharacter.h"
 
+#include "Entity.h"
+#include "MainControlsComponent.h"
+#include "MainGraphicsComponent.h"
+#include "MainPhysicsComponent.h"
+#include "MainPositionComponent.h"
+#include <new> 
 
 using namespace sf;
-
-#define VEL_MAX		.1 
-#define JUMP_FORCE	0.1f
-#define MASS		1.4f
 
 
 int main()
@@ -24,6 +21,8 @@ int main()
 	RenderWindow window(VideoMode(800, 600), "FFFFF", Style::Default);
 	sf::Clock deltaClock;
 	
+	Entity main_ent(new MainControlsComponent, new MainGraphicsComponent, new MainPhysicsComponent(2,-0.00002,0.001));
+
 
 	/*
 	LinkedList<Immovable> ll;
@@ -33,8 +32,8 @@ int main()
 	ImmovableTable it(50);
 	it.add(i);
 	it.add(j);
-	*/
-
+	
+	
 	MainCharacter player;
 	player.SetText('>');
 	player.SetMass(1.9);
@@ -105,12 +104,12 @@ int main()
 	Structure leftWall(-20, 300, 20, 600);
 	Structure rightWall(780, 300, 20, 600);
 	Structure middleWall(400, 300, 20, 300);
-	/*
+	
 	Immovable ceiling(400, -20, 800, 20);
 	Immovable floor(400, 560, 800, 20);
 	Immovable leftWall(-20, 300, 20, 600);
 	Immovable rightWall(780, 300, 20, 600);
-	*/
+	
 
 
 
@@ -134,13 +133,16 @@ int main()
 	evnt_action.evnt_type = sf::Event::MouseButtonPressed;
 	player.RegisterEventAction(evnt_action);
 
-
+	*/
 	//------------------------
 	// Main Loop
 	//------------------------
 	
 	while (window.isOpen())
 	{
+		window.clear();
+		main_ent.Update(window);
+		window.display();
 		//sf::Time deltaTime = deltaClock.restart();
 		//while (deltaClock.getElapsedTime().asMilliseconds() < 17) {
 		//	printf("%d\n", deltaClock.getElapsedTime().asMilliseconds());
@@ -155,22 +157,22 @@ int main()
 		//------------------------
 		// Check for Collisions
 		//------------------------
-		LevelManager::CheckCollisions();
+		//LevelManager::CheckCollisions();
 
 		//------------------------
 		// Check for Input
 		//------------------------
-		LevelManager::CheckInput(window);
+		//LevelManager::CheckInput(window);
 	
 		//------------------------
 		// Update Position
 		//------------------------
-		LevelManager::UpdatePositions();
+		//LevelManager::UpdatePositions();
 		
 		//------------------------
 		// Update Screen
 		//------------------------
-		LevelManager::UpdateScreen(window);
+		//LevelManager::UpdateScreen(window);
 
 	}
 
