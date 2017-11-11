@@ -10,7 +10,7 @@
 
 int main()
 {
-	b2Vec2 gravity(0.0f, 0.3f);
+	b2Vec2 gravity(0.0f, 0.1f);
 	b2World world(gravity);
 
 	b2Vec2 groundBoxCoord[] = { b2Vec2(0,0),b2Vec2(800,0),b2Vec2(800,600),b2Vec2(0,600) };
@@ -67,12 +67,20 @@ int main()
 	fixtureDef.density = 1.0f;
 	// Override the default friction.
 	fixtureDef.friction = 3.0f;
+	fixtureDef.restitution = .15;
+
 	// Add the shape to the body.
+
+
 	body->CreateFixture(&fixtureDef);
 	
 	body->SetAngularDamping(.05);
 
-
+	b2MassData massD;
+	body->GetMassData(&massD);
+	printf("x:%f, y:%f\n", massD.center.x, tempy / 2);
+	massD.center = b2Vec2(0, -15);
+	body->SetMassData(&massD);
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
 	// in most game scenarios.
