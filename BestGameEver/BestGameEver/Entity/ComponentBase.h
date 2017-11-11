@@ -1,9 +1,7 @@
 #pragma once
-#include "Entity/ComponentMessage.h"
-#include <SFML/Graphics.hpp>
 #include "Entity/EntityBase.h"
 
-class Component
+class ComponentBase
 {
 public:
 
@@ -15,10 +13,10 @@ public:
 	};
 
 
-	Component() {};
-	virtual ~Component() {};
+	ComponentBase() {};
+	virtual ~ComponentBase() {};
 
-	virtual void Update(EntityBase &entity, sf::RenderWindow &window) = 0;
+	virtual void Update(EntityBase &entity) = 0;
 	virtual void MessageHandler(ComponentMessage *comp_msg) = 0;
 
 	ComponentID ID;

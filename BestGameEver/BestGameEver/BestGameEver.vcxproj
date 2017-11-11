@@ -57,13 +57,8 @@
     <ClCompile Include="Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="Components\MainControlsComponent.cpp" />
-    <ClCompile Include="Components\MainGraphicsComponent.cpp" />
-    <ClCompile Include="Components\MainPhysicsComponent.cpp" />
-    <ClCompile Include="Components\MainPlayerControls.cpp" />
-    <ClCompile Include="Entity\PhysicsComponent.cpp" />
-    <ClCompile Include="GraphicsComponent.cpp" />
+    <ClCompile Include="Components\BasicControlsComponent.cpp" />
+    <ClCompile Include="Components\RocketControlsComponent.cpp" />
     <ClCompile Include="Level\EventHandler.cpp" />
     <ClCompile Include="Level\ImmovableTable.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -124,20 +119,19 @@
     <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h" />
     <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h" />
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="Components\MainControlsComponent.h" />
-    <ClInclude Include="Components\MainGraphicsComponent.h" />
-    <ClInclude Include="Components\MainPhysicsComponent.h" />
-    <ClInclude Include="Components\MainPlayerControls.h" />
-    <ClInclude Include="Entity\Component.h" />
-    <ClInclude Include="Entity\ComponentMessage.h" />
-    <ClInclude Include="Entity\ControlsBase.h" />
-    <ClInclude Include="Entity\ControlsComponent.h" />
+    <ClInclude Include="Components\BasicControlsComponent.h" />
+    <ClInclude Include="Components\BasicGraphicsComponent.h" />
+    <ClInclude Include="Components\BasicPhysicsComponent.h" />
+    <ClInclude Include="Components\Components.h" />
+    <ClInclude Include="Components\RocketControlsComponent.h" />
+    <ClInclude Include="Components\RocketPhysicsComponent.h" />
+    <ClInclude Include="Entity\ComponentBase.h" />
+    <ClInclude Include="Entity\Message.h" />
+    <ClInclude Include="Entity\ControlsComponentBase.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\EntityBase.h" />
-    <ClInclude Include="Entity\EntityMessage.h" />
-    <ClInclude Include="Entity\GraphicsComponent.h" />
-    <ClInclude Include="Entity\PhysicsComponent.h" />
+    <ClInclude Include="Entity\GraphicsComponentBase.h" />
+    <ClInclude Include="Entity\PhysicsComponentBase.h" />
     <ClInclude Include="Level\EventHandler.h" />
     <ClInclude Include="Level\ImmovableTable.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

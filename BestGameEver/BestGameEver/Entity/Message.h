@@ -5,8 +5,11 @@ enum FuncID {
 	GET_POS,
 	SET_POS,
 	SET_VEL,
-	ADD_VEL
+	ADD_VEL,
+	APPLY_FORCE,
+	ROTATE
 };
+
 
 
 struct ComponentMessage {
@@ -14,12 +17,10 @@ struct ComponentMessage {
 	void *params;
 };
 
-struct Position {
-	float x;
-	float y;
+
+struct EntityMessage {
+	int comp_ID;
+	ComponentMessage *comp_msg;
 };
 
-struct Velocity {
-	float x;
-	float y;
-};
+

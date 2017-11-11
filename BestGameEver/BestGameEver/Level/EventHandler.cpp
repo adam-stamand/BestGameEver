@@ -4,9 +4,6 @@
 std::vector<sf::Event> EventHandler::events_occured;
 
 
-
-
-
 void EventHandler::ClearEvents(void) {
 	events_occured.clear();
 }

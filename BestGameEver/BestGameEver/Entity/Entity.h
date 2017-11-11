@@ -1,22 +1,25 @@
 #pragma once
-#include <SFML/Graphics.hpp>
-#include "Entity/Component.h"
+#include "Entity/ComponentBase.h"
 #include "Entity/EntityBase.h"
 #include <assert.h>
+
+typedef std::vector<ComponentBase *> ComponentVec;
+
+
 
 class Entity : public EntityBase
 {
 
 private:
-	typedef std::vector<Component *> ComponentVec;
 	ComponentVec components;
 
 public:
-	Entity(ComponentVec components, float x, float y)
+	Entity(ComponentVec components, float x, float y, float angle)
 	{
 		this->components = components;
 		this->x_pos = x;
 		this->y_pos = y;
+		this->angle = angle;
 	};
 
 	~Entity() {};
@@ -33,9 +36,9 @@ public:
 		assert(0);
 	}
 
-	void Update(sf::RenderWindow &window) {
+	void Update() {
 		for (int i = 0; i < components.size(); i++) {
-			components.at(i)->Update(*this, window);
+			components.at(i)->Update(*this);
 		}
 	}
 

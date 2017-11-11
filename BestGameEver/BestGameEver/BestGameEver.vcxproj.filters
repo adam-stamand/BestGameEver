@@ -42,18 +42,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\MainControlsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\MainGraphicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\MainPhysicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\MainPlayerControls.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Level\EventHandler.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -67,13 +55,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Entity\PhysicsComponent.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsComponent.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Box2D\Collision\b2BroadPhase.cpp">
       <Filter>Box2d\Collision</Filter>
     </ClCompile>
@@ -212,30 +193,15 @@
     <ClCompile Include="Box2D\Rope\b2Rope.cpp">
       <Filter>Box2d\Rope</Filter>
     </ClCompile>
+    <ClCompile Include="Components\BasicControlsComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\RocketControlsComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Components\MainControlsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MainGraphicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MainPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\MainPlayerControls.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\ComponentMessage.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\ControlsBase.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Entity.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\EntityMessage.h">
       <Filter>Entity</Filter>
     </ClInclude>
     <ClInclude Include="Level\EventHandler.h">
@@ -253,22 +219,9 @@
     <ClInclude Include="Utils\Node.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\PhysicsComponent.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\GraphicsComponent.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\EntityBase.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ControlsComponent.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity\Component.h">
-      <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Box2D\Box2D.h">
       <Filter>Box2d</Filter>
     </ClInclude>
@@ -409,6 +362,39 @@
     </ClInclude>
     <ClInclude Include="Box2D\Rope\b2Rope.h">
       <Filter>Box2d\Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\Message.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ComponentBase.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\ControlsComponentBase.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\GraphicsComponentBase.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity\PhysicsComponentBase.h">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BasicPhysicsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BasicGraphicsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\BasicControlsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\Components.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RocketControlsComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\RocketPhysicsComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
