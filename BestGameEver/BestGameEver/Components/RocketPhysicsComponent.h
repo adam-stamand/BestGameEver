@@ -23,7 +23,6 @@ public:
 		case ROTATE:
 			force = ((float*)msg->params);
 			this->body->SetAngularVelocity(*force);
-			this->body->SetAngularDamping(20.0);
 			break;
 
 		}

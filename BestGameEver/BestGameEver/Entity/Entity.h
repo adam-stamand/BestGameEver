@@ -14,12 +14,9 @@ private:
 	ComponentVec components;
 
 public:
-	Entity(ComponentVec components, float x, float y, float angle)
+	Entity(ComponentVec components)
 	{
 		this->components = components;
-		this->x_pos = x;
-		this->y_pos = y;
-		this->angle = angle;
 	};
 
 	~Entity() {};

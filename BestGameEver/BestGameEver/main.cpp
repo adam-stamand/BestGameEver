@@ -10,35 +10,46 @@
 
 int main()
 {
-
-	b2Vec2 gravity(0.0f, 0.0f);
+	b2Vec2 gravity(0.0f, 0.3f);
 	b2World world(gravity);
 
+	b2Vec2 groundBoxCoord[] = { b2Vec2(0,0),b2Vec2(800,0),b2Vec2(800,600),b2Vec2(0,600) };
 
-	// Define the ground body.
+	b2ChainShape groundChain;
 	b2BodyDef groundBodyDef;
-	groundBodyDef.position.Set(400.0f, 550.0f);
+	b2FixtureDef groundFixtureDef;
 
+	groundChain.CreateLoop(groundBoxCoord, 4);
+
+	groundBodyDef.type = b2_staticBody;
+	groundBodyDef.position.Set(0, 0);
+	groundFixtureDef.shape = &groundChain;
 	b2Body* groundBody = world.CreateBody(&groundBodyDef);
-
-	// Define the ground box shape.
-	b2PolygonShape groundBox;
-
-	// The extents are the half-widths of the box.
-	groundBox.SetAsBox(400.0f, 0.0f);
-
-	// Add the ground fixture to the ground body.
-	groundBody->CreateFixture(&groundBox, 0.0f);
-
-
-
-
-
-
+	groundBody->CreateFixture(&groundFixtureDef);
 
 
 
 	// Define the dynamic body. We set its position and call the body factory.
+	std::string str = "Images/rocket_ship.png";
+	sf::Texture texture;
+	texture.loadFromFile(str);
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+
+
+	float tempx = (float)texture.getSize().x;
+	float tempy = (float)texture.getSize().y;
+	sprite.setOrigin(tempx/2, tempy/2);
+	tempx *= .0125;
+	tempy *= .0125;
+	//this->sprite.setColor(sf::Color(0, 55, 05, 128));
+	//this->sprite.setPosition(200.f, 100.f);
+	//this->sprite.setRotation(30.f);
+	//sf::FloatRect rect = sprite.getGlobalBounds();
+
+	sprite.setScale(.0125f, 0.0125f);
+	
+
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
 	bodyDef.position.Set(110.0f, 305.0f);
@@ -46,13 +57,7 @@ int main()
 
 	// Define another box shape for our dynamic body.
 	b2PolygonShape dynamicBox;
-	b2Vec2 vec[3];
-
-
-	vec[0].Set(20, 10);
-	vec[1].Set(30,50);
-	vec[2].Set(50,10);
-	dynamicBox.Set(vec, 3);
+	dynamicBox.SetAsBox(tempx / 2, tempy / 2);
 
 	// Define the dynamic body fixture.
 	b2FixtureDef fixtureDef;
@@ -60,12 +65,13 @@ int main()
 
 	// Set the box density to be non-zero, so it will be dynamic.
 	fixtureDef.density = 1.0f;
-
 	// Override the default friction.
 	fixtureDef.friction = 3.0f;
-
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
+	
+	body->SetAngularDamping(.05);
+
 
 	// Prepare for simulation. Typically we use a time step of 1/60 of a
 	// second (60Hz) and 10 iterations. This provides a high quality simulation
@@ -85,11 +91,8 @@ int main()
 
 	Entity main_ent(
 		{new RocketControlsComponent,
-		 new BasicGraphicsComponent("Images/rocket_ship.jpg", &window),
-		 new RocketPhysicsComponent(body, &world)}, 
-		50, 
-		50, 
-		0
+		 new BasicGraphicsComponent(&window, &sprite),
+		 new RocketPhysicsComponent(body, &world)}
 	);
 	
 	//components = { new MainGraphicsComponent('0'), new MainPhysicsComponent(4, 0, 0.001) };

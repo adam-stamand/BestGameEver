@@ -4,7 +4,7 @@
 class BasicGraphicsComponent : public GraphicsComponentBase
 {
 public:
-	BasicGraphicsComponent(std::string str, sf::RenderWindow *window) : GraphicsComponentBase(str, window) {};
+	BasicGraphicsComponent(sf::RenderWindow *window, sf::Sprite *sprite) : GraphicsComponentBase(window, sprite) {};
 	~BasicGraphicsComponent() {};
 
 	void MessageHandler(ComponentMessage *msg) {
