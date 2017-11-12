@@ -2,7 +2,7 @@
 #include <new> 
 #include "Box2D/Box2D.h"
 #include <string> 
-
+#include "SFML/Audio.hpp""
 #include "Entity/Entity.h"
 #include "Components/Components.h"
 #include "Level/EventHandler.h"
@@ -18,6 +18,13 @@ int main()
 	b2ChainShape groundChain;
 	b2BodyDef groundBodyDef;
 	b2FixtureDef groundFixtureDef;
+	sf::Music music;
+	if (!music.openFromFile("Music/BestGameEverMaster.wav")) {
+		return -1;
+	}
+	music.setLoop(true);
+	music.play();
+
 
 	groundChain.CreateLoop(groundBoxCoord, 4);
 

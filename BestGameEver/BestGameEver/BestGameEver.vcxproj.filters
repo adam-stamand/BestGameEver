@@ -40,6 +40,9 @@
     <Filter Include="Box2d\Rope">
       <UniqueIdentifier>{fef69ce2-6891-4fc4-8659-f0a3b8251909}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Music">
+      <UniqueIdentifier>{55c2eb3b-acd9-451f-93e6-8d1390f9940d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Level\EventHandler.cpp">
@@ -401,5 +404,10 @@
     <Image Include="Images\rocket_ship.jpg">
       <Filter>Images</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Music\BestGameEverMaster.wav">
+      <Filter>Music</Filter>
+    </Media>
   </ItemGroup>
 </Project>
