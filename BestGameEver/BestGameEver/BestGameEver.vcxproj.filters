@@ -51,9 +51,6 @@
     <ClCompile Include="Level\ImmovableTable.cpp">
       <Filter>Level</Filter>
     </ClCompile>
-    <ClCompile Include="Level\LevelManager.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\Node.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -202,6 +199,12 @@
     <ClCompile Include="Components\RocketControlsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Level\EntityManager.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityBase.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity\Entity.h">
@@ -211,9 +214,6 @@
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Level\ImmovableTable.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="Level\LevelManager.h">
       <Filter>Level</Filter>
     </ClInclude>
     <ClInclude Include="Utils\LinkedList.h">
@@ -398,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="Components\RocketPhysicsComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Level\EntityManager.h">
+      <Filter>Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

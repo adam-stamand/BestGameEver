@@ -39,7 +39,7 @@ void RocketControlsComponent::MoveForward(EntityBase &entity) {
 void RocketControlsComponent::RotateClockwise(EntityBase &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
-	float force = 25;
+	float force = 75;
 
 
 	comp_msg.func_ID = ROTATE;
@@ -55,7 +55,7 @@ void RocketControlsComponent::RotateClockwise(EntityBase &entity) {
 void RocketControlsComponent::RotateCounterClockwise(EntityBase &entity) {
 		ComponentMessage comp_msg;
 	EntityMessage ent_msg;
-	float force = -25;
+	float force = -75;
 
 
 	comp_msg.func_ID = ROTATE;

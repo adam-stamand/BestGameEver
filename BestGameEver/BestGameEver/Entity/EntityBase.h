@@ -8,11 +8,14 @@
 class EntityBase
 {
 public:
-	EntityBase() {};
+	EntityBase() { this->id = EntityBase::counter++; };
 	~EntityBase() {};
 
 	virtual void SendMessage(EntityMessage * msg) = 0;
 	virtual void Update() = 0;
+
+	int id; // consider making a const
+	static uint32_t counter;
 
 	float x_pos = 0;
 	float y_pos = 0;
