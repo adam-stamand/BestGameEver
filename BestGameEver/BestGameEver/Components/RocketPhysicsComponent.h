@@ -24,8 +24,6 @@ public:
 			force = ((float*)msg->params);
 			unit_vec = this->body->GetWorldVector(b2Vec2(1, 0));
 			this->body->ApplyForce((*force * unit_vec), this->body->GetWorldPoint(b2Vec2(0, -50)), true);
-
-			//this->body->SetAngularVelocity(*force);
 			break;
 
 		}

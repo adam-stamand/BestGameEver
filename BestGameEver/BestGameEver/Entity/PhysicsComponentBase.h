@@ -15,8 +15,8 @@ public:
 
 
 	virtual void Update(EntityBase &entity) {
-		entity.x_pos = this->body->GetPosition().x;
-		entity.y_pos = this->body->GetPosition().y;
+		entity.x_pos = this->body->GetPosition().x * 30;
+		entity.y_pos = this->body->GetPosition().y * 30;
 		entity.angle = this->body->GetAngle();
 	}
 

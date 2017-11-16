@@ -7,7 +7,8 @@
 #include "Components/Components.h"
 #include "Level/EventHandler.h"
 #include "Level/EntityManager.h"
-
+#include <stdlib.h>
+#include "windows.h" 
 
 sf::Sprite * CreateSprite(std::string str, float setX, float setY) {
 	sf::Texture * texture = new sf::Texture;
@@ -38,18 +39,15 @@ b2PolygonShape * CreateShape(sf::Sprite &sprite, b2Vec2 vec[], int verts) {
 	float yScale = sprite.getScale().y;
 
 	for (int i = 0; i < verts; i++) {
-		vec[i].x =(vec[i].x * xScale * xSize) - (xScale *xSize / 2);
-		vec[i].y = (vec[i].y * yScale * ySize) - (yScale *ySize / 2);
+		vec[i].x =(vec[i].x * xScale * xSize *1/30) - (xScale *xSize / 2  *1 / 30);
+		vec[i].y = (vec[i].y * yScale * ySize *1/30) - (yScale *ySize / 2 *1 / 30);
+		printf("sizex:%f, sizey:%f\n", vec[i].x, vec[i].y);
 	}
 
 	shape->Set(vec, verts);
 	return shape;
 }
 
-
-b2PolygonShape * CreateShape(sf::Sprite &sprite, b2CircleShape &shape) {
-
-}
 
 
 b2Body * CreateBody(b2BodyType type, b2World &world, b2FixtureDef * fixture, float xPos, float yPos) {
@@ -71,10 +69,10 @@ b2FixtureDef * CreateFixture(sf::Sprite &sprite) {
 	b2FixtureDef * fixtureDef = new b2FixtureDef;
 	int verts = 4;
 	b2Vec2 vec[4];
-	vec[0] = b2Vec2(0, 1);
-	vec[1] = b2Vec2(1, 1);
-	vec[2] = b2Vec2(1, 0);
-	vec[3] = b2Vec2(0, 0);
+	vec[0] = b2Vec2(0, 0);
+	vec[1] = b2Vec2(0, 1);
+	vec[2] = b2Vec2(1, 1);
+	vec[3] = b2Vec2(1, 0);
 	fixtureDef->shape = CreateShape(sprite, vec, verts);
 	return fixtureDef;
 }
@@ -84,12 +82,12 @@ b2FixtureDef * CreateFixture(sf::Sprite &sprite) {
 
 int main()
 {
-	b2Vec2 gravity(0.0f, 0.1f);
+	b2Vec2 gravity(0.0f, 10.0f);
 	b2World world(gravity);
 
 
 	// Define ground
-	b2Vec2 groundBoxCoord[] = { b2Vec2(0,0),b2Vec2(800,0),b2Vec2(800,600),b2Vec2(0,600) };
+	b2Vec2 groundBoxCoord[] = { b2Vec2(0,0),b2Vec2(800/30,0),b2Vec2(800/30,600/30),b2Vec2(0,600/30) };
 	b2ChainShape groundChain;
 	b2BodyDef groundBodyDef;
 	b2FixtureDef groundFixtureDef;
@@ -107,27 +105,29 @@ int main()
 	
 	// Define the dynamic body. We set its position and call the body factory.
 	b2MassData massD;
-	massD.center = b2Vec2(0, -15);
 	b2Vec2 vec[] = { b2Vec2(.5,0), b2Vec2(1,0.65), b2Vec2(1,1), b2Vec2(0,1),b2Vec2(0, 0.65) };
 
-	sf::Sprite * sprite = CreateSprite("Images/rocket_ship.png", 45, 75);
+	sf::Sprite * sprite = CreateSprite("Images/rocket_ship.png", 1500/30, 2000/30);
 
-	b2FixtureDef * fixtureDef = CreateFixture(*sprite, vec, 5);
-	fixtureDef->density = .5f;
+	b2FixtureDef * fixtureDef = CreateFixture(*sprite);
+	fixtureDef->density = 1.0f;
 	fixtureDef->friction = 3.0f;
-	fixtureDef->restitution = .15;
+	fixtureDef->restitution = 0;
 
-	b2Body * body = CreateBody(b2_dynamicBody, world, fixtureDef, 50, 150);
-	body->SetAngularDamping(.05);
-	body->GetMassData(&massD);
-	body->SetMassData(&massD);
+	b2Body * body = CreateBody(b2_dynamicBody, world, fixtureDef, 250/30,250/30);
+	body->SetAngularDamping(1);
+	//body->SetLinearDamping(0);
+	//body->GetMassData(&massD);
+	//massD.center = b2Vec2(0, -15/25);
+	printf("mass:%f\n", massD.mass);
+	//body->SetMassData(&massD);
 
 	//
 	//
 	//
 
 
-	sf::Sprite * sprite2 = CreateSprite("Images/box.png", 35, 35);
+	sf::Sprite * sprite2 = CreateSprite("Images/box.png", 35/30, 35/30);
 
 	b2FixtureDef * fixtureDef2 = CreateFixture(*sprite2);
 	fixtureDef2->density = .5f;
@@ -174,28 +174,23 @@ int main()
 		50
 	);
 
-	EntityManager::RegisterEntity(&box);
+	//EntityManager::RegisterEntity(&box);
 
 
 	//------------------------
 	// Main Loop
 	//------------------------
 
+	window.setFramerateLimit(60);
+
 	while (window.isOpen())
 	{
-
 
 		EventHandler::GetEvents(window);
 		EntityManager::Update(window);
 		world.Step(timeStep, velocityIterations, positionIterations);
 		EventHandler::ClearEvents();
 
-		//sf::Time deltaTime = deltaClock.restart();
-		//while (deltaClock.getElapsedTime().asMilliseconds() < 17) {
-		//	printf("%d\n", deltaClock.getElapsedTime().asMilliseconds());
-	//	}
-	//	deltaClock.restart();
-	
 	}
 
 	return 0;
