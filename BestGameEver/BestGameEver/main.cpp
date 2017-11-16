@@ -9,10 +9,78 @@
 #include "Level/EntityManager.h"
 
 
-void CreateStructure(b2Vec2 coords[], int num_coords) {
+sf::Sprite * CreateSprite(std::string str, float setX, float setY) {
+	sf::Texture * texture = new sf::Texture;
+	texture->loadFromFile(str);
+	sf::Sprite * sprite = new sf::Sprite;
 
+	sprite->setTexture(*texture);
+	float currX, currY, scaleX, scaleY;
+	currX = (float)texture->getSize().x;
+	currY = (float)texture->getSize().y;
+	
+	scaleX = setX / currX;
+	scaleY = setY / currY;
+
+	sprite->setScale(scaleX, scaleY);
+	sprite->setOrigin(currX / 2, currY / 2);
+	return sprite;
+}
+
+
+b2PolygonShape * CreateShape(sf::Sprite &sprite, b2Vec2 vec[], int verts) {
+	
+	b2PolygonShape * shape = new b2PolygonShape;
+	float xSize = sprite.getTexture()->getSize().x;
+	float ySize = sprite.getTexture()->getSize().y;
+
+	float xScale = sprite.getScale().x;
+	float yScale = sprite.getScale().y;
+
+	for (int i = 0; i < verts; i++) {
+		vec[i].x =(vec[i].x * xScale * xSize) - (xScale *xSize / 2);
+		vec[i].y = (vec[i].y * yScale * ySize) - (yScale *ySize / 2);
+	}
+
+	shape->Set(vec, verts);
+	return shape;
+}
+
+
+b2PolygonShape * CreateShape(sf::Sprite &sprite, b2CircleShape &shape) {
 
 }
+
+
+b2Body * CreateBody(b2BodyType type, b2World &world, b2FixtureDef * fixture, float xPos, float yPos) {
+	b2BodyDef * bodyDef = new b2BodyDef;
+	bodyDef->type = b2_dynamicBody;
+	bodyDef->position.Set(xPos, yPos);
+	b2Body * body = world.CreateBody(bodyDef);
+	body->CreateFixture(fixture);
+	return body;
+}
+
+b2FixtureDef * CreateFixture(sf::Sprite &sprite, b2Vec2 vec[], int verts) {
+	b2FixtureDef * fixtureDef = new b2FixtureDef;
+	fixtureDef->shape = CreateShape(sprite, vec, verts);
+	return fixtureDef;
+}
+
+b2FixtureDef * CreateFixture(sf::Sprite &sprite) {
+	b2FixtureDef * fixtureDef = new b2FixtureDef;
+	int verts = 4;
+	b2Vec2 vec[4];
+	vec[0] = b2Vec2(0, 1);
+	vec[1] = b2Vec2(1, 1);
+	vec[2] = b2Vec2(1, 0);
+	vec[3] = b2Vec2(0, 0);
+	fixtureDef->shape = CreateShape(sprite, vec, verts);
+	return fixtureDef;
+}
+
+
+
 
 int main()
 {
@@ -35,54 +103,39 @@ int main()
 	groundBody->CreateFixture(&groundFixtureDef);
 
 	
-
-	// Define the dynamic body. We set its position and call the body factory.
-	std::string str = "Images/rocket_ship.png";
-	sf::Texture texture;
-	texture.loadFromFile(str);
-	sf::Sprite sprite;
-	sprite.setTexture(texture);
-
-
-	float tempx = (float)texture.getSize().x;
-	float tempy = (float)texture.getSize().y;
-	sprite.setOrigin(tempx/2, tempy/2);
-	tempx *= .0125;
-	tempy *= .0125;
-
-	sprite.setScale(.0125f, 0.0125f);
+	// TODO: Add material definitions to fixtures!!
 	
-
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(110.0f, 305.0f);
-	b2Body* body = world.CreateBody(&bodyDef);
-
-	// Define another box shape for our dynamic body.
-	b2PolygonShape dynamicBox;
-	dynamicBox.SetAsBox(tempx / 2, tempy / 2);
-
-	// Define the dynamic body fixture.
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-
-	// Set the box density to be non-zero, so it will be dynamic.
-	fixtureDef.density = 1.0f;
-	// Override the default friction.
-	fixtureDef.friction = 3.0f;
-	fixtureDef.restitution = .15;
-
-	// Add the shape to the body.
-	body->CreateFixture(&fixtureDef);
-	body->SetAngularDamping(.05);
-
+	// Define the dynamic body. We set its position and call the body factory.
 	b2MassData massD;
-	body->GetMassData(&massD);
-	printf("x:%f, y:%f\n", massD.center.x, tempy / 2);
 	massD.center = b2Vec2(0, -15);
+	b2Vec2 vec[] = { b2Vec2(.5,0), b2Vec2(1,0.65), b2Vec2(1,1), b2Vec2(0,1),b2Vec2(0, 0.65) };
+
+	sf::Sprite * sprite = CreateSprite("Images/rocket_ship.png", 45, 75);
+
+	b2FixtureDef * fixtureDef = CreateFixture(*sprite, vec, 5);
+	fixtureDef->density = .5f;
+	fixtureDef->friction = 3.0f;
+	fixtureDef->restitution = .15;
+
+	b2Body * body = CreateBody(b2_dynamicBody, world, fixtureDef, 50, 150);
+	body->SetAngularDamping(.05);
+	body->GetMassData(&massD);
 	body->SetMassData(&massD);
 
+	//
+	//
+	//
 
+
+	sf::Sprite * sprite2 = CreateSprite("Images/box.png", 35, 35);
+
+	b2FixtureDef * fixtureDef2 = CreateFixture(*sprite2);
+	fixtureDef2->density = .5f;
+	fixtureDef2->friction = 1.0f;
+	fixtureDef2->restitution = .5;
+
+	b2Body * body2 = CreateBody(b2_dynamicBody, world, fixtureDef2, 400, 500);
+	body2->SetAngularDamping(.05);
 
 	//------------------------
 	// Init
@@ -101,29 +154,32 @@ int main()
 		return -1;
 	}
 	music.setLoop(true);
-	music.play();
+	//music.play();
 
 	Entity main_ent(
 		{new RocketControlsComponent,
-		 new BasicGraphicsComponent(&window, &sprite),
-		 new RocketPhysicsComponent(body, &world)}
+		 new BasicGraphicsComponent(&window, sprite),
+		 new RocketPhysicsComponent(body, &world)},
+		50,
+		150
 	);
 	
 	EntityManager::RegisterEntity(&main_ent);
 
 	
-	//Entity box(
-	//	{new BasicGraphicsComponent(&window, &sprite),
-	//	 new BasicPhysicsComponent(body, &world)}
-	//);
+	Entity box(
+		{new BasicGraphicsComponent(&window, sprite2),
+		 new BasicPhysicsComponent(body2, &world)},
+		500,
+		50
+	);
 
-	//EntityManager::RegisterEntity(&box);
+	EntityManager::RegisterEntity(&box);
 
 
 	//------------------------
 	// Main Loop
 	//------------------------
-	
 
 	while (window.isOpen())
 	{

@@ -404,13 +404,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Images\rocket_ship.jpg">
-      <Filter>Images</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="Music\BestGameEverMaster.wav">
       <Filter>Music</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Images\rocket_ship.png">
+      <Filter>Images</Filter>
+    </Image>
   </ItemGroup>
 </Project>

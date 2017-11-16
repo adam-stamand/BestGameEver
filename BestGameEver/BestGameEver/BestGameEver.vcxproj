@@ -146,10 +146,10 @@
     <ClInclude Include="Utils\Node.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Images\rocket_ship.jpg" />
+    <Media Include="Music\BestGameEverMaster.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Music\BestGameEverMaster.wav" />
+    <Image Include="Images\rocket_ship.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
