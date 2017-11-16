@@ -14,7 +14,7 @@ private:
 	ComponentVec components;
 
 public:
-	Entity(ComponentVec components, float xPos, float yPos)
+	Entity(ComponentVec components, float xPos = 0, float yPos = 0)
 	{
 		this->x_pos = xPos;
 		this->y_pos = yPos;

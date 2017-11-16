@@ -115,7 +115,7 @@ int main()
 	fixtureDef->restitution = 0;
 
 	b2Body * body = CreateBody(b2_dynamicBody, world, fixtureDef, 250/30,250/30);
-	body->SetAngularDamping(1);
+	body->SetAngularDamping(2);
 	//body->SetLinearDamping(0);
 	//body->GetMassData(&massD);
 	//massD.center = b2Vec2(0, -15/25);
@@ -135,7 +135,7 @@ int main()
 	fixtureDef2->restitution = .5;
 
 	b2Body * body2 = CreateBody(b2_dynamicBody, world, fixtureDef2, 400, 500);
-	body2->SetAngularDamping(.05);
+	body2->SetAngularDamping(500);
 
 	//------------------------
 	// Init
@@ -159,9 +159,7 @@ int main()
 	Entity main_ent(
 		{new RocketControlsComponent,
 		 new BasicGraphicsComponent(&window, sprite),
-		 new RocketPhysicsComponent(body, &world)},
-		50,
-		150
+		 new RocketPhysicsComponent(body, &world)}
 	);
 	
 	EntityManager::RegisterEntity(&main_ent);
@@ -169,9 +167,7 @@ int main()
 	
 	Entity box(
 		{new BasicGraphicsComponent(&window, sprite2),
-		 new BasicPhysicsComponent(body2, &world)},
-		500,
-		50
+		 new BasicPhysicsComponent(body2, &world)}
 	);
 
 	//EntityManager::RegisterEntity(&box);
