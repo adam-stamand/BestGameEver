@@ -13,13 +13,13 @@ void EntityManager::DeRegisterEntity(int id) {
 
 
 void EntityManager::Update(sf::RenderWindow &window) {
-	window.clear();
+	
 	for (int i = 0; i < MAX_ENTITIES; i++) {
 		if (entities[i] != NULL) {
 			entities[i]->Update();
 		}
 	}
-	window.display();
+	
 }
 
 

@@ -39,8 +39,8 @@ int main()
 	rocket->body->SetAngularDamping(2);
 
 
-	sf::Sprite * tree = Factory::CreateSprite("Images/tree.png", 70, 150);
-
+	sf::Sprite * tree = Factory::CreateSprite(IMAGE(tree.png), 85, 135);
+	sf::Sprite * background = Factory::CreateSprite(IMAGE(sky_background.png), 800, 600);
 
 	//------------------------
 	// Init
@@ -61,6 +61,28 @@ int main()
 	music.setLoop(true);
 	//music.play();
 
+
+
+	Entity background_ent(
+		{ new BasicGraphicsComponent(&window, background) },
+		400.0, 300.0
+	);
+
+	EntityManager::RegisterEntity(&background_ent);
+
+
+
+	Entity * trees[6];
+	for (int i = 0; i < 5; i++) {
+		trees[i] = new Entity(
+			{ new BasicGraphicsComponent(&window, tree) },
+			i*150+100, 525.0
+		);
+		EntityManager::RegisterEntity(trees[i]);
+	}
+
+
+
 	Entity main_ent(
 		{new RocketControlsComponent,
 		 new BasicGraphicsComponent(&window, rocket->sprites.at(0)),
@@ -78,11 +100,7 @@ int main()
 	EntityManager::RegisterEntity(&box_ent);
 
 
-	Entity tree_ent(
-		{new BasicGraphicsComponent(&window, tree)}
-	);
 
-	EntityManager::RegisterEntity(&tree_ent);
 
 	//------------------------
 	// Main Loop
@@ -92,11 +110,12 @@ int main()
 
 	while (window.isOpen())
 	{
-
+		//window.clear();
 		EventHandler::GetEvents(window);
 		EntityManager::Update(window);
 		world.Step(timeStep, velocityIterations, positionIterations);
 		EventHandler::ClearEvents();
+		window.display();
 
 	}
 
