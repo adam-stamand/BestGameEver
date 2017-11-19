@@ -60,6 +60,7 @@
     <ClCompile Include="Components\BasicControlsComponent.cpp" />
     <ClCompile Include="Components\RocketControlsComponent.cpp" />
     <ClCompile Include="EntityBase.cpp" />
+    <ClCompile Include="Factory\Factory.cpp" />
     <ClCompile Include="Level\EventHandler.cpp" />
     <ClCompile Include="Level\ImmovableTable.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -71,6 +72,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Utils\Node.cpp" />
+    <ClCompile Include="World\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -133,6 +135,12 @@
     <ClInclude Include="Entity\EntityBase.h" />
     <ClInclude Include="Entity\GraphicsComponentBase.h" />
     <ClInclude Include="Entity\PhysicsComponentBase.h" />
+    <ClInclude Include="Factory\Factory.h" />
+    <ClInclude Include="Factory\Item.h" />
+    <ClInclude Include="Factory\ItemType.h" />
+    <ClInclude Include="Factory\Material.h" />
+    <ClInclude Include="Factory\UserItemType.h" />
+    <ClInclude Include="Factory\UserMaterials.h" />
     <ClInclude Include="Level\EventHandler.h" />
     <ClInclude Include="Level\ImmovableTable.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -144,6 +152,7 @@
     </ClInclude>
     <ClInclude Include="Utils\LinkedList.h" />
     <ClInclude Include="Utils\Node.h" />
+    <ClInclude Include="World\World.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Music\BestGameEverMaster.wav" />

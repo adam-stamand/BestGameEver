@@ -43,6 +43,12 @@
     <Filter Include="Music">
       <UniqueIdentifier>{55c2eb3b-acd9-451f-93e6-8d1390f9940d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{6b6156a5-135d-4ddf-b1de-1ac0f26b4678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{cd8b64e3-b660-4d89-81c6-c41c39e1153b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Level\EventHandler.cpp">
@@ -204,6 +210,12 @@
     </ClCompile>
     <ClCompile Include="EntityBase.cpp">
       <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\Factory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="World\World.cpp">
+      <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,6 +413,27 @@
     </ClInclude>
     <ClInclude Include="Level\EntityManager.h">
       <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Factory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Item.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\UserMaterials.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\ItemType.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\Material.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="World\World.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\UserItemType.h">
+      <Filter>Factory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
