@@ -24,3 +24,14 @@ public:
 
 };
 
+class Rubber : public Material {
+
+public:
+	Rubber() {
+		this->density = 1.0f;
+		this->friction = 75.0f;
+		this->resitution = 0.5f;
+	};
+
+};
+

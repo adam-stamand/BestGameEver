@@ -5,7 +5,7 @@
 class BasicPhysicsComponent : public PhysicsComponentBase
 {
 public:
-	BasicPhysicsComponent(b2Body *body, b2World *world) : PhysicsComponentBase(body, world) {};
+	BasicPhysicsComponent(b2Body *body) : PhysicsComponentBase(body) {};
 	~BasicPhysicsComponent() {};
 
 

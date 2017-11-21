@@ -5,7 +5,7 @@
 class RocketPhysicsComponent : public PhysicsComponentBase
 {
 public:
-	RocketPhysicsComponent(b2Body *body, b2World *world) : PhysicsComponentBase(body, world) {}
+	RocketPhysicsComponent(b2Body *body) : PhysicsComponentBase(body) {}
 	~RocketPhysicsComponent() {};
 
 

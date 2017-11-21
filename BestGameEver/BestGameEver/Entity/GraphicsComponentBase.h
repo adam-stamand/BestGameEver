@@ -2,7 +2,7 @@
 #include "Entity/ComponentBase.h"
 #include <string.h>
 
-#define RAD_2_DEGREES(x) (x * 57.295779513)
+
 
 class GraphicsComponentBase : public ComponentBase
 {

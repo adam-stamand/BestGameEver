@@ -30,7 +30,25 @@ public:
 			ItemFixture(
 				IMAGE(box.png),
 				POLYGON,
-				new Wood,
+				new Rubber,
+				{ b2Vec2(0, 0), b2Vec2(0,1), b2Vec2(1, 1), b2Vec2(1, 0) })
+		};
+
+	}
+
+};
+
+
+class Balloon : public ItemType {
+public:
+	Balloon() {
+		this->bodyType = DYNAMIC_BODY;
+		this->fixtures =
+		{
+			ItemFixture(
+				IMAGE(balloon.png),
+				CIRCLE,
+				new Rubber,
 				{ b2Vec2(0, 0), b2Vec2(0,1), b2Vec2(1, 1), b2Vec2(1, 0) })
 		};
 

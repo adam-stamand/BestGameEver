@@ -23,7 +23,7 @@ RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this)
 void RocketControlsComponent::MoveForward(EntityBase &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
-	float force = -50;
+	float force = -100;
 
 
 	comp_msg.func_ID = APPLY_FORCE;

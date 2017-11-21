@@ -46,7 +46,7 @@
     <Filter Include="Factory">
       <UniqueIdentifier>{6b6156a5-135d-4ddf-b1de-1ac0f26b4678}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World">
+    <Filter Include="Globals">
       <UniqueIdentifier>{cd8b64e3-b660-4d89-81c6-c41c39e1153b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -214,8 +214,8 @@
     <ClCompile Include="Factory\Factory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="World\World.cpp">
-      <Filter>World</Filter>
+    <ClCompile Include="Globals\Globals.cpp">
+      <Filter>Globals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -429,11 +429,11 @@
     <ClInclude Include="Factory\Material.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="World\World.h">
-      <Filter>World</Filter>
-    </ClInclude>
     <ClInclude Include="Factory\UserItemType.h">
       <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Globals\Globals.h">
+      <Filter>Globals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

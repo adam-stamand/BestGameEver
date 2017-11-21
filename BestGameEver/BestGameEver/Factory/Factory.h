@@ -3,7 +3,7 @@
 #include "Box2D/Box2D.h"
 #include "Factory/Item.h"
 #include "Factory/UserItemType.h"
-#include "World/World.h"
+#include "Globals/Globals.h"
 
 
 
@@ -15,7 +15,7 @@ public:
 
 	static sf::Sprite * CreateSprite(std::string str, int xSize, int ySize);
 	static b2Shape * CreateShape(ItemType::ShapeType shape, b2Vec2 coords[], int verts);
-	static b2FixtureDef * CreateFixture(ItemType::ShapeType shape, b2Vec2 coords[], int verts, Material &material);
+	static b2FixtureDef * CreateFixture(b2Shape *shape, Material &material);
 	static b2Body * CreateBody(std::vector<b2FixtureDef*> fixtures, b2BodyType bodyType);
 
 	template <typename T>
