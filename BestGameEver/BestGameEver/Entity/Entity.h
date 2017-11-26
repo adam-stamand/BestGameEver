@@ -1,45 +1,35 @@
 #pragma once
+
+#include <assert.h>
+#include <array>
+#include <SFML/Graphics.hpp>
+
+#include "Entity/Message.h"
 #include "Entity/ComponentBase.h"
 #include "Entity/EntityBase.h"
-#include <assert.h>
-
-typedef std::vector<ComponentBase *> ComponentVec;
+#include "Globals/Globals.h"
+#include "Entity/ComponentID.h"
 
 
 
 class Entity : public EntityBase
 {
-
-private:
-	ComponentVec components;
-
 public:
-	Entity(ComponentVec components, float xPos = 0, float yPos = 0)
-	{
-		this->x_pos = xPos;
-		this->y_pos = yPos;
-		this->components = components;
-	};
+	typedef std::array<ComponentBase*, NUM_COMP> ComponentArray;
+	typedef std::vector<ComponentBase*> ComponentVec;
 
+	Entity(ComponentVec comps);
 	~Entity() {};
 
+	void SendMessage(ComponentMessage &msg);
+	void Update();
 
-	void SendMessage(EntityMessage * msg) {
+	void AddComponent(ComponentBase * component);
+	void RemoveComponent(ComponentID id);
+	void EnableComponent(ComponentID id);
+	void DisableComponent(ComponentID id);
 
-		for (int i = 0; i < components.size(); i++) {
-			if (msg->comp_ID == components.at(i)->ID) {
-				components.at(i)->MessageHandler(msg->comp_msg);
-				return;
-			}
-		}
-		assert(0);
-	}
-
-	void Update() {
-		for (int i = 0; i < components.size(); i++) {
-			components.at(i)->Update(*this);
-		}
-	}
-
+	ComponentArray components = { 0 }; // check that all elements are put to 0
 };
+
 

@@ -9,18 +9,29 @@ public:
 	~BasicPhysicsComponent() {};
 
 
-	void MessageHandler(ComponentMessage *msg) {
+	void MessageHandler(ComponentMessage &msg) {
 		b2Vec2 * temp;
-		switch (msg->func_ID) {
+		switch (msg.funcID) {
 
-		case APPLY_FORCE:
-			temp = ((b2Vec2*)msg->params);
+		case ComponentMessage::APPLY_FORCE: {
+			temp = ((b2Vec2*)msg.params);
 			this->body->ApplyForceToCenter(*temp, true);
 			break;
-		case SET_POS:
-			temp = ((b2Vec2*)msg->params);
-			this->body->SetTransform(*temp, this->body->GetAngle());
+
+		}
+		case ComponentMessage::GET_TRANS: {
+			ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
+			b2Vec2 temp;
+			temp.x = this->body->GetPosition().x;
+			temp.y = this->body->GetPosition().y;
+			float tempAngle = this->body->GetAngle();
+			params->xPos = temp.x;
+			params->yPos = temp.y;
+			params->angle = tempAngle;
+
 			break;
+		}
+			
 
 		}
 	};

@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity/ComponentBase.h"
+#include "Entity/Message.h"
 #include <string.h>
 
 
@@ -8,21 +9,27 @@ class GraphicsComponentBase : public ComponentBase
 {
 
 public:
-	GraphicsComponentBase(sf::RenderWindow *window, sf::Sprite *sprite) {
-		this->sprite = sprite;
+	GraphicsComponentBase(sf::RenderWindow *window, std::vector<sf::Sprite*> sprites) : ComponentBase(GRAPHICS) {
+		this->sprites = sprites;
 		this->window = window;
-		this->ID = GRAPHICS;
 	};
 
 	~GraphicsComponentBase() {};
 
 	virtual void Update(EntityBase &entity) {
-		this->sprite->setPosition(entity.x_pos, entity.y_pos);
-		this->sprite->setRotation(RAD_2_DEGREES(entity.angle));
-		this->window->draw(*(this->sprite));
+		
+		ComponentMessage::Transform trans;
+		ComponentMessage comp_msg(PHYSICS, ComponentMessage::GET_TRANS, &trans); // figure out for multiple fixtures
+		entity.SendMessage(comp_msg);
+		for (int i = 0; i < sprites.size(); i++) {
+			this->sprites.at(i)->setPosition(BOX_2_SF(trans.xPos), BOX_2_SF(trans.yPos));
+			this->sprites.at(i)->setRotation(RAD_2_DEGREES(trans.angle));
+			this->window->draw(*(this->sprites.at(i)));
+		}
+		
 	};
 
 protected:
 	sf::RenderWindow *window;
-	sf::Sprite *sprite;
+	std::vector<sf::Sprite*> sprites;
 };

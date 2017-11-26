@@ -1,27 +1,26 @@
 #pragma once
+
 #include "Entity/PhysicsComponentBase.h"
 #include "Globals/Globals.h"
 #include <stdint.h>
-#include "Utils/RateLimiter.h"
 #include "Entity/Message.h"
-#include "Box2D/Box2D.h"
+#include "Utils/RateLimiter.h"
 
-class RocketPhysicsComponent : public PhysicsComponentBase
+
+class CharacterPhysicsComponent : public PhysicsComponentBase
 {
 public:
 
 	RateLimiter rateLimiter;
-
-	RocketPhysicsComponent(b2Body *body) : PhysicsComponentBase(body), rateLimiter(30){}
-	~RocketPhysicsComponent() {};
-
+	CharacterPhysicsComponent(b2Body *body) : PhysicsComponentBase(body), rateLimiter(30) {};
+	~CharacterPhysicsComponent();
 
 
-	class RocketRayCast : public b2RayCastCallback {
+
+	class CharacterRayCast : public b2RayCastCallback {
 	public:
-		RocketRayCast() {};
-		~RocketRayCast() {};
-
+		CharacterRayCast() {};
+		~CharacterRayCast() {};
 
 		b2Fixture* fixture;
 		b2Vec2 point;
@@ -29,33 +28,33 @@ public:
 		float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction);
 	};
 
-	
-
 	void MessageHandler(ComponentMessage &msg) {
 		b2Vec2 unit_vec;
-		float *force;
-		static int timer = 0;
-		switch (msg.funcID) {
 
+		switch (msg.funcID) {
 		case ComponentMessage::APPLY_FORCE: {
 			ComponentMessage::Force * params = (ComponentMessage::Force*)msg.params;
-			unit_vec = this->body->GetWorldVector(params->vec);
-			this->body->ApplyForce((params->force * unit_vec), this->body->GetWorldPoint(params->point), true);
+			this->body->ApplyForceToCenter((params->force * params->vec), true);
 			break;
 		}
-			
+		
 		case ComponentMessage::FIRE: {
 			if (rateLimiter.Check()) {
 				ComponentMessage::Force * params = (ComponentMessage::Force*)msg.params;
-				RocketRayCast  * rocketRay = new RocketRayCast;
-				unit_vec = this->body->GetWorldVector(b2Vec2(0, 1));
+				CharacterRayCast  * characterRay = new CharacterRayCast;
+				unit_vec = this->body->GetWorldVector(params->vec);
 				b2Vec2 point1 = this->body->GetWorldPoint(b2Vec2(0, 0));
 				b2Vec2 point2 = point1 + (-100.0 * unit_vec);
-				Globals::world.RayCast(rocketRay, point1, point2);
-				rocketRay->fixture->GetBody()->ApplyLinearImpulse(params->force * unit_vec, rocketRay->point, true);
+				Globals::world.RayCast(characterRay, point1, point2);
+				characterRay->fixture->GetBody()->ApplyLinearImpulse(params->force * unit_vec, characterRay->point, true);
 			}
 			break;
-
+		}
+		case ComponentMessage::SET_TRANS: {
+			ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
+			this->body->SetTransform(b2Vec2(params->xPos, params->yPos), 0);
+			this->body->SetAwake(true);
+			break;
 		}
 		case ComponentMessage::GET_TRANS: {
 			ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
@@ -69,10 +68,7 @@ public:
 
 			break;
 		}
-			
+
 		}
-	}
-
-
+	};
 };
-

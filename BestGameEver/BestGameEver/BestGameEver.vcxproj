@@ -57,22 +57,25 @@
     <ClCompile Include="Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="Components\BasicControlsComponent.cpp" />
-    <ClCompile Include="Components\RocketControlsComponent.cpp" />
-    <ClCompile Include="EntityBase.cpp" />
-    <ClCompile Include="Factory\Factory.cpp" />
-    <ClCompile Include="Globals\Globals.cpp" />
-    <ClCompile Include="Level\EventHandler.cpp" />
-    <ClCompile Include="Level\ImmovableTable.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    <ClCompile Include="Components\BasicControlsComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Components\CharacterControlsComponent.cpp" />
+    <ClCompile Include="Components\CharacterPhysicsComponent.cpp" />
+    <ClCompile Include="Components\LevelControlsComponent.cpp" />
+    <ClCompile Include="Components\RocketControlsComponent.cpp" />
+    <ClCompile Include="Components\RocketPhysicsComponent.cpp" />
+    <ClCompile Include="Entity\Entity.cpp" />
+    <ClCompile Include="Factory\Factory.cpp" />
+    <ClCompile Include="Factory\ItemShape.cpp" />
+    <ClCompile Include="Globals\Globals.cpp" />
+    <ClCompile Include="Level\EventHandler.cpp" />
     <ClCompile Include="Level\EntityManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Utils\Node.cpp" />
+    <ClCompile Include="Utils\RateLimiter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -122,43 +125,43 @@
     <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h" />
     <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h" />
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="Components\BasicControlsComponent.h" />
+    <ClInclude Include="Components\BackgroundPhysicsComponent.h" />
+    <ClInclude Include="Components\BasicControlsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="Components\BasicGraphicsComponent.h" />
-    <ClInclude Include="Components\BasicPhysicsComponent.h" />
+    <ClInclude Include="Components\BasicPhysicsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Components\CharacterControlsComponent.h" />
+    <ClInclude Include="Components\CharacterPhysicsComponent.h" />
     <ClInclude Include="Components\Components.h" />
+    <ClInclude Include="Components\LevelControlsComponent.h" />
     <ClInclude Include="Components\RocketControlsComponent.h" />
     <ClInclude Include="Components\RocketPhysicsComponent.h" />
     <ClInclude Include="Entity\ComponentBase.h" />
-    <ClInclude Include="Entity\Message.h" />
+    <ClInclude Include="Entity\ComponentID.h" />
     <ClInclude Include="Entity\ControlsComponentBase.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Entity\EntityBase.h" />
     <ClInclude Include="Entity\GraphicsComponentBase.h" />
+    <ClInclude Include="Entity\Message.h" />
     <ClInclude Include="Entity\PhysicsComponentBase.h" />
     <ClInclude Include="Factory\Factory.h" />
     <ClInclude Include="Factory\Item.h" />
+    <ClInclude Include="Factory\ItemShape.h" />
+    <ClInclude Include="Factory\ItemShapeType.h" />
     <ClInclude Include="Factory\ItemType.h" />
     <ClInclude Include="Factory\Material.h" />
     <ClInclude Include="Factory\UserItemType.h" />
     <ClInclude Include="Factory\UserMaterials.h" />
     <ClInclude Include="Globals\Globals.h" />
     <ClInclude Include="Level\EventHandler.h" />
-    <ClInclude Include="Level\ImmovableTable.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="Level\EntityManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="Utils\LinkedList.h" />
-    <ClInclude Include="Utils\Node.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Music\BestGameEverMaster.wav" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Images\rocket_ship.png" />
+    <ClInclude Include="Utils\RateLimiter.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

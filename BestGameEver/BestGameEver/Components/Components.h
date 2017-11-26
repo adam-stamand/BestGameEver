@@ -2,10 +2,19 @@
 
 
 #include "Components/BasicControlsComponent.h"
-
 #include "Components/BasicPhysicsComponent.h"
-
 #include "Components/BasicGraphicsComponent.h"
-#include "Components/RocketPhysicsComponent.h"
 
+
+#include "Components/CharacterControlsComponent.h"
+#include "Components/CharacterPhysicsComponent.h"
+
+#include "Components/BackgroundPhysicsComponent.h"
+
+
+
+#include "Components/RocketPhysicsComponent.h"
 #include "Components/RocketControlsComponent.h"
+
+#include "Components/LevelControlsComponent.h"
+

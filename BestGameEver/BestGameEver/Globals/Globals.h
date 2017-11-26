@@ -1,13 +1,24 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
 #include "Box2D/Box2D.h"
 
-#define WORLD_SCALE 30
-#define RAD_2_DEGREES(x)	(x * 57.295779513)
-#define DEGREES_2_RAD(x)	(x / 57.295779513)
-#define SF_2_BOX(x)			(x / WORLD_SCALE)
-#define BOX_2_SF(x)			(x * WORLD_SCALE)
+#define MUSIC(x)			"Music/" #x
+#define IMAGE(x)			"Images/" #x
+#define WORLD_SCALE			30
+#define RAD_2_DEGREES(x)	((x) * 57.295779513)
+#define DEGREES_2_RAD(x)	((x) / 57.295779513)
+#define SF_2_BOX(x)			((x) / WORLD_SCALE)
+#define BOX_2_SF(x)			((x) * WORLD_SCALE)
 
 
-extern b2World world;
+class Globals {
+public:
+	static uint32_t GetID();
+	static uint32_t GetTimer();
+	static void IncrTimer();
+	static b2World world;
+
+private:
+	static uint32_t globalTimer;
+	static uint32_t idCounter;
+};

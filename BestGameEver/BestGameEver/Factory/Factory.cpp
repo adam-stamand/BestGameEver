@@ -12,37 +12,28 @@ Factory::~Factory()
 }
 
 
-Item * Factory::_CreateItem(ItemType *userItemType, float xSize, float ySize) {
+Item * Factory::_CreateItem(ItemType *userItemType, float xSize, float ySize, uint16_t mask, uint16_t category) {
 	Item * item = new Item;
 	std::vector<b2FixtureDef*> fixtures;
 
-	for (int i = 0; i < userItemType->fixtures.size(); i++) {
+	for (int i = 0; i < userItemType->itemFixtures.size(); i++) {
 
-		item->sprites.push_back(Factory::CreateSprite(userItemType->fixtures.at(i).file, xSize, ySize));
+		item->sprites.push_back(Factory::CreateSprite(userItemType->itemFixtures.at(i).file, xSize, ySize));
 
-		float xSize = item->sprites.at(i)->getTexture()->getSize().x;
-		float ySize = item->sprites.at(i)->getTexture()->getSize().y;
-
-		float xScale = item->sprites.at(i)->getScale().x;
-		float yScale = item->sprites.at(i)->getScale().y;
-
-		for (int j = 0; j < userItemType->fixtures.at(i).coords.size(); j++) {
-			userItemType->fixtures.at(i).coords.at(j).x = (SF_2_BOX(userItemType->fixtures.at(i).coords.at(j).x * xScale * xSize * 1)) - SF_2_BOX((xScale *xSize / 2 * 1));
-			userItemType->fixtures.at(i).coords.at(j).y = (SF_2_BOX(userItemType->fixtures.at(i).coords.at(j).y * yScale * ySize * 1)) - SF_2_BOX((yScale *ySize / 2 * 1));
-		}
 
 		b2Shape * shape = Factory::CreateShape(
-			userItemType->fixtures.at(i).shapeType,
-			(b2Vec2*)&userItemType->fixtures.at(i).coords.at(0),
-			userItemType->fixtures.at(i).coords.size() 
+			*item->sprites.at(i),
+			*userItemType->itemFixtures.at(i).shape
 		);
 
 		fixtures.push_back(
 			Factory::CreateFixture(
 				shape,
-				*userItemType->fixtures.at(i).material
+				*userItemType->itemFixtures.at(i).material
 			)
 		);
+		fixtures.at(i)->filter.categoryBits = category;
+		fixtures.at(i)->filter.maskBits = mask;
 	}
 	item->body = Factory::CreateBody(fixtures, userItemType->bodyType);
 	item->body->GetFixtureList();
@@ -73,17 +64,11 @@ sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize) {
 
 
 
-b2Shape * Factory::CreateShape(ItemType::ShapeType shape, b2Vec2 coords[], int verts) {
+b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType) {
 	
-	switch (shape) {
-	case ItemType::POLYGON:
-		b2PolygonShape * shape = new b2PolygonShape;
-		shape->Set(coords, verts);
-		return shape;
-		break;
-	}
-	return NULL;
-	
+	b2Shape * shape = shapeType.GetShape(sprite);
+
+	return shape;
 }
 
 b2FixtureDef * Factory::CreateFixture(b2Shape * shape, Material &material) {
@@ -104,7 +89,7 @@ b2Body * Factory::CreateBody(std::vector<b2FixtureDef*> fixtures, b2BodyType bod
 	b2BodyDef * bodyDef = new b2BodyDef;
 	bodyDef->type = bodyType;
 
-	b2Body * body = world.CreateBody(bodyDef);
+	b2Body * body = Globals::world.CreateBody(bodyDef);
 	for (int i = 0; i < fixtures.size(); i++) {
 		body->CreateFixture(fixtures.at(i));
 	}

@@ -1,24 +1,20 @@
 #pragma once
+
 #include "Entity/EntityBase.h"
+#include "Entity/ComponentID.h"
+#include "Entity/Message.h"
 
 class ComponentBase
 {
 public:
 
-	enum ComponentID {
-		PHYSICS = 0,
-		CONTROLS,
-		GRAPHICS,
-		NUM_COMP
-	};
-
-
-	ComponentBase() {};
+	ComponentBase(ComponentID id) { this->id = id; };
 	virtual ~ComponentBase() {};
 
+	virtual void MessageHandler(ComponentMessage &msg) = 0;
 	virtual void Update(EntityBase &entity) = 0;
-	virtual void MessageHandler(ComponentMessage *comp_msg) = 0;
 
-	ComponentID ID;
+	bool enabled = true;
+	ComponentID id;
 };
 

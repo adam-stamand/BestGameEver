@@ -3,6 +3,7 @@
 
 RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this) 
 {
+	
 	this->RegisterAction(
 		{ sf::Keyboard::W },
 		{ &ControlsComponent_t::MoveForward }
@@ -17,53 +18,37 @@ RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this)
 		{ sf::Keyboard::A },
 		{ &ControlsComponent_t::RotateCounterClockwise }
 	);
+
+	this->RegisterAction(
+		{ sf::Keyboard::L },
+		{ &ControlsComponent_t::FireGun }
+	);
 }
 
 
-void RocketControlsComponent::MoveForward(EntityBase &entity) {
-	ComponentMessage comp_msg;
-	EntityMessage ent_msg;
-	float force = -100;
+void RocketControlsComponent::FireGun(Entity &entity) {
+	ComponentMessage::Force force(-100, b2Vec2(0, 1), b2Vec2(0, 0));
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::FIRE, &force);
+	entity.SendMessage(comp_msg);
+}
 
-
-	comp_msg.func_ID = APPLY_FORCE;
-	comp_msg.params = &force;
-
-	ent_msg.comp_ID = PHYSICS;
-	ent_msg.comp_msg = &comp_msg;
-
-	entity.SendMessage(&ent_msg);
+void RocketControlsComponent::MoveForward(Entity &entity) {
+	ComponentMessage::Force force(-100, b2Vec2(0,1), b2Vec2(0, 0));
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	entity.SendMessage(comp_msg);
 }
 
 
-void RocketControlsComponent::RotateClockwise(EntityBase &entity) {
-	ComponentMessage comp_msg;
-	EntityMessage ent_msg;
-	float force = 1;
-
-
-	comp_msg.func_ID = ROTATE;
-	comp_msg.params = &force;
-
-	ent_msg.comp_ID = PHYSICS;
-	ent_msg.comp_msg = &comp_msg;
-
-	entity.SendMessage(&ent_msg);
+void RocketControlsComponent::RotateClockwise(Entity &entity) {
+	ComponentMessage::Force force(1, b2Vec2(1, 0), b2Vec2(0, -50));
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	entity.SendMessage(comp_msg);
 }
 
 
-void RocketControlsComponent::RotateCounterClockwise(EntityBase &entity) {
-		ComponentMessage comp_msg;
-	EntityMessage ent_msg;
-	float force = -1;
-
-
-	comp_msg.func_ID = ROTATE;
-	comp_msg.params = &force;
-
-	ent_msg.comp_ID = PHYSICS;
-	ent_msg.comp_msg = &comp_msg;
-
-	entity.SendMessage(&ent_msg);
+void RocketControlsComponent::RotateCounterClockwise(Entity &entity) {
+	ComponentMessage::Force force(1, b2Vec2(-1, 0), b2Vec2(0, -50));
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	entity.SendMessage(comp_msg);
 }
 

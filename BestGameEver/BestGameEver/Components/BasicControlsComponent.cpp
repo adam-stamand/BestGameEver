@@ -2,7 +2,7 @@
 
 
 
-BasicControlsComponent::BasicControlsComponent() : ControlsComponentBase(this) 
+BasicControlsComponent::BasicControlsComponent() : ControlsComponentBase(this)
 {
 
 	this->RegisterAction(
@@ -35,77 +35,77 @@ BasicControlsComponent::BasicControlsComponent() : ControlsComponentBase(this)
 
 
 
-void BasicControlsComponent::Teleport(sf::Event &evnt, EntityBase &entity) {
+void BasicControlsComponent::Teleport(sf::Event &evnt, Entity &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
 	b2Vec2 position(evnt.mouseButton.x, evnt.mouseButton.y);
 	
 
-	comp_msg.func_ID = SET_POS;
+	comp_msg.funcID = SET_POS;
 	comp_msg.params = &position;
 
-	ent_msg.comp_ID = PHYSICS;
+	ent_msg.compID = PHYSICS;
 	ent_msg.comp_msg = &comp_msg;
 
-	entity.SendMessage(&ent_msg);
+	entity.SendMessage(ent_msg);
 
 }
 
-void BasicControlsComponent::MoveUp(EntityBase &entity) {
+void BasicControlsComponent::MoveUp(Entity &entity) {
 	ComponentMessage comp_msg;
 	b2Vec2 force(0, -100);
 	EntityMessage ent_msg;
 
-	comp_msg.func_ID = APPLY_FORCE;
+	comp_msg.funcID = APPLY_FORCE;
 	comp_msg.params = &force;
 
-	ent_msg.comp_ID = PHYSICS;
+	ent_msg.compID = PHYSICS;
 	ent_msg.comp_msg = &comp_msg;
 
-	entity.SendMessage(&ent_msg);
+	entity.SendMessage(ent_msg);
 }
 
 
 
-void BasicControlsComponent::MoveRight(EntityBase &entity) {
+void BasicControlsComponent::MoveRight(Entity &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
 	b2Vec2 force(100, 0);
 
-	comp_msg.func_ID = APPLY_FORCE;
+	comp_msg.funcID = APPLY_FORCE;
 	comp_msg.params = &force;
 
-	ent_msg.comp_ID = PHYSICS;
+	ent_msg.compID = PHYSICS;
 	ent_msg.comp_msg = &comp_msg;
 
-	entity.SendMessage(&ent_msg);
+	entity.SendMessage(ent_msg);
 }
 
 
-void BasicControlsComponent::MoveLeft(EntityBase &entity) {
+void BasicControlsComponent::MoveLeft(Entity &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
 	b2Vec2 force(-100, 0);
 
-	comp_msg.func_ID = APPLY_FORCE;
+	comp_msg.funcID = APPLY_FORCE;
 	comp_msg.params = &force;
 
-	ent_msg.comp_ID = PHYSICS;
+	ent_msg.compID = PHYSICS;
 	ent_msg.comp_msg = &comp_msg;
 
-	entity.SendMessage(&ent_msg);
+	entity.SendMessage(ent_msg);
 }
 
-void BasicControlsComponent::MoveDown(EntityBase &entity) {
+void BasicControlsComponent::MoveDown(Entity &entity) {
 	ComponentMessage comp_msg;
 	EntityMessage ent_msg;
 	b2Vec2 force(0, 100);
 
-	comp_msg.func_ID = APPLY_FORCE;
+	comp_msg.funcID = APPLY_FORCE;
 	comp_msg.params = &force;
 
-	ent_msg.comp_ID = PHYSICS;
+	ent_msg.compID = PHYSICS;
 	ent_msg.comp_msg = &comp_msg;
 
-	entity.SendMessage(&ent_msg);
+	entity.SendMessage(ent_msg);
 }

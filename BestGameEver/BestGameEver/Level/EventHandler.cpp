@@ -8,6 +8,7 @@ void EventHandler::ClearEvents(void) {
 	events_occured.clear();
 }
 
+
 sf::Event *EventHandler::FindEvent(sf::Event::EventType evnt) {
 	for (int i = 0; i < events_occured.size(); i++) {
 		if (events_occured.at(i).type == evnt) {
