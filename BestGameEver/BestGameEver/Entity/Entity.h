@@ -6,13 +6,13 @@
 
 #include "Entity/Message.h"
 #include "Entity/ComponentBase.h"
-#include "Entity/EntityBase.h"
+#include "Entity/EntityInterface.h"
 #include "Globals/Globals.h"
 #include "Entity/ComponentID.h"
 
 
 
-class Entity : public EntityBase
+class Entity : public EntityInterface
 {
 public:
 	typedef std::array<ComponentBase*, NUM_COMP> ComponentArray;

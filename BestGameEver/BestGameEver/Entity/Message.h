@@ -17,7 +17,13 @@ public:
 		ADD_VEL,
 		APPLY_FORCE,
 		APPLY_IMPLUSE,
-		FIRE
+		FIRE,
+		ENTER,
+		GET_IDS,
+		CONTACT_BEGIN,
+		CONTACT_END,
+		DISABLE,
+		ENABLE
 	};
 
 	struct Transform {
@@ -30,6 +36,12 @@ public:
 		float xVel;
 		float yVel;
 	};
+
+	struct Contact {
+		uint32_t idA;
+		uint32_t idB;
+	};
+
 
 	struct Force { 
 		float force;

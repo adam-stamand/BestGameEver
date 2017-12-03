@@ -6,10 +6,6 @@
 #include "Factory/ItemShapeType.h"
 
 
-#define DYNAMIC_BODY	b2BodyType::b2_dynamicBody
-#define STATIC_BODY		b2BodyType::b2_staticBody
-#define KINEMATIC_BODY	b2BodyType::b2_kinematicBody
-
 
 
 
@@ -18,28 +14,12 @@ class ItemType
 public:
 
 
-
-	struct ItemFixture {
-		std::string file;
-		Material * material;
-		ItemShapeType * shape;
-
-		ItemFixture(
-			std::string str,
-			Material * mat,
-			ItemShapeType * shp) :
-			file(str),
-			material(mat),
-			shape(shp)
-		{};
-	};
-
-
-
 	ItemType(){};
 	~ItemType() {};
 
-	std::vector<ItemFixture> itemFixtures;
+	std::string file;
+	Material * material;
+	ItemShapeType * shape;
 	b2BodyType bodyType;
 	
 };

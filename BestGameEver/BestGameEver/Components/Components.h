@@ -11,10 +11,13 @@
 
 #include "Components/BackgroundPhysicsComponent.h"
 
-
+#include "Components/GunPhysicsComponent.h"
+#include "Components/GunControlsComponent.h"
 
 #include "Components/RocketPhysicsComponent.h"
 #include "Components/RocketControlsComponent.h"
 
-#include "Components/LevelControlsComponent.h"
+#include "Components/ConnectionControlsComponent.h"
+
+#include "Components/VehicleConnectionComponent.h"
 

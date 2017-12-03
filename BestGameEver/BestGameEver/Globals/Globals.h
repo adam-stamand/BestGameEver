@@ -13,6 +13,7 @@
 
 class Globals {
 public:
+
 	static uint32_t GetID();
 	static uint32_t GetTimer();
 	static void IncrTimer();

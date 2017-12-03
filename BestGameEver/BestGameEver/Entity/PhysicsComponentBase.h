@@ -12,7 +12,7 @@ public:
 	};
 
 	virtual ~PhysicsComponentBase() {};
-	virtual void Update(EntityBase &entity) {}
+	virtual void Update(EntityInterface &entity) {};
 
 
 protected:

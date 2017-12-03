@@ -2,7 +2,7 @@
 
 
 
-Entity::Entity(ComponentVec comps) {
+Entity::Entity(ComponentVec comps)  {
 	for (int i = 0; i < comps.size(); i++) {
 		components[comps[i]->id] = comps[i];
 	}
@@ -35,7 +35,7 @@ void Entity::SendMessage(ComponentMessage &msg) {
 		components[msg.compID]->MessageHandler(msg);
 	}
 	else {
-		assert(0);
+		puts("ERR: Component does not exist - Entity.cpp");
 	}
 }
 

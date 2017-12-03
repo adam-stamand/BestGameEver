@@ -16,9 +16,9 @@ public:
 		}
 	};
 
-	void RocketControlsComponent::FireGun(Entity &entity);
-	void RocketControlsComponent::MoveForward(Entity &entity);
-	void RocketControlsComponent::RotateClockwise(Entity &entity);
-	void RocketControlsComponent::RotateCounterClockwise(Entity &entity);
+	void RocketControlsComponent::FireGun(EntityInterface &entity);
+	void RocketControlsComponent::MoveForward(EntityInterface &entity);
+	void RocketControlsComponent::RotateClockwise(EntityInterface &entity);
+	void RocketControlsComponent::RotateCounterClockwise(EntityInterface &entity);
 };
 

@@ -56,6 +56,14 @@ public:
 			this->body->SetAwake(true);
 			break;
 		}
+		case ComponentMessage::ENABLE: {
+			this->body->SetActive(true);
+			break;
+		}
+		case ComponentMessage::DISABLE: {
+			this->body->SetActive(false);
+			break;
+		}
 		case ComponentMessage::GET_TRANS: {
 			ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
 			b2Vec2 temp;

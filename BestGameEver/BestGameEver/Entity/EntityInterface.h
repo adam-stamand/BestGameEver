@@ -7,18 +7,23 @@
 #include <array>
 #include <assert.h>
 #include <SFML/Graphics.hpp>
-
-#include "Entity/Message.h"
 #include "Globals/Globals.h"
 
-class EntityBase
+#include "Entity/Message.h"
+
+class EntityInterface
 {
 public:
-	EntityBase() : id(Globals::GetID()) {};
-	~EntityBase() {};
+	EntityInterface() : id(Globals::GetID()) {};
+	~EntityInterface() {};
 
 	virtual void SendMessage(ComponentMessage &msg) = 0;
 	virtual void Update() = 0;
+
+	//virtual void AddComponent(ComponentBase * component) = 0;
+	virtual void RemoveComponent(ComponentID id) = 0;
+	virtual void EnableComponent(ComponentID id) = 0;
+	virtual void DisableComponent(ComponentID id) = 0;
 
 	const uint32_t id = 0;
 	bool enabled = true;

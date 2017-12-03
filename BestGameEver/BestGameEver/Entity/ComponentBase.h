@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Entity/EntityBase.h"
+#include "Entity/EntityInterface.h"
 #include "Entity/ComponentID.h"
 #include "Entity/Message.h"
 
@@ -12,7 +12,7 @@ public:
 	virtual ~ComponentBase() {};
 
 	virtual void MessageHandler(ComponentMessage &msg) = 0;
-	virtual void Update(EntityBase &entity) = 0;
+	virtual void Update(EntityInterface &entity) = 0;
 
 	bool enabled = true;
 	ComponentID id;

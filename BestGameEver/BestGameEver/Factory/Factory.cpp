@@ -12,42 +12,51 @@ Factory::~Factory()
 }
 
 
-Item * Factory::_CreateItem(ItemType *userItemType, float xSize, float ySize, uint16_t mask, uint16_t category) {
+Item * Factory::CreateItem(std::vector<ItemFixture*> itemFixtures, b2BodyType bodyType) {
 	Item * item = new Item;
 	std::vector<b2FixtureDef*> fixtures;
 
-	for (int i = 0; i < userItemType->itemFixtures.size(); i++) {
-
-		item->sprites.push_back(Factory::CreateSprite(userItemType->itemFixtures.at(i).file, xSize, ySize));
-
-
-		b2Shape * shape = Factory::CreateShape(
-			*item->sprites.at(i),
-			*userItemType->itemFixtures.at(i).shape
-		);
-
-		fixtures.push_back(
-			Factory::CreateFixture(
-				shape,
-				*userItemType->itemFixtures.at(i).material
-			)
-		);
-		fixtures.at(i)->filter.categoryBits = category;
-		fixtures.at(i)->filter.maskBits = mask;
+	for (int i = 0; i < itemFixtures.size(); i++) {
+		fixtures.push_back(itemFixtures.at(i)->fixture);
 	}
-	item->body = Factory::CreateBody(fixtures, userItemType->bodyType);
-	item->body->GetFixtureList();
+
+	item->itemFixtures = itemFixtures;
+	item->body = Factory::CreateBody(fixtures, bodyType);
+
 	return item;
+}
+
+ItemFixture * Factory::_CreateItemFixture(ItemType &userItemType, b2Vec2 center, b2Vec2 size, float angle, uint16_t mask, uint16_t category) {
+	
+	// Create Item Fixture
+	ItemFixture * itemFixture = new ItemFixture;
+	
+	itemFixture->center = center;
+	itemFixture->angle = angle;
+
+	// Create Sprite
+	itemFixture->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
+
+	// Create Shape
+	b2Shape * shape = Factory::CreateShape(*itemFixture->sprite, *userItemType.shape, center);
+
+	// Create Fixutre
+	itemFixture->fixture = Factory::CreateFixture(shape, *userItemType.material);
+	
+	// Apply collision masks
+	itemFixture->fixture->filter.categoryBits = category;
+	itemFixture->fixture->filter.maskBits = mask;
+
+	return itemFixture;
 }
 
 
 
-sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize) {
+sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize, b2Vec2 center) {
 
 	sf::Texture * texture = new sf::Texture;
 	texture->loadFromFile(str);
 	sf::Sprite * sprite = new sf::Sprite;
-
 	sprite->setTexture(*texture);
 	float currX, currY, scaleX, scaleY;
 	currX = (float)texture->getSize().x;
@@ -57,6 +66,7 @@ sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize) {
 	scaleY = ySize / currY;
 
 	sprite->setScale(scaleX, scaleY);
+	// setOrigin is done in original Sprite coordinates! (before scaling)
 	sprite->setOrigin(currX / 2, currY / 2);
 	return sprite;
 }
@@ -64,11 +74,8 @@ sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize) {
 
 
 
-b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType) {
-	
-	b2Shape * shape = shapeType.GetShape(sprite);
-
-	return shape;
+b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType, b2Vec2 center) {
+	return shapeType.GetShape(sprite, center);
 }
 
 b2FixtureDef * Factory::CreateFixture(b2Shape * shape, Material &material) {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Entity/ComponentBase.h"
-#include "Entity/Entity.h"
+#include "Entity/EntityInterface.h"
 #include "Entity/Message.h"
 #include "Level/EventHandler.h"
 #include <assert.h>
@@ -17,12 +17,12 @@ public:
 	ControlsComponentBase(T *child) : ComponentBase(CONTROLS) { this->child = child; }
 
 	~ControlsComponentBase() {};
-
+	void Update(EntityInterface &entity);
 protected:
 
 	typedef T ControlsComponent_t;
-	typedef void(T::*KeyPress_Func_P)(Entity &entity);
-	typedef void(T::*Event_Func_P)(sf::Event &evnt, Entity &entity);
+	typedef void(T::*KeyPress_Func_P)(EntityInterface &entity);
+	typedef void(T::*Event_Func_P)(sf::Event &evnt, EntityInterface &entity);
 
 	typedef std::vector<sf::Keyboard::Key> ControlKeys;
 	typedef std::vector<KeyPress_Func_P> KeyPress_Funcs;
@@ -38,9 +38,9 @@ protected:
 		KeyPress_Funcs funcs;
 	};
 
-	void Update(EntityBase &entity);
-	void CheckEventActions(T &object, Entity &entity);
-	void CheckKeyPressActions(T &object, Entity &entity);
+
+	void CheckEventActions(T &object, EntityInterface &entity);
+	void CheckKeyPressActions(T &object, EntityInterface &entity);
 
 	void RegisterAction(ControlKeys key_vec, KeyPress_Funcs funcs);
 	void RegisterAction(sf::Event::EventType evnt, Event_Funcs funcs);
@@ -59,15 +59,14 @@ private:
 
 
 template <class T>
-// TODO Look into static cast and make sure that's what we want
-void ControlsComponentBase<T>::Update(EntityBase &entity) {
-	this->CheckKeyPressActions(*child, static_cast<Entity&>(entity));
-	this->CheckEventActions(*child, static_cast<Entity&>(entity));
+void ControlsComponentBase<T>::Update(EntityInterface &entity) {
+	this->CheckKeyPressActions(*child, entity);
+	this->CheckEventActions(*child,entity);
 }
 
 
 template <class T>
-void ControlsComponentBase<T>::CheckKeyPressActions(T &object, Entity &entity) {
+void ControlsComponentBase<T>::CheckKeyPressActions(T &object, EntityInterface &entity) {
 
 	for (long int i = 0; i < key_action_map.size(); i++) {
 		bool skip_flag = false;
@@ -90,7 +89,7 @@ void ControlsComponentBase<T>::CheckKeyPressActions(T &object, Entity &entity) {
 
 
 template <class T>
-void ControlsComponentBase<T>::CheckEventActions(T &object, Entity &entity) {
+void ControlsComponentBase<T>::CheckEventActions(T &object, EntityInterface &entity) {
 
 	for (long int i = 0; i < event_action_map.size(); i++) {
 		sf::Event *evnt_p;

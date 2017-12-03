@@ -62,7 +62,9 @@
     </ClCompile>
     <ClCompile Include="Components\CharacterControlsComponent.cpp" />
     <ClCompile Include="Components\CharacterPhysicsComponent.cpp" />
-    <ClCompile Include="Components\LevelControlsComponent.cpp" />
+    <ClCompile Include="Components\ConnectionControlsComponent .cpp" />
+    <ClCompile Include="Components\GunControlsComponent.cpp" />
+    <ClCompile Include="Components\GunPhysicsComponent.cpp" />
     <ClCompile Include="Components\RocketControlsComponent.cpp" />
     <ClCompile Include="Components\RocketPhysicsComponent.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
@@ -130,20 +132,22 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Components\BasicGraphicsComponent.h" />
-    <ClInclude Include="Components\BasicPhysicsComponent.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="Components\BasicPhysicsComponent.h" />
     <ClInclude Include="Components\CharacterControlsComponent.h" />
     <ClInclude Include="Components\CharacterPhysicsComponent.h" />
     <ClInclude Include="Components\Components.h" />
-    <ClInclude Include="Components\LevelControlsComponent.h" />
+    <ClInclude Include="Components\ConnectionControlsComponent.h" />
+    <ClInclude Include="Components\GunControlsComponent.h" />
+    <ClInclude Include="Components\GunPhysicsComponent.h" />
     <ClInclude Include="Components\RocketControlsComponent.h" />
     <ClInclude Include="Components\RocketPhysicsComponent.h" />
+    <ClInclude Include="Components\VehicleConnectionComponent.h" />
     <ClInclude Include="Entity\ComponentBase.h" />
     <ClInclude Include="Entity\ComponentID.h" />
+    <ClInclude Include="Entity\ConnectionComponentBase.h" />
     <ClInclude Include="Entity\ControlsComponentBase.h" />
     <ClInclude Include="Entity\Entity.h" />
-    <ClInclude Include="Entity\EntityBase.h" />
+    <ClInclude Include="Entity\EntityInterface.h" />
     <ClInclude Include="Entity\GraphicsComponentBase.h" />
     <ClInclude Include="Entity\Message.h" />
     <ClInclude Include="Entity\PhysicsComponentBase.h" />
@@ -156,6 +160,7 @@
     <ClInclude Include="Factory\UserItemType.h" />
     <ClInclude Include="Factory\UserMaterials.h" />
     <ClInclude Include="Globals\Globals.h" />
+    <ClInclude Include="Level\ContactManager.h" />
     <ClInclude Include="Level\EventHandler.h" />
     <ClInclude Include="Level\EntityManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

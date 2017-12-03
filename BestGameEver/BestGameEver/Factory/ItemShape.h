@@ -10,7 +10,7 @@ public:
 
 	float radius;
 	b2Vec2 point;
-	b2Shape * GetShape(sf::Sprite &sprite);
+	b2Shape * GetShape(sf::Sprite &sprite, b2Vec2 center);
 
 };
 
@@ -22,6 +22,6 @@ public:
 	
 	std::vector<b2Vec2> coords;
 
-	b2Shape * GetShape(sf::Sprite &sprite);
+	b2Shape * GetShape(sf::Sprite &sprite, b2Vec2 center);
 
 };

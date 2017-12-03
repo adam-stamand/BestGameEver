@@ -17,8 +17,8 @@ public:
 		}
 	};
 
-	void FireGun(Entity &entity);
-	void MoveLeft(Entity &entity);
-	void MoveRight(Entity &entity);
+	void FireGun(EntityInterface &entity);
+	void MoveLeft(EntityInterface &entity);
+	void MoveRight(EntityInterface &entity);
 };
 

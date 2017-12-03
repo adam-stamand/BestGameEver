@@ -16,11 +16,15 @@ void EntityManager::DeRegisterEntity(int id) {
 
 
 void EntityManager::EnableEntity(int id) {
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::ENABLE, NULL);
+	entities[id]->SendMessage(comp_msg);
 	entities[id]->enabled = true;
 }
 
 
 void EntityManager::DisableEntity(int id) {
+	ComponentMessage comp_msg(PHYSICS, ComponentMessage::DISABLE, NULL);
+	entities[id]->SendMessage(comp_msg);
 	entities[id]->enabled = false;
 }
 
