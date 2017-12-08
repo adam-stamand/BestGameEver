@@ -8,11 +8,9 @@
 
 #include "Globals/Globals.h"
 #include "Factory/Factory.h"
+#include "UserComponents/UserComponents.h"
 #include "Entity/Entity.h"
-#include "Components/Components.h"
-#include "Level/EventHandler.h"
-#include "Level/EntityManager.h"
-#include "Level/ContactManager.h"
+#include "Manager/Manager.h"
 
 
 // GOALS
@@ -31,8 +29,13 @@
 // make joint creator
 // figure out how to apply initial rotation to sprites
 // sensor collisions
+// get center of mass working again // seems to be working... for the time being // generalize use
 // use bullets
-
+// decide character's velocity when exiting vehicle
+// full screen gun doesn't work // decide how to scale game, or if you can
+// make border maker
+// create AI component
+// Make a car //application of joints really
 
 int main()
 {
@@ -72,59 +75,69 @@ int main()
 	groundBody = Globals::world.CreateBody(&groundBodyDef);
 	groundBody->CreateFixture(&groundFixtureDef);
 
-	uint16_t mask = 0xFFFD;
-	uint16_t category = 0x0004;
-	std::vector<ItemFixture*> rocketFixtures{
-		Factory::CreateItemFixture<Rocket>(b2Vec2(0,0), b2Vec2(1,2.5),0, mask, category),
-		//Factory::CreateItemFixture<Cannon>(b2Vec2(0,-1.1), b2Vec2(1,1), 90, mask, category),
-		//Factory::CreateItemFixture<Tire>(b2Vec2(0,1), b2Vec2(1,1), 0, mask, category),
-		//Factory::CreateItemFixture<Tire>(b2Vec2(-.5,0), b2Vec2(1,1), 0, mask, category),
-		//Factory::CreateItemFixture<Tire>(b2Vec2(.5,0), b2Vec2(1,1), 0, mask, category)
+
+
+
+
+
+
+	
+	std::vector<Part*> rocketParts{
+		Factory::CreatePart<Rocket>(b2Vec2(0,0), b2Vec2(1,2.5)),
+		//Factory::CreatePart<Box>(b2Vec2(0,1), b2Vec2(2,2), DEGREES_2_RAD(45)),
+		//Factory::CreatePart<Tire>(b2Vec2(0,-1), b2Vec2(1.5,1.5))
 	};
-	Item * rocket = Factory::CreateItem(rocketFixtures, DYNAMIC_BODY);
+	Item * rocket = Factory::CreateItem(rocketParts, DYNAMIC_BODY);
 	rocket->body->SetAngularDamping(3);
 	rocket->body->SetLinearDamping(0);
-	rocket->body->SetTransform(b2Vec2(200 / WORLD_SCALE, 200 / WORLD_SCALE), 0);
+	rocket->body->SetTransform(b2Vec2(SF_2_BOX(200), SF_2_BOX(200)), 0);
 	
-
-
-	mask = 0xFFFF;// 0xFFFB;
-	category = 0x1;// 0x0002;
-	std::vector<ItemFixture*> characterFixtures{ Factory::CreateItemFixture<Character>(b2Vec2(0,0), b2Vec2(2,2),0, mask, category) };
-	Item * character = Factory::CreateItem(characterFixtures, DYNAMIC_BODY);
-	character->body->SetTransform(b2Vec2(400 / WORLD_SCALE, 400 / WORLD_SCALE), 0);
+	
+	std::vector<Part*> characterParts{ 
+		Factory::CreatePart<Character>(b2Vec2(0,0), b2Vec2(1,1)) 
+	};
+	Item * character = Factory::CreateItem(characterParts, DYNAMIC_BODY);
+	character->body->SetTransform(b2Vec2(SF_2_BOX(400), SF_2_BOX(400)), 0);
 	character->body->SetFixedRotation(true);
 	
+	
+	std::vector<Part*> boxParts{ 
+		Factory::CreatePart<Box>(b2Vec2(0,0), b2Vec2(2,2))
+	};
+	Item * box_body = Factory::CreateItem(boxParts, DYNAMIC_BODY);
+	box_body->body->SetAngularDamping(2);
+	box_body->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), DEGREES_2_RAD(0));
 
 	
-	std::vector<ItemFixture*> balloonFixtures{ Factory::CreateItemFixture<Balloon>(b2Vec2(0,0), b2Vec2(1,2)) };
-	Item * balloon = Factory::CreateItem(balloonFixtures, DYNAMIC_BODY);
-	balloon->body->SetGravityScale(-.5);
-	balloon->body->SetLinearDamping(3);
-	balloon->body->SetAngularDamping(1);
-	balloon->body->SetTransform(b2Vec2(300 / WORLD_SCALE, 300 / WORLD_SCALE), 0);
-	//b2MassData massD;
-	//balloon->body->GetMassData(&massD);
-	//massD.center.Set(0, -0.5);
-	//balloon->body->SetMassData(&massD);
-
-
-	sf::Sprite * tree = Factory::CreateSprite(IMAGE(tree.png), BOX_2_SF(2), BOX_2_SF(4), b2Vec2(0,0));
-	sf::Sprite * background = Factory::CreateSprite(IMAGE(sky_background.png), 800, 600, b2Vec2(0, 0));
-
-
-
-	std::vector<ItemFixture*> gunFixtures{
-		Factory::CreateItemFixture<Cannon>(b2Vec2(0,0), b2Vec2(.35,1), 0, mask, category),
+	std::vector<Part*> balloonParts{ 
+		Factory::CreatePart<Balloon>(b2Vec2(0,0), b2Vec2(1,2))
 	};
-	Item * gun = Factory::CreateItem(gunFixtures, DYNAMIC_BODY);
+	Item * balloon = Factory::CreateItem(balloonParts, DYNAMIC_BODY);
+	balloon->body->SetGravityScale(2);
+	balloon->body->SetLinearDamping(1);
+	balloon->body->SetAngularDamping(1);
+	balloon->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), 0);
+	//balloon->SetCenterMass(b2Vec2(0, -.5));
+
+
+	std::vector<Part*> backgroundParts{
+		Factory::CreatePart<Background>(b2Vec2(SF_2_BOX(400),SF_2_BOX(300)), b2Vec2(SF_2_BOX(800),SF_2_BOX(600)))
+	};
+	Item * background = Factory::CreateItem(backgroundParts, DYNAMIC_BODY);
+
+	
+	std::vector<Part*> gunParts{
+		Factory::CreatePart<Cannon>(b2Vec2(0,0), b2Vec2(.35,1)),
+	};
+	Item * gun = Factory::CreateItem(gunParts, DYNAMIC_BODY);
 	rocket->body->SetAngularDamping(3);
 	rocket->body->SetLinearDamping(0);
-	gun->body->SetTransform(b2Vec2(200 / WORLD_SCALE, 200 / WORLD_SCALE), 0);
-
-
-
+	gun->body->SetTransform(b2Vec2(SF_2_BOX(200), SF_2_BOX(200)), 0);
 	
+
+
+	// Make unique config structs for each type of joint
+	// then overload the create joint function using those structs
 	b2RevoluteJointDef jointDef;
 	jointDef.bodyA = gun->body;
 	jointDef.bodyB = rocket->body;
@@ -137,129 +150,118 @@ int main()
 	//------------------------
 	// Create Entities
 	//------------------------
+	
 
-
-	/*
-	Entity background_ent(
-	{ new BasicGraphicsComponent(&window, {background}),
-			new BackgroundPhysicsComponent(NULL, SF_2_BOX(400),SF_2_BOX(300)) }
+	Entity background_ent;
+	background_ent.Init(
+	{ 
+		new BasicGraphicsComponent(&window, background) 
+	}
 	);
 
 	EntityManager::RegisterEntity(&background_ent);
 
-
-
+	
+	
 	Entity * trees[5];
-	for (int i = 0; i < 5; i++) {
-		trees[i] = new Entity(
-		{ new BasicGraphicsComponent(&window, {tree}),
-			  new BackgroundPhysicsComponent(NULL,SF_2_BOX(i*150.0 + 100.0), SF_2_BOX(525.0))}
+	for (int i = 0; i < 10; i++) {
+		
+		std::vector<Part*> treeParts{
+			Factory::CreatePart<Tree>(b2Vec2(SF_2_BOX((i*100) + 50),SF_2_BOX(550)), b2Vec2(1,2))
+		};
+		Item * tree = Factory::CreateItem(treeParts, DYNAMIC_BODY);
+		trees[i] = new Entity;
+		trees[i]->Init(
+		{
+			new BasicGraphicsComponent(&window, tree)
+		}
 		);
 		EntityManager::RegisterEntity(trees[i]);
 	}
-	*/
-
-
-
-	Entity main_ent(
-	{ new RocketControlsComponent(),
-		new BasicGraphicsComponent(&window, rocket->itemFixtures),
-		new RocketPhysicsComponent(rocket->body) }
-	);
-	rocket->body->SetUserData(&main_ent);
-
-	EntityManager::RegisterEntity(&main_ent);
 	
-	Entity gun_ent(
+	
+	// Get better way to attach user data to bodies;
+	
+	Entity rocket_ent;
+	rocket_ent.Init(
+	{   
+		new RocketControlsComponent(),
+		new BasicGraphicsComponent(&window, rocket),
+		new BasicPhysicsComponent(rocket) }
+	);
+
+	rocket->body->SetUserData(&rocket_ent);
+	EntityManager::RegisterEntity(&rocket_ent);
+	
+	Entity gun_ent;
+	gun_ent.Init(
 	{
 		new GunControlsComponent(),
-		new BasicGraphicsComponent(&window, gun->itemFixtures),
-		new GunPhysicsComponent(gun->body, &window)
-	}
+		new BasicGraphicsComponent(&window, gun),
+		new GunPhysicsComponent(gun, &window) }
 	);
 
-	gun->body->SetUserData(&gun_ent);
+	gun->body->SetUserData(&gun_ent); //use entity id instead of reference
 	EntityManager::RegisterEntity(&gun_ent);
 	
-
-
-
-	Entity character_ent(
-		{ 
-		  new BasicGraphicsComponent(&window, character->itemFixtures),
-		  new CharacterPhysicsComponent(character->body),
+	Entity character_ent;
+	character_ent.Init(
+	{ 
+		  new BasicGraphicsComponent(&window, character),
+		  new CharacterPhysicsComponent(character),
 		  new CharacterControlsComponent() }
 	);
-
 	character->body->SetUserData(&character_ent);
 	EntityManager::RegisterEntity(&character_ent);
 
 
-
-
-	Entity balloon_ent(
-		{new BasicGraphicsComponent(&window, balloon->itemFixtures),
-		 new BasicPhysicsComponent(balloon->body)}
+	Entity balloon_ent;
+	balloon_ent.Init(
+	{
+		new BasicGraphicsComponent(&window, balloon),
+		new BasicPhysicsComponent(balloon) }
 	);
 	balloon->body->SetUserData(&balloon_ent);
 	EntityManager::RegisterEntity(&balloon_ent);
 
-
-
-
-	/*
-	Entity * boxes[6];
-	Item * boxes_body[6];
-	for (int i = 0; i < 6; i++) {
-	boxes_body[i] = Factory::CreateItem<Box>(BOX_2_SF(1), BOX_2_SF(1));
-	boxes_body[i]->body->SetAngularDamping(2);
-	boxes_body[i]->body->SetTransform(b2Vec2(300 / WORLD_SCALE, 300 / WORLD_SCALE), DEGREES_2_RAD(40));
-
-	boxes[i] = new 	Entity(
-	{ new BasicGraphicsComponent(&window, boxes_body[i]->sprites),
-	new BasicPhysicsComponent(boxes_body[i]->body) }
+	
+	Entity box;
+	box.Init(
+	{ 
+		new BasicGraphicsComponent(&window, box_body),
+		new BasicPhysicsComponent(box_body) }
 	);
 
-	EntityManager::RegisterEntity(boxes[i]);
-
-	}
-	*/
-	
-	Entity * box;
-	Item * box_body;
-	std::vector<ItemFixture*> boxFixtures{ Factory::CreateItemFixture<Box>(b2Vec2(0,0), b2Vec2(1,1)) };
-	box_body = Factory::CreateItem(boxFixtures, DYNAMIC_BODY);
-	box_body->body->SetAngularDamping(2);
-	box_body->body->SetTransform(b2Vec2(300 / WORLD_SCALE, 300 / WORLD_SCALE), DEGREES_2_RAD(40));
-
-	box = new 	Entity(
-	{ new BasicGraphicsComponent(&window, box_body->itemFixtures),
-		new BasicPhysicsComponent(box_body->body) }
-	);
-
-	box_body->body->SetUserData(&box);
-	EntityManager::RegisterEntity(box);
+	EntityManager::RegisterEntity(&box);
 
 	
-
-	
-	
-	Entity connection_ent(
+	Entity balloonConnect_ent;
+	balloonConnect_ent.Init(
 	{
 		new ConnectionControlsComponent(),
-		new VehicleConnectionComponent(&main_ent, &character_ent, &gun_ent)
-	}
+		new BalloonConnectionComponent(balloon_ent.GetID(), character_ent.GetID()) }
 	);
+	EntityManager::RegisterEntity(&balloonConnect_ent);
+	
+
+	Entity connection_ent;
+	connection_ent.Init(
+	{
+		new ConnectionControlsComponent(),
+		new VehicleConnectionComponent(rocket_ent.GetID(), character_ent.GetID(), gun_ent.GetID()) }
+	);
+	
 	EntityManager::RegisterEntity(&connection_ent);
 	
 
 	
 	ContactManager contactManager;
 	contactManager.RegisterContact(&connection_ent);
-	contactManager.RegisterFilter({main_ent.id, character_ent.id, gun_ent.id});
+	contactManager.RegisterContact(&balloonConnect_ent);
+	contactManager.RegisterFilter({rocket_ent.GetID(), character_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID() });
 	Globals::world.SetContactListener(&contactManager);
 
-
+	
 	//------------------------
 	// Main Loop
 	//------------------------
@@ -270,10 +272,10 @@ int main()
 	{
 		window.clear();
 		Globals::IncrTimer();
-		EventHandler::GetEvents(window);
+		EventManager::GetEvents(window);
 		EntityManager::Update(window);
 		Globals::world.Step(timeStep, velocityIterations, positionIterations);
-		EventHandler::ClearEvents();
+		EventManager::ClearEvents();
 		window.display();
 
 	}

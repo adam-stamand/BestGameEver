@@ -7,9 +7,6 @@
     <Filter Include="Entity">
       <UniqueIdentifier>{e6fa2b13-1fe3-4f39-9457-b25d5e8108ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Level">
-      <UniqueIdentifier>{8f5a8668-708e-49ec-877c-c8486f8e95d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Box2d">
       <UniqueIdentifier>{a58fb6d7-4eec-4abf-9852-d1ffd86008f4}</UniqueIdentifier>
     </Filter>
@@ -40,14 +37,17 @@
     <Filter Include="Globals">
       <UniqueIdentifier>{cd8b64e3-b660-4d89-81c6-c41c39e1153b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components">
+    <Filter Include="Component">
+      <UniqueIdentifier>{708fa215-5263-4154-a770-624cd20cdc55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserComponents">
       <UniqueIdentifier>{49a67d1a-25e6-4173-a83e-ddd6e5f619c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{39e9895c-2e5c-4922-9cae-0b0a5995fcfd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Level\EventHandler.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Box2D\Collision\b2BroadPhase.cpp">
       <Filter>Box2d\Collision</Filter>
@@ -187,9 +187,6 @@
     <ClCompile Include="Box2D\Rope\b2Rope.cpp">
       <Filter>Box2d\Rope</Filter>
     </ClCompile>
-    <ClCompile Include="Level\EntityManager.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="Factory\Factory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
@@ -199,41 +196,35 @@
     <ClCompile Include="Factory\ItemShape.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="Entity\Entity.cpp">
-      <Filter>Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\RateLimiter.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Components\BasicControlsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="UserComponents\CharacterControlsComponent.cpp">
+      <Filter>UserComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Components\CharacterControlsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="UserComponents\ConnectionControlsComponent .cpp">
+      <Filter>UserComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Components\CharacterPhysicsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="UserComponents\GunControlsComponent.cpp">
+      <Filter>UserComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Components\ConnectionControlsComponent .cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="UserComponents\RocketControlsComponent.cpp">
+      <Filter>UserComponents</Filter>
     </ClCompile>
-    <ClCompile Include="Components\GunControlsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Entity\Entity.cpp">
+      <Filter>Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Components\GunPhysicsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Manager\ContactManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Components\RocketControlsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Manager\EntityManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Components\RocketPhysicsComponent.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="Manager\EventManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Level\EventHandler.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Box2D\Box2D.h">
       <Filter>Box2d</Filter>
     </ClInclude>
@@ -375,9 +366,6 @@
     <ClInclude Include="Box2D\Rope\b2Rope.h">
       <Filter>Box2d\Rope</Filter>
     </ClInclude>
-    <ClInclude Include="Level\EntityManager.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="Factory\Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
@@ -405,77 +393,80 @@
     <ClInclude Include="Factory\ItemShapeType.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentBase.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Utils\RateLimiter.h">
+      <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ControlsComponentBase.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="UserComponents\BalloonConnectionComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\BasicGraphicsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\BasicPhysicsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\CharacterControlsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\CharacterPhysicsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\ConnectionControlsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\GunControlsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\GunPhysicsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\RocketControlsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\VehicleConnectionComponent.h">
+      <Filter>UserComponents</Filter>
     </ClInclude>
     <ClInclude Include="Entity\Entity.h">
       <Filter>Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\GraphicsComponentBase.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Component\ComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\Message.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Component\ComponentID.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\PhysicsComponentBase.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Component\ComponentMessage.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\RateLimiter.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="Component\ConnectionComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ComponentID.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Component\ControlsComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Level\ContactManager.h">
-      <Filter>Level</Filter>
+    <ClInclude Include="Component\GraphicsComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\EntityInterface.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Component\PhysicsComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
-    <ClInclude Include="Entity\ConnectionComponentBase.h">
-      <Filter>Entity</Filter>
+    <ClInclude Include="Manager\ContactManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Components\BackgroundPhysicsComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Manager\EntityManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Components\BasicControlsComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Manager\EventManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Components\BasicGraphicsComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Manager\JointManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Components\BasicPhysicsComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="Manager\Manager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Components\CharacterControlsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\CharacterPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Components.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\ConnectionControlsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\GunControlsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\GunPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\RocketControlsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\RocketPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\VehicleConnectionComponent.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="UserComponents\UserComponents.h">
+      <Filter>UserComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

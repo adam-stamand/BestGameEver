@@ -76,3 +76,25 @@ public:
 	}
 
 };
+
+class Tree : public ItemType {
+public:
+	Tree() {
+		this->bodyType = DYNAMIC_BODY;
+		this->file = IMAGE(tree.png);
+		this->material = NULL;
+		this->shape = NULL;
+	}
+
+};
+
+class Background : public ItemType {
+public:
+	Background() {
+		this->bodyType = DYNAMIC_BODY;
+		this->file = IMAGE(sky_background.png);
+		this->material = NULL;
+		this->shape = NULL;
+	}
+
+};

@@ -2,48 +2,65 @@
 
 
 
-Entity::Entity(ComponentVec comps)  {
+void Entity::Init(ComponentVec comps) {
 	for (int i = 0; i < comps.size(); i++) {
-		components[comps[i]->id] = comps[i];
+		puts("FDSF");
+		comps.at(i)->SetEntityID(this->GetID());
+		components[comps.at(i)->GetComponentID()] = comps.at(i);
 	}
 }
 
 
 void Entity::AddComponent(ComponentBase * component) {
-	this->components[component->id] = component;
+	this->components[component->GetComponentID()] = component;
+}
+
+
+uint32_t Entity::GetID() {
+	return this->id;
+}
+
+
+bool Entity::IsEnabled() {
+	return this->enabled;
+}
+
+
+void Entity::Enable(bool state) {
+	this->enabled = state;
 }
 
 
 void Entity::RemoveComponent(ComponentID id) {
-	delete(components[id]); //check if delete(NULL) is ok
+	delete(components[id]);
 	components[id] = NULL;
 }
 
 
 void Entity::EnableComponent(ComponentID id) {
-	this->components[id]->enabled = true;
+	assert(this->components[id] != NULL);
+	this->components[id]->Enable(true);
 }
 
 
 void Entity::DisableComponent(ComponentID id) {
-	this->components[id]->enabled = false;
+	assert(this->components[id] != NULL);
+	this->components[id]->Enable(false);
 }
 
 
 void Entity::SendMessage(ComponentMessage &msg) {
-	if (components[msg.compID] != NULL) {
-		components[msg.compID]->MessageHandler(msg);
-	}
-	else {
-		puts("ERR: Component does not exist - Entity.cpp");
-	}
+	assert(this->components[msg.compID] != NULL);
+	components[msg.compID]->MessageHandler(msg);
+	
 }
+
 
 void Entity::Update() {
 	for (int i = 0; i < components.size(); i++) {
 		if (components[i] != NULL) {
-			if (components[i]->enabled) {
-				components[i]->Update(*this);
+			if (components[i]->IsEnabled()) {
+				components[i]->Update();
 			}
 		}
 	}

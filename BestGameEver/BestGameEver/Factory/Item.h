@@ -10,15 +10,19 @@
 
 
 
-
-
-class ItemFixture {
+class Part
+{
 
 public:
-	ItemFixture() {};
+	friend class Factory;
+	sf::Sprite * GetSprite() { return this->sprite; };
+	b2Vec2 * GetCenter() { return &this->center; };
+	float * GetAngle() { return &this->angle; };
 
+private:
+	Part() {}
+	b2FixtureDef * fixtureDef;
 	sf::Sprite * sprite;
-	b2FixtureDef * fixture;
 	b2Vec2 center;
 	float angle;
 };
@@ -28,7 +32,39 @@ class Item {
 
 public:
 	Item() {};
+	
+	b2Vec2 GetTranslation() {
+		if (this->body != NULL) {
+			return this->body->GetWorldPoint(b2Vec2(0,0));
+		}
+		else {
+			return b2Vec2(0,0);
+		}
+	}
 
-	std::vector<ItemFixture*> itemFixtures;
-	b2Body * body;
+	float GetAngle() {
+		if (this->body != NULL) {
+			return this->body->GetAngle();
+		}
+		else {
+			return 0;
+		}
+	}
+
+	void SetCenterMass(b2Vec2 localPoint) {
+		b2MassData massD;
+		this->body->GetMassData(&massD);
+		massD.center.Set(localPoint.x, localPoint.y);
+		this->body->SetMassData(&massD);
+	}
+
+	std::vector<Part*> parts;
+	//b2Body * GetBody() { return this->body; }
+
+	b2Body * body = NULL;
+
+
+private:
+	
+
 };

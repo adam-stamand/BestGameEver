@@ -12,42 +12,52 @@ Factory::~Factory()
 }
 
 
-Item * Factory::CreateItem(std::vector<ItemFixture*> itemFixtures, b2BodyType bodyType) {
+Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 	Item * item = new Item;
+	item->parts = parts;
+
 	std::vector<b2FixtureDef*> fixtures;
 
-	for (int i = 0; i < itemFixtures.size(); i++) {
-		fixtures.push_back(itemFixtures.at(i)->fixture);
+	for (int i = 0; i < parts.size(); i++) {
+		if (parts.at(i)->fixtureDef == NULL) { // If any part is missing a fixture, no body assigned
+			return item;
+		}
+		fixtures.push_back(parts.at(i)->fixtureDef);
 	}
 
-	item->itemFixtures = itemFixtures;
 	item->body = Factory::CreateBody(fixtures, bodyType);
 
 	return item;
 }
 
-ItemFixture * Factory::_CreateItemFixture(ItemType &userItemType, b2Vec2 center, b2Vec2 size, float angle, uint16_t mask, uint16_t category) {
+
+
+Part * Factory::_CreatePart(ItemType &userItemType, b2Vec2 center, b2Vec2 size, float angle, uint16_t mask, uint16_t category) {
 	
 	// Create Item Fixture
-	ItemFixture * itemFixture = new ItemFixture;
-	
-	itemFixture->center = center;
-	itemFixture->angle = angle;
+	Part * part = new Part;
+	part->center = center;
+	part->angle = angle;
 
 	// Create Sprite
-	itemFixture->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
+	part->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
+
+	if (userItemType.material == NULL || userItemType.shape == NULL) { // No need to assign body; just a background
+		part->fixtureDef = NULL;
+		return part;
+	}
 
 	// Create Shape
-	b2Shape * shape = Factory::CreateShape(*itemFixture->sprite, *userItemType.shape, center);
+	b2Shape * shape = Factory::CreateShape(*part->sprite, *userItemType.shape, center, angle);
 
 	// Create Fixutre
-	itemFixture->fixture = Factory::CreateFixture(shape, *userItemType.material);
+	part->fixtureDef = Factory::CreateFixtureDef(shape, *userItemType.material);
 	
 	// Apply collision masks
-	itemFixture->fixture->filter.categoryBits = category;
-	itemFixture->fixture->filter.maskBits = mask;
+	//itemFixture->fixture->filter.categoryBits = category;
+	//itemFixture->fixture->filter.maskBits = mask;
 
-	return itemFixture;
+	return part;
 }
 
 
@@ -74,11 +84,11 @@ sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize, b2Vec2
 
 
 
-b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType, b2Vec2 center) {
-	return shapeType.GetShape(sprite, center);
+b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType, b2Vec2 center, float angle) {
+	return shapeType.GetShape(sprite, center, angle);
 }
 
-b2FixtureDef * Factory::CreateFixture(b2Shape * shape, Material &material) {
+b2FixtureDef * Factory::CreateFixtureDef(b2Shape * shape, Material &material) {
 
 	b2FixtureDef * fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = shape;

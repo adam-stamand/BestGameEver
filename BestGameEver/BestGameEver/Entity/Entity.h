@@ -3,23 +3,25 @@
 #include <assert.h>
 #include <array>
 #include <SFML/Graphics.hpp>
-
-#include "Entity/Message.h"
-#include "Entity/ComponentBase.h"
-#include "Entity/EntityInterface.h"
 #include "Globals/Globals.h"
-#include "Entity/ComponentID.h"
+#include "Component/ComponentBase.h"
 
 
+// Allow for variable number of components; Generic component
 
-class Entity : public EntityInterface
+class Entity
 {
 public:
 	typedef std::array<ComponentBase*, NUM_COMP> ComponentArray;
 	typedef std::vector<ComponentBase*> ComponentVec;
 
-	Entity(ComponentVec comps);
+	Entity() : id(Globals::GetEntityID()) {}
 	~Entity() {};
+
+	void Init(ComponentVec comps);
+	uint32_t GetID();
+	bool IsEnabled();
+	void Enable(bool state);
 
 	void SendMessage(ComponentMessage &msg);
 	void Update();
@@ -29,7 +31,10 @@ public:
 	void EnableComponent(ComponentID id);
 	void DisableComponent(ComponentID id);
 
-	ComponentArray components = { 0 }; // check that all elements are put to 0
+private:
+	ComponentArray components = { 0 };
+	const uint32_t id = 0; // 0 is treated as invalid id number
+	bool enabled = true;
 };
 
 

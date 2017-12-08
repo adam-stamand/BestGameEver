@@ -19,12 +19,14 @@ void RateLimiter::SetLimit(uint32_t ticks) {
 
 
 bool RateLimiter::Check() {
+	uint32_t timeDiff = Globals::GetTimer() - this->prevTicks;
+	
 	// Handle Wrap around of globalTimer
-	if ((Globals::GetTimer() - this->prevTicks) <= 0) {
+	if (timeDiff <= 0) {
 		this->prevTicks = 0;
 	}
 
-	if ((Globals::GetTimer() - this->prevTicks) > this->tickLimit) {
+	if (timeDiff > this->tickLimit) {
 		this->prevTicks = Globals::GetTimer();
 		return true;
 	}
