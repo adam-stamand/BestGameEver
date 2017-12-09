@@ -2,23 +2,25 @@
 
 
 
-CharacterControlsComponent::CharacterControlsComponent() : ControlsComponentBase(this)
+CharacterControlsComponent::CharacterControlsComponent() : ControlsComponentBase(this), rateLimiter(30)
 {
 
 	this->RegisterAction(
-	{ sf::Keyboard::D },
-	{ &ControlsComponent_t::MoveRight }
+		{ sf::Keyboard::D },
+		{ &ControlsComponent_t::MoveRight }
 	);
 
 	this->RegisterAction(
-	{ sf::Keyboard::A },
-	{ &ControlsComponent_t::MoveLeft }
+		{ sf::Keyboard::A },
+		{ &ControlsComponent_t::MoveLeft }
 	);
 
 	this->RegisterAction(
-	{ sf::Keyboard::L },
-	{ &ControlsComponent_t::FireGun }
+		{ sf::Keyboard::L },
+		{ &ControlsComponent_t::FireGun }
 	);	
+
+
 
 }
 
@@ -42,3 +44,5 @@ void CharacterControlsComponent::FireGun() {
 	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
+
+

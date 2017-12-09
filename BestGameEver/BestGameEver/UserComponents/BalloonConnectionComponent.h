@@ -31,8 +31,8 @@ public:
 
 		case ComponentMessage::GET_IDS: {
 			ComponentMessage::Contact * params = (ComponentMessage::Contact*)msg.params;
-			params->idA = this->vehicleID;
-			params->idB = this->occupantID;
+			params->idVec = { this->vehicleID, this->occupantID };
+
 			break;
 		}
 
@@ -60,7 +60,7 @@ public:
 
 				EntityManager::SendMessage(this->vehicleID, comp_msg);
 				jointDef.bodyA = tempBody;
-				tempBody->SetGravityScale(-5);
+				tempBody->SetGravityScale(-10);
 				EntityManager::SendMessage(this->occupantID, comp_msg); // TODO Needs to be double checked
 				jointDef.bodyB = tempBody;
 

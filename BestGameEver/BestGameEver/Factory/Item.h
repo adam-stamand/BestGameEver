@@ -4,10 +4,6 @@
 #include "Box2D/Box2D.h"
 
 
-#define DYNAMIC_BODY	b2BodyType::b2_dynamicBody
-#define STATIC_BODY		b2BodyType::b2_staticBody
-#define KINEMATIC_BODY	b2BodyType::b2_kinematicBody
-
 
 
 class Part
@@ -21,8 +17,8 @@ public:
 
 private:
 	Part() {}
-	b2FixtureDef * fixtureDef;
-	sf::Sprite * sprite;
+	b2FixtureDef * fixtureDef = NULL;
+	sf::Sprite * sprite = NULL;
 	b2Vec2 center;
 	float angle;
 };

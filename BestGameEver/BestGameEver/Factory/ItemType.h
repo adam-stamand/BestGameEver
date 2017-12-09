@@ -5,7 +5,16 @@
 #include "Factory/Material.h"
 #include "Factory/ItemShapeType.h"
 
+#define DYNAMIC_BODY	b2BodyType::b2_dynamicBody
+#define STATIC_BODY		b2BodyType::b2_staticBody
+#define KINEMATIC_BODY	b2BodyType::b2_kinematicBody
 
+enum BodyType {
+	dynamicBody = b2BodyType::b2_dynamicBody,
+	staticBody = b2BodyType::b2_staticBody,
+	kinematicBody = b2BodyType::b2_kinematicBody,
+	voidBody
+};
 
 
 
@@ -14,13 +23,11 @@ class ItemType
 public:
 
 
-	ItemType(){};
+	ItemType() {};
 	~ItemType() {};
 
 	std::string file;
-	Material * material;
-	ItemShapeType * shape;
-	b2BodyType bodyType;
-	
+	Material * material = NULL;
+	ItemShapeType * shape = NULL;
 };
 

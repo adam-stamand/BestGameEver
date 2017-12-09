@@ -11,6 +11,27 @@ Factory::~Factory()
 {
 }
 
+std::vector<b2Joint*> Factory::CreateJoints(std::vector<Item*> items, RevoluteJointConfig config)
+{
+
+	std::vector<b2Joint*> joints;
+	for (int i = 1; i < items.size(); i++) {
+		b2RevoluteJointDef * jointDef = new b2RevoluteJointDef;
+		jointDef->bodyA = items[i - 1]->body;
+		jointDef->localAnchorA.Set(config.coordsA[i - 1].x, config.coordsA[i - 1].y);
+
+		jointDef->bodyB = items[i]->body;
+		jointDef->localAnchorB.Set(config.coordsB[i].x, config.coordsB[i].y);
+
+
+		jointDef->collideConnected = config.collide;
+		joints.push_back(Globals::world.CreateJoint(jointDef));
+	}
+	
+	return joints;
+}
+
+
 
 Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 	Item * item = new Item;
@@ -20,7 +41,7 @@ Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 
 	for (int i = 0; i < parts.size(); i++) {
 		if (parts.at(i)->fixtureDef == NULL) { // If any part is missing a fixture, no body assigned
-			return item;
+			assert(0); // missing fixture definition for body
 		}
 		fixtures.push_back(parts.at(i)->fixtureDef);
 	}
@@ -31,31 +52,35 @@ Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 }
 
 
+Item * Factory::CreateItem(std::vector<Part*> parts) {
+	Item * item = new Item;
+	item->parts = parts;
+	return item;
+}
 
-Part * Factory::_CreatePart(ItemType &userItemType, b2Vec2 center, b2Vec2 size, float angle, uint16_t mask, uint16_t category) {
-	
+
+Part * Factory::_CreatePart(ItemType &userItemType, b2Vec2 center, b2Vec2 size, float angle) {
+	// a part needs at least either a sprite or a shape	
+	assert(!userItemType.file.empty() || userItemType.shape != NULL);
+
 	// Create Item Fixture
 	Part * part = new Part;
 	part->center = center;
 	part->angle = angle;
 
 	// Create Sprite
-	part->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
-
-	if (userItemType.material == NULL || userItemType.shape == NULL) { // No need to assign body; just a background
-		part->fixtureDef = NULL;
-		return part;
+	if (!userItemType.file.empty()){
+		part->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
+		//size.x = SF_2_BOX(part->sprite->getTexture()->getSize().x * part->sprite->getScale().x);
+		//size.y = SF_2_BOX(part->sprite->getTexture()->getSize().y * part->sprite->getScale().y); // conform size to size of sprite
+	} //check if sprite was specified
+	
+	// Create Shape and Fixture
+	if (userItemType.shape != NULL) { // No need to assign body if NULL; just a background
+		b2Shape * shape = Factory::CreateShape(size, *userItemType.shape, center, angle);
+		part->fixtureDef = Factory::CreateFixtureDef(shape, userItemType.material);
 	}
 
-	// Create Shape
-	b2Shape * shape = Factory::CreateShape(*part->sprite, *userItemType.shape, center, angle);
-
-	// Create Fixutre
-	part->fixtureDef = Factory::CreateFixtureDef(shape, *userItemType.material);
-	
-	// Apply collision masks
-	//itemFixture->fixture->filter.categoryBits = category;
-	//itemFixture->fixture->filter.maskBits = mask;
 
 	return part;
 }
@@ -84,17 +109,19 @@ sf::Sprite * Factory::CreateSprite(std::string str, int xSize, int ySize, b2Vec2
 
 
 
-b2Shape * Factory::CreateShape(sf::Sprite &sprite, ItemShapeType &shapeType, b2Vec2 center, float angle) {
-	return shapeType.GetShape(sprite, center, angle);
+b2Shape * Factory::CreateShape(b2Vec2 size, ItemShapeType &shapeType, b2Vec2 center, float angle) {
+	return shapeType.GetShape(size, center, angle);
 }
 
-b2FixtureDef * Factory::CreateFixtureDef(b2Shape * shape, Material &material) {
+b2FixtureDef * Factory::CreateFixtureDef(b2Shape * shape, Material  *material) {
 
 	b2FixtureDef * fixtureDef = new b2FixtureDef;
 	fixtureDef->shape = shape;
-	fixtureDef->density = material.density;
-	fixtureDef->friction = material.friction;
-	fixtureDef->restitution = material.resitution;
+	if (material != NULL) { // come up with better way of doign this
+		fixtureDef->density = material->density;
+		fixtureDef->friction = material->friction;
+		fixtureDef->restitution = material->resitution;
+	}
 	return fixtureDef;
 }
 

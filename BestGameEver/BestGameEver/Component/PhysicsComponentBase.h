@@ -54,6 +54,13 @@ public:
 			break;
 		}
 
+		case ComponentMessage::APPLY_IMPULSE: {
+			ComponentMessage::Force * params = (ComponentMessage::Force*)msg.params;
+			b2Vec2 unit_vec = this->body->GetWorldVector(params->vec);
+			this->body->ApplyLinearImpulse((params->force * unit_vec), this->body->GetWorldPoint(params->point), true);
+			break;
+		}
+
 		}
 		ComponentMessageHandler(msg);
 	}

@@ -69,6 +69,7 @@
     <ClCompile Include="UserComponents\ConnectionControlsComponent .cpp" />
     <ClCompile Include="UserComponents\GunControlsComponent.cpp" />
     <ClCompile Include="UserComponents\RocketControlsComponent.cpp" />
+    <ClCompile Include="UserComponents\TempControlsComponent.cpp" />
     <ClCompile Include="Utils\RateLimiter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,8 @@
     <ClInclude Include="UserComponents\BasicPhysicsComponent.h" />
     <ClInclude Include="UserComponents\CharacterControlsComponent.h" />
     <ClInclude Include="UserComponents\CharacterPhysicsComponent.h" />
+    <ClInclude Include="UserComponents\GroundConnectionComponent.h" />
+    <ClInclude Include="UserComponents\TempControlsComponent.h" />
     <ClInclude Include="UserComponents\UserComponents.h" />
     <ClInclude Include="UserComponents\ConnectionControlsComponent.h" />
     <ClInclude Include="UserComponents\GunControlsComponent.h" />

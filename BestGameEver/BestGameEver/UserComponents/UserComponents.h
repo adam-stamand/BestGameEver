@@ -11,4 +11,6 @@
 #include "UserComponents/ConnectionControlsComponent.h"
 #include "UserComponents/VehicleConnectionComponent.h"
 #include "UserComponents/BalloonConnectionComponent.h"
+#include "UserComponents/TempControlsComponent.h"
+#include "UserComponents/GroundConnectionComponent.h"
 

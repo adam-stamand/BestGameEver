@@ -13,6 +13,10 @@
 #include "Manager/Manager.h"
 
 
+//figure out difference between at and [] for vectors
+
+//consider changing itemType to partType
+
 // GOALS
 //
 // Pop balloons
@@ -25,7 +29,8 @@
 
 //TODO Character body still in game after entering vehicle
 
-// let character jump
+// Create debugging setup, so that asserts tell useful info
+// let character jump // on all object, not just ground
 // make joint creator
 // figure out how to apply initial rotation to sprites
 // sensor collisions
@@ -36,6 +41,11 @@
 // make border maker
 // create AI component
 // Make a car //application of joints really
+// Gun collides with walls first, causing it to move the joint // Consider masking it out, make uncollidable
+
+typedef std::vector<Part*> Parts;
+
+
 
 int main()
 {
@@ -61,27 +71,13 @@ int main()
 	// Create Items/Sprites
 	//------------------------
 
-	// Define ground
-	b2Vec2 groundBoxCoord[] = { b2Vec2(0,0),b2Vec2(800/30,0),b2Vec2(800/30,600/30),b2Vec2(0,600/30) };
-	b2ChainShape groundChain;
-	b2BodyDef groundBodyDef;
-	b2FixtureDef groundFixtureDef;
-	b2Body* groundBody;
 
-	groundChain.CreateLoop(groundBoxCoord, 4);
-	groundBodyDef.type = b2_staticBody;
-	groundBodyDef.position.Set(0, 0);
-	groundFixtureDef.shape = &groundChain;
-	groundBody = Globals::world.CreateBody(&groundBodyDef);
-	groundBody->CreateFixture(&groundFixtureDef);
+	Parts borderParts{
+		Factory::CreatePart<Border>(b2Vec2(SF_2_BOX(400),SF_2_BOX(300)),b2Vec2(SF_2_BOX(800),SF_2_BOX(600)))
+	};
+	Item * border = Factory::CreateItem(borderParts, STATIC_BODY);
 
 
-
-
-
-
-
-	
 	std::vector<Part*> rocketParts{
 		Factory::CreatePart<Rocket>(b2Vec2(0,0), b2Vec2(1,2.5)),
 		//Factory::CreatePart<Box>(b2Vec2(0,1), b2Vec2(2,2), DEGREES_2_RAD(45)),
@@ -108,6 +104,18 @@ int main()
 	box_body->body->SetAngularDamping(2);
 	box_body->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), DEGREES_2_RAD(0));
 
+
+
+
+	Parts platformParts{
+		Factory::CreatePart<Platform>(b2Vec2(0,0), b2Vec2(8,1))
+	};
+	Item * platform = Factory::CreateItem(platformParts, STATIC_BODY);
+	platform->body->SetTransform(b2Vec2(SF_2_BOX(400), SF_2_BOX(200)), 0);
+
+
+
+
 	
 	std::vector<Part*> balloonParts{ 
 		Factory::CreatePart<Balloon>(b2Vec2(0,0), b2Vec2(1,2))
@@ -123,7 +131,7 @@ int main()
 	std::vector<Part*> backgroundParts{
 		Factory::CreatePart<Background>(b2Vec2(SF_2_BOX(400),SF_2_BOX(300)), b2Vec2(SF_2_BOX(800),SF_2_BOX(600)))
 	};
-	Item * background = Factory::CreateItem(backgroundParts, DYNAMIC_BODY);
+	Item * background = Factory::CreateItem(backgroundParts);
 
 	
 	std::vector<Part*> gunParts{
@@ -151,25 +159,25 @@ int main()
 	// Create Entities
 	//------------------------
 	
-
 	Entity background_ent;
 	background_ent.Init(
-	{ 
-		new BasicGraphicsComponent(&window, background) 
+	{
+		new BasicGraphicsComponent(&window, background)
 	}
 	);
 
 	EntityManager::RegisterEntity(&background_ent);
 
-	
-	
-	Entity * trees[5];
+
+
+
+	Entity * trees[10];
 	for (int i = 0; i < 10; i++) {
-		
-		std::vector<Part*> treeParts{
-			Factory::CreatePart<Tree>(b2Vec2(SF_2_BOX((i*100) + 50),SF_2_BOX(550)), b2Vec2(1,2))
+
+		Parts treeParts{
+			Factory::CreatePart<Tree>(b2Vec2(SF_2_BOX((i * 100) + 50),SF_2_BOX(550)), b2Vec2(1,2))
 		};
-		Item * tree = Factory::CreateItem(treeParts, DYNAMIC_BODY);
+		Item * tree = Factory::CreateItem(treeParts);
 		trees[i] = new Entity;
 		trees[i]->Init(
 		{
@@ -178,6 +186,32 @@ int main()
 		);
 		EntityManager::RegisterEntity(trees[i]);
 	}
+
+
+
+	Entity border_ent;
+	border_ent.Init(
+	{
+		new BasicPhysicsComponent(border)
+	}
+	);
+	border->body->SetUserData(&border_ent);
+	EntityManager::RegisterEntity(&border_ent);
+
+
+	Entity platform_ent;
+	platform_ent.Init(
+	{
+		new BasicPhysicsComponent(platform),
+		new BasicGraphicsComponent(&window, platform),
+	}
+	);
+	platform->body->SetUserData(&platform_ent);
+	EntityManager::RegisterEntity(&platform_ent);
+
+
+	
+
 	
 	
 	// Get better way to attach user data to bodies;
@@ -253,10 +287,50 @@ int main()
 	
 	EntityManager::RegisterEntity(&connection_ent);
 	
+	Entity temp_ent;
+	temp_ent.Init(
+	{
+		new TempControlsComponent(),
+		new GroundConnectionComponent(character_ent.GetID(), {platform_ent.GetID(), border_ent.GetID()}) }
+	);
 
+	EntityManager::RegisterEntity(&temp_ent);
+
+
+
+	std::vector<Item*> rope;
+	RevoluteJointConfig config;
+	config.collide = false;
+
+
+	for (int i = 0; i < 5; i++) {
+		Parts * segmentParts = new Parts({
+			Factory::CreatePart<Box>(b2Vec2(0,0),b2Vec2(.5,1.5)),
+		});
+
+		config.coordsA.push_back(b2Vec2(0,.75));
+		config.coordsB.push_back(b2Vec2(0,-.75));
+
+		Item * segment = Factory::CreateItem(*segmentParts, DYNAMIC_BODY);
+		rope.push_back(segment);
+		segment->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), 0);
+		Entity * segment_ent = new Entity;
+		segment_ent->Init(
+		{
+			new BasicGraphicsComponent(&window, segment),
+			new BasicPhysicsComponent(segment) }
+		);
+		EntityManager::RegisterEntity(segment_ent);
+	}
+
+	config.coordsA.insert(config.coordsA.begin(), b2Vec2(0, 0));
+	config.coordsB.insert(config.coordsB.begin(), b2Vec2(0, .75));
+	rope.insert(rope.begin(), platform);
+	Factory::CreateJoints(rope, config);
 	
 	ContactManager contactManager;
 	contactManager.RegisterContact(&connection_ent);
+	contactManager.RegisterContact(&temp_ent);
 	contactManager.RegisterContact(&balloonConnect_ent);
 	contactManager.RegisterFilter({rocket_ent.GetID(), character_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID() });
 	Globals::world.SetContactListener(&contactManager);

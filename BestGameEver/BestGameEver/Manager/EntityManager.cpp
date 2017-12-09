@@ -56,7 +56,7 @@ void EntityManager::Update(sf::RenderWindow &window) {
 
 
 void EntityManager::SendMessage(uint32_t entityID, ComponentMessage &msg) {
-	assert(entities[entityID]->IsEnabled());
+	//assert(entities[entityID]->IsEnabled());
 	entities[entityID]->SendMessage(msg);
 }
 

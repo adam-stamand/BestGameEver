@@ -4,7 +4,6 @@
 
 void Entity::Init(ComponentVec comps) {
 	for (int i = 0; i < comps.size(); i++) {
-		puts("FDSF");
 		comps.at(i)->SetEntityID(this->GetID());
 		components[comps.at(i)->GetComponentID()] = comps.at(i);
 	}
@@ -50,7 +49,11 @@ void Entity::DisableComponent(ComponentID id) {
 
 
 void Entity::SendMessage(ComponentMessage &msg) {
-	assert(this->components[msg.compID] != NULL);
+	if (this->components[msg.compID] == NULL) {
+		printf("Entity %d sending message to component %d\n",this->id,  msg.compID);
+		assert(0);
+
+	}
 	components[msg.compID]->MessageHandler(msg);
 	
 }

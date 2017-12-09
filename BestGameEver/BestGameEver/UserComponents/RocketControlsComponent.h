@@ -11,7 +11,6 @@ public:
 	RocketControlsComponent();
 	~RocketControlsComponent() {}
 
-	void RocketControlsComponent::FireGun();
 	void RocketControlsComponent::MoveForward();
 	void RocketControlsComponent::RotateClockwise();
 	void RocketControlsComponent::RotateCounterClockwise();

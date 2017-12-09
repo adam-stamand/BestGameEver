@@ -19,18 +19,10 @@ RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this)
 		{ &ControlsComponent_t::RotateCounterClockwise }
 	);
 
-	this->RegisterAction(
-		{ sf::Keyboard::L },
-		{ &ControlsComponent_t::FireGun }
-	);
 }
 
 
-void RocketControlsComponent::FireGun() {
-	ComponentMessage::Force force(-100, b2Vec2(0, 1), b2Vec2(0, 0));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::FIRE, &force);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
-}
+
 
 void RocketControlsComponent::MoveForward() {
 	ComponentMessage::Force force(-100, b2Vec2(0,1), b2Vec2(0, 0));

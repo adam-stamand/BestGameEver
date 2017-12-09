@@ -35,8 +35,7 @@ public:
 
 		case ComponentMessage::GET_IDS: {
 			ComponentMessage::Contact * params = (ComponentMessage::Contact*)msg.params;
-			params->idA = this->vehicleID;
-			params->idB = this->occupantID;
+			params->idVec = {this->vehicleID, this->occupantID};
 			break;
 		}
 

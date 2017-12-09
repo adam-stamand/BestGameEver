@@ -68,8 +68,7 @@ Entity * ContactManager::SearchContact(b2Contact* contact, uint32_t idA, uint32_
 
 	for (int i = 0; i < this->entities.size(); i++) {
 		entities.at(i)->SendMessage(comp_msg);
-		std::vector<uint32_t> idVec{ contactStruct.idA, contactStruct.idB };
-		bool temp = this->CheckContact(idA, idB, idVec);
+		bool temp = this->CheckContact(idA, idB, contactStruct.idVec);
 
 		if (temp) {
 			return this->entities.at(i);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <stdint.h>
 #include "Box2D/Box2D.h"
 #include "Component/ComponentID.h"
@@ -13,9 +14,10 @@ public:
 		GET_TRANSFORM = 0,
 		SET_TRANSFORM,
 		SET_VEL,
+		JUMP,
 		ADD_VEL,
 		APPLY_FORCE,
-		APPLY_IMPLUSE,
+		APPLY_IMPULSE,
 		FIRE,
 		ENTER,
 		GET_IDS,
@@ -39,8 +41,7 @@ public:
 	};
 
 	struct Contact {
-		uint32_t idA;
-		uint32_t idB;
+		std::vector<uint32_t> idVec;
 	};
 
 	struct Body {

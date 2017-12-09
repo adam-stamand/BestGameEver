@@ -9,6 +9,6 @@ public:
 	ItemShapeType() {};
 	~ItemShapeType() {};
 
-	virtual b2Shape * GetShape(sf::Sprite & sprite, b2Vec2 center, float angle) = 0;
+	virtual b2Shape * GetShape(b2Vec2 size, b2Vec2 center, float angle) = 0;
 };
 
