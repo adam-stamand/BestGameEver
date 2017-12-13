@@ -12,8 +12,8 @@ class Part
 public:
 	friend class Factory;
 	sf::Sprite * GetSprite() { return this->sprite; };
-	b2Vec2 * GetCenter() { return &this->center; };
-	float * GetAngle() { return &this->angle; };
+	b2Vec2 GetCenter() { return this->center; };
+	float GetAngle() { return this->angle; };
 
 private:
 	Part() {}

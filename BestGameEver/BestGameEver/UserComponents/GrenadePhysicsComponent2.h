@@ -33,7 +33,7 @@ public:
 				b2Vec2 unit_vec(sin(angle), cos(angle));
 				b2Vec2 point2 = point1 + (-100.0 * unit_vec);
 				Globals::world.RayCast(&ray, point1, point2);
-				ray.fixture->GetBody()->ApplyLinearImpulse(-10 * unit_vec, ray.point, true);
+				ray.fixture->GetBody()->ApplyLinearImpulse(-3* unit_vec, ray.point, true);
 			}
 			Globals::world.DestroyBody(this->body);
 			EntityManager::DeRegisterEntity(this->GetEntityID());

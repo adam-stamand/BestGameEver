@@ -1,10 +1,14 @@
 #pragma once
 
-#include "Component/ComponentBase.h"
-#include "Manager/EventManager.h"
 #include <assert.h>
 
-// Could probably still cleanup
+#include "Component/ComponentBase.h"
+#include "Manager/EventManager.h"
+
+//--TODO--//
+//Make into generic I/O utility
+
+
 
 template <class T>
 class ControlsComponentBase : public ComponentBase
@@ -108,7 +112,6 @@ void ControlsComponentBase<T>::RegisterAction(sf::Event::EventType evnt, Event_F
 	EventAction evnt_action;
 	evnt_action.evnt = evnt;
 	evnt_action.funcs = funcs;
-	//evnt_action.funcs.insert(evnt_action.funcs.end(), funcs.begin(), funcs.end()); // can proabbly just copy vector instead of insert
 	event_action_map.push_back(evnt_action);
 }
 
@@ -119,7 +122,5 @@ void ControlsComponentBase<T>::RegisterAction(ControlKeys key_vec, KeyPress_Func
 	KeyPressAction key_action;
 	key_action.keys_pressed = key_vec;
 	key_action.funcs = funcs;
-	//key_action.keys_pressed.insert(key_action.keys_pressed.end(), key_vec.begin(), key_vec.end());
-	//key_action.funcs.insert(key_action.funcs.end(), funcs.begin(), funcs.end());
 	key_action_map.push_back(key_action);
 }

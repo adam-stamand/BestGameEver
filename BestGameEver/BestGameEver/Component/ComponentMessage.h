@@ -3,9 +3,10 @@
 #include <vector>
 #include <stdint.h>
 #include "Box2D/Box2D.h"
-#include "Component/ComponentID.h"
 
-// Consider cleaner way of doing enum and structs
+#include "Component/ComponentID.h"
+//--TODO--//
+// Consider cleaner way of doing enum and structs // definitely need a better way...
 
 class ComponentMessage {
 public:

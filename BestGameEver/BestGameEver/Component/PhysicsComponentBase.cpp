@@ -2,18 +2,25 @@
 #include "Component/PhysicsComponentBase.h"
 
 
+//--TODO--//
+// Resolve the body user data issue
+// use return value to determine whether to override following switch
+
+
 PhysicsComponentBase::PhysicsComponentBase(Item * item) : ComponentBase(PHYSICS){
 	this->body = item->body;
 	// attach entity id to body user data
 };
 
 	
-
 void PhysicsComponentBase::Update() {
-	ComponentUpdate();
+	ComponentUpdate(); // use return value to determine whether to override following switch
 }
 
+
 void PhysicsComponentBase::MessageHandler(ComponentMessage &msg) {
+
+	ComponentMessageHandler(msg); // use return value to determine whether to override following switch
 
 	switch (msg.funcID) {
 
@@ -59,7 +66,7 @@ void PhysicsComponentBase::MessageHandler(ComponentMessage &msg) {
 	}
 
 	}
-	ComponentMessageHandler(msg);
+	
 }
 
 

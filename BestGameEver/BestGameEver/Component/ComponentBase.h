@@ -2,7 +2,7 @@
 
 #include "Component/ComponentMessage.h"
 
-// consider removing set entity ID function, or protecting it somehow; better than friend class
+// consider removing set entity ID function, or protecting it somehow; better than friend class // or not?
 
 class ComponentBase
 {

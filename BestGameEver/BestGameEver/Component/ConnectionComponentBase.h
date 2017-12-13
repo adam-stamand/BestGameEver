@@ -2,8 +2,8 @@
 
 #include "Component/ComponentBase.h"
 
-
-// Turn this into generic component
+//--TODO--//
+//Move into separate thing completely
 
 class ConnectionComponentBase : public ComponentBase
 {

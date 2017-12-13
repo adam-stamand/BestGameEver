@@ -9,6 +9,10 @@
 #include "Globals/Globals.h"
 #include "Manager/DebugManager.h"
 
+//--TODO--//
+// Change constructor to require input string
+
+
 // Allow for variable number of components; Generic component // maybe
 
 
@@ -18,8 +22,6 @@ class Entity
 	typedef std::vector<ComponentBase*> ComponentVec;
 
 public:
-
-
 	Entity() : id(Globals::GetEntityID()) {}
 	Entity(std::string str) : id(Globals::GetEntityID()) { entityName = str; } // make only constructor // delete other one
 	~Entity() {};
