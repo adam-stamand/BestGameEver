@@ -68,6 +68,7 @@ public:
 			}
 			else if (this->inRange) {
 				
+				
 				EntityManager::EnableComponent(vehicleID, CONTROLS);
 				EntityManager::EnableComponent(gunID, CONTROLS);
 				EntityManager::EnableComponent(gunID, PHYSICS);

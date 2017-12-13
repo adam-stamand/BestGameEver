@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 
 enum ComponentID {
 	PHYSICS = 0,
@@ -8,3 +9,5 @@ enum ComponentID {
 	GENERIC,
 	NUM_COMP
 };
+
+extern std::map<ComponentID, const char*> componentIDMap;

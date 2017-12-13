@@ -8,6 +8,12 @@
 class ContactManager : public b2ContactListener
 {
 public:
+	enum ContactType {
+		CONTACT_BEGIN,
+		CONTACT_END
+
+	};
+
 	ContactManager() {};
 	~ContactManager() {};
 
@@ -16,8 +22,8 @@ public:
 	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
 
 	void GetIDs(b2Contact* contact, uint32_t &idA, uint32_t &idB);
-	Entity * SearchContact(b2Contact* contact, uint32_t idA, uint32_t idB);
-	bool CheckContact(uint32_t idA, uint32_t idB, std::vector<uint32_t> testIDs);
+	void SearchContact(uint32_t idA, uint32_t idB, ContactType type);
+	bool CheckContact(uint32_t idA, uint32_t idB, std::vector<uint32_t> idVec);
 	void RegisterContact(Entity *entity);
 	void RegisterFilter(std::vector<uint32_t> filter);
 

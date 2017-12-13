@@ -16,7 +16,7 @@ void TempControlsComponent::Jump() {
 	if (rateLimiter.Check()) {
 		ComponentMessage::Force force(-10, b2Vec2(0, 1), b2Vec2(0, 0));
 		ComponentMessage comp_msg(CONNECTION, ComponentMessage::JUMP, &force);
-		EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+		//EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 	}
 }
 

@@ -13,7 +13,7 @@ public:
 	bool Check();
 
 private:
-	uint32_t prevTicks;
-	uint32_t tickLimit;
+	uint32_t prevTicks = 0;
+	uint32_t tickLimit = 0;
 };
 

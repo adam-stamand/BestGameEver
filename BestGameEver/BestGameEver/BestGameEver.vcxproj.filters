@@ -226,6 +226,18 @@
     <ClCompile Include="UserComponents\TempControlsComponent.cpp">
       <Filter>UserComponents</Filter>
     </ClCompile>
+    <ClCompile Include="Factory\EntityFactory.cpp">
+      <Filter>Factory</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentID.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\GraphicsComponentBase.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\PhysicsComponentBase.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h">
@@ -476,6 +488,30 @@
     </ClInclude>
     <ClInclude Include="UserComponents\TempControlsComponent.h">
       <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\CharacterConnectionComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityType.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\UserEntityType.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\GrenadePhysicsComponent.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactory.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactoryInterface.h">
+      <Filter>Factory</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\GrenadePhysicsComponent2.h">
+      <Filter>UserComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="Manager\DebugManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

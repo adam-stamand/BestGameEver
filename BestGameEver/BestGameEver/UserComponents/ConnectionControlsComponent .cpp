@@ -14,7 +14,7 @@ ConnectionControlsComponent::ConnectionControlsComponent() : ControlsComponentBa
 void ConnectionControlsComponent::Enter() {
 	if (rateLimiter.Check()) {
 		ComponentMessage comp_msg(CONNECTION, ComponentMessage::ENTER, NULL);
-		EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+		//EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 	}
 }
 

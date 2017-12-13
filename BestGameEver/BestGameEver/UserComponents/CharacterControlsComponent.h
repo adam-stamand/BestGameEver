@@ -4,6 +4,8 @@
 #include "Component/ControlsComponentBase.h"
 #include "Manager/EntityManager.h"
 #include "Utils/RateLimiter.h"
+#include "Factory/Factory.h"
+#include "Factory/EntityFactory.h"
 
 class CharacterControlsComponent : public ControlsComponentBase<CharacterControlsComponent>
 {
@@ -13,7 +15,8 @@ public:
 	~CharacterControlsComponent() {};
 
 private:
-	void FireGun();
+	void Enter();
+	void Grenade();
 	void MoveLeft();
 	void MoveRight();
 };

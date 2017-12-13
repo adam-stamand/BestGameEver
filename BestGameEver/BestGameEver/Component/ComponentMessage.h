@@ -40,8 +40,16 @@ public:
 		float yVel;
 	};
 
+
+	struct IDPair{
+		uint32_t idA;
+		uint32_t idB;
+	};
+
+
 	struct Contact {
-		std::vector<uint32_t> idVec;
+		uint32_t primaryID;
+		std::vector<uint32_t> secondaryVec;
 	};
 
 	struct Body {

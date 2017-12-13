@@ -11,6 +11,8 @@ Factory::~Factory()
 {
 }
 
+
+
 std::vector<b2Joint*> Factory::CreateJoints(std::vector<Item*> items, RevoluteJointConfig config)
 {
 
@@ -21,7 +23,7 @@ std::vector<b2Joint*> Factory::CreateJoints(std::vector<Item*> items, RevoluteJo
 		jointDef->localAnchorA.Set(config.coordsA[i - 1].x, config.coordsA[i - 1].y);
 
 		jointDef->bodyB = items[i]->body;
-		jointDef->localAnchorB.Set(config.coordsB[i].x, config.coordsB[i].y);
+		jointDef->localAnchorB.Set(config.coordsB[i - 1].x, config.coordsB[i - 1].y);
 
 
 		jointDef->collideConnected = config.collide;
@@ -32,6 +34,45 @@ std::vector<b2Joint*> Factory::CreateJoints(std::vector<Item*> items, RevoluteJo
 }
 
 
+std::vector<b2Joint*> Factory::CreateJoints(Item * itemA, Item * itemB, WheelJointConfig config)
+{
+	std::vector<b2Joint*> joints;
+	b2WheelJointDef * jointDef = new b2WheelJointDef;
+
+	jointDef->localAxisA = config.axis;
+	jointDef->bodyA = itemA->body;
+	jointDef->localAnchorA.Set(config.coordsA.x, config.coordsA.y);
+
+	jointDef->bodyB = itemB->body;
+	jointDef->localAnchorB.Set(config.coordsB.x, config.coordsB.y);
+
+	jointDef->dampingRatio = 5;
+	
+	jointDef->collideConnected = config.collide;
+	joints.push_back(Globals::world.CreateJoint(jointDef));
+
+	return joints;
+
+}
+
+
+
+void Factory::CreateItem(Item * item, std::vector<Part*> parts, b2BodyType bodyType) {
+	
+	item->parts = parts;
+
+	std::vector<b2FixtureDef*> fixtures;
+
+	for (int i = 0; i < parts.size(); i++) {
+		if (parts.at(i)->fixtureDef == NULL) { // If any part is missing a fixture, no body assigned
+			assert(0); // missing fixture definition for body
+		}
+		fixtures.push_back(parts.at(i)->fixtureDef);
+	}
+
+	item->body = Factory::CreateBody(fixtures, bodyType);
+	if (item == NULL) assert(0);
+}
 
 Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 	Item * item = new Item;
@@ -47,7 +88,7 @@ Item * Factory::CreateItem(std::vector<Part*> parts, b2BodyType bodyType) {
 	}
 
 	item->body = Factory::CreateBody(fixtures, bodyType);
-
+	if (item == NULL) assert(0);
 	return item;
 }
 
@@ -71,8 +112,6 @@ Part * Factory::_CreatePart(ItemType &userItemType, b2Vec2 center, b2Vec2 size, 
 	// Create Sprite
 	if (!userItemType.file.empty()){
 		part->sprite = Factory::CreateSprite(userItemType.file, BOX_2_SF(size.x), BOX_2_SF(size.y), center);
-		//size.x = SF_2_BOX(part->sprite->getTexture()->getSize().x * part->sprite->getScale().x);
-		//size.y = SF_2_BOX(part->sprite->getTexture()->getSize().y * part->sprite->getScale().y); // conform size to size of sprite
 	} //check if sprite was specified
 	
 	// Create Shape and Fixture
@@ -81,7 +120,7 @@ Part * Factory::_CreatePart(ItemType &userItemType, b2Vec2 center, b2Vec2 size, 
 		part->fixtureDef = Factory::CreateFixtureDef(shape, userItemType.material);
 	}
 
-
+	if (part == NULL) assert(0);
 	return part;
 }
 

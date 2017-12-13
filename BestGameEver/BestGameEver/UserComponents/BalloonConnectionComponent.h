@@ -10,9 +10,10 @@ class BalloonConnectionComponent : public ConnectionComponentBase
 public:
 
 
-	BalloonConnectionComponent(uint32_t vehicleID, uint32_t occupantID) : ConnectionComponentBase() {
+	BalloonConnectionComponent(uint32_t vehicleID, uint32_t occupantID, uint32_t segment) : ConnectionComponentBase() {
 		this->vehicleID = vehicleID;
 		this->occupantID = occupantID;
+		this->segment = segment;
 	};
 
 	~BalloonConnectionComponent() {};
@@ -20,6 +21,7 @@ public:
 
 	bool occupied = false;
 	bool inRange = false;
+	uint32_t segment;
 	uint32_t vehicleID;
 	uint32_t occupantID;
 	b2RevoluteJointDef jointDef;
@@ -47,8 +49,11 @@ public:
 		}
 		case ComponentMessage::ENTER: {
 			if (this->occupied) {
+				b2Body * tempBody;
+				ComponentMessage comp_msg(PHYSICS, ComponentMessage::GET_BODY, &tempBody);
 
-				m_joint->GetBodyA()->SetGravityScale(2);
+				EntityManager::SendMessage(this->vehicleID, comp_msg);
+				tempBody->SetGravityScale(2);
 				Globals::world.DestroyJoint(this->m_joint);
 				this->m_joint = NULL;
 				this->occupied = false;
@@ -59,13 +64,16 @@ public:
 				ComponentMessage comp_msg(PHYSICS, ComponentMessage::GET_BODY, &tempBody);
 
 				EntityManager::SendMessage(this->vehicleID, comp_msg);
-				jointDef.bodyA = tempBody;
 				tempBody->SetGravityScale(-10);
+
+				EntityManager::SendMessage(this->segment, comp_msg);
+				jointDef.bodyA = tempBody;
+
 				EntityManager::SendMessage(this->occupantID, comp_msg); // TODO Needs to be double checked
 				jointDef.bodyB = tempBody;
 
 				jointDef.collideConnected = false;
-				jointDef.localAnchorA.Set(0, .75);
+				jointDef.localAnchorA.Set(0, .25);
 				jointDef.localAnchorB.Set(0, -.5);
 				this->m_joint = (b2RevoluteJoint*)Globals::world.CreateJoint(&jointDef);
 

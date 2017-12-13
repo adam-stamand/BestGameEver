@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "Box2D/Box2D.h"
+#include "Factory/EntityFactoryInterface.h" // fix this
+
 
 #define MUSIC(x)			"Music/" #x
 #define IMAGE(x)			"Images/" #x
@@ -19,6 +21,8 @@ public:
 	static uint32_t GetTimer();
 	static void IncrTimer();
 	static b2World world;
+	static sf::RenderWindow window;
+	static EntityFactoryInterface * entFactoryInterface;
 
 private:
 	static uint32_t globalTimer;

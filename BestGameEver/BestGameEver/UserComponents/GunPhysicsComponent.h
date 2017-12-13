@@ -4,7 +4,7 @@
 #include "Component/PhysicsComponentBase.h"
 #include "Globals/Globals.h"
 #include "Utils/RateLimiter.h"
-
+#include "Factory/Factory.h"
 
 
 class GunPhysicsComponent : public PhysicsComponentBase

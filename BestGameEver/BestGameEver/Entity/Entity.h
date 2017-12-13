@@ -3,38 +3,47 @@
 #include <assert.h>
 #include <array>
 #include <SFML/Graphics.hpp>
-#include "Globals/Globals.h"
+#include <string>
+
 #include "Component/ComponentBase.h"
+#include "Globals/Globals.h"
+#include "Manager/DebugManager.h"
 
+// Allow for variable number of components; Generic component // maybe
 
-// Allow for variable number of components; Generic component
 
 class Entity
 {
-public:
 	typedef std::array<ComponentBase*, NUM_COMP> ComponentArray;
 	typedef std::vector<ComponentBase*> ComponentVec;
 
-	Entity() : id(Globals::GetEntityID()) {}
-	~Entity() {};
+public:
 
-	void Init(ComponentVec comps);
-	uint32_t GetID();
-	bool IsEnabled();
-	void Enable(bool state);
+
+	Entity() : id(Globals::GetEntityID()) {}
+	Entity(std::string str) : id(Globals::GetEntityID()) { entityName = str; } // make only constructor // delete other one
+	~Entity() {};
 
 	void SendMessage(ComponentMessage &msg);
 	void Update();
 
-	void AddComponent(ComponentBase * component);
+	void AddComponent(ComponentVec comps);
 	void RemoveComponent(ComponentID id);
 	void EnableComponent(ComponentID id);
 	void DisableComponent(ComponentID id);
+
+	uint32_t GetID();
+	bool IsEnabled();
+	void Enable(bool state);
+
+	std::string GetName() { return entityName; }
+	std::string PrintEntity();
 
 private:
 	ComponentArray components = { 0 };
 	const uint32_t id = 0; // 0 is treated as invalid id number
 	bool enabled = true;
+	std::string entityName = "Unnamed";
 };
 
 

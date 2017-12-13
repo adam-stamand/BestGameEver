@@ -104,3 +104,13 @@ public:
 	}
 
 };
+
+class Car : public ItemType {
+public:
+	Car() {
+		this->file = IMAGE(car.png),
+			this->material = new Steel;
+			this->shape = new PolyItem({ b2Vec2(0, 0), b2Vec2(0,1), b2Vec2(1, 1), b2Vec2(1, 0) });
+	}
+
+};

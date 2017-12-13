@@ -36,7 +36,6 @@ public:
 		}
 
 		case ComponentMessage::CONTACT_BEGIN: {
-			puts("INCONTATONC");
 			this->inRange = true;
 			break;
 		}

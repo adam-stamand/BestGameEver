@@ -10,5 +10,7 @@ class BasicPhysicsComponent : public PhysicsComponentBase
 public:
 	BasicPhysicsComponent(Item * item) : PhysicsComponentBase(item) {};
 	~BasicPhysicsComponent() {};
+
+
 };
 

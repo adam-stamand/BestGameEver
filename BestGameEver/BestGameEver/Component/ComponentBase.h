@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component/ComponentMessage.h"
-#include "Component/ComponentID.h"
 
 // consider removing set entity ID function, or protecting it somehow; better than friend class
 
