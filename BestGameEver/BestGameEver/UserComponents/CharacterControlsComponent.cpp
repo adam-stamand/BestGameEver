@@ -32,31 +32,41 @@ CharacterControlsComponent::CharacterControlsComponent() : ControlsComponentBase
 
 void CharacterControlsComponent::Grenade() {
 	uint32_t id = Globals::entFactoryInterface->CreateEntity(EntityFactory::GRENADE_ENT);
-	ComponentMessage::Transform transform;
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::GET_TRANSFORM, &transform);
+
+	TransformMessage comp_msg;
+	comp_msg.SetDirection(ComponentMessage::INPUT);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
-	comp_msg.funcID = ComponentMessage::SET_TRANSFORM;
+	comp_msg.SetDirection(ComponentMessage::OUTPUT);
 	EntityManager::SendMessage(id, comp_msg);
 }
 
 void CharacterControlsComponent::MoveRight() {
-	ComponentMessage::Force force(100, b2Vec2(1, 0), b2Vec2(0, 0));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	ForceMessage comp_msg;
+	comp_msg.magnitude = 50;
+	comp_msg.unitVec = flVec2(1, 0);
+	comp_msg.point = flVec2(0, 0);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
 
 
 void CharacterControlsComponent::MoveLeft() {
-	ComponentMessage::Force force(100, b2Vec2(-1, 0), b2Vec2(0, 0));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	ForceMessage comp_msg;
+	comp_msg.magnitude = 50;
+	comp_msg.unitVec = flVec2(-1, 0);
+	comp_msg.point = flVec2(0, 0);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
 
 
 void CharacterControlsComponent::Enter() {
 	if (rateLimiter.Check()) {
-		ComponentMessage comp_msg(CONNECTION, ComponentMessage::ENTER, NULL);
+		ForceMessage comp_msg;
+		comp_msg.magnitude = 50;
+		comp_msg.unitVec = flVec2(-1, 0);
+		comp_msg.point = flVec2(0, 0);
 		EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+		//ComponentMessage comp_msg(CONNECTION, ComponentMessage::ENTER, NULL);
+		//EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 	}
 }
 

@@ -12,6 +12,21 @@
 #include "Entity/Entity.h"
 #include "Manager/Manager.h"
 
+
+// create fl namespace
+
+
+// Takeaways 
+// - InterEntity: pull out controls to central class/manager. Create connection manager, use it to register wtih contact manager; Still have connection components
+// Connection manager takes registration; has methods like InCtonactWith, and GetPairedEntity. Connection manager registers with contact manager
+// - IntraEntity: Messaging, create base messaging class, create specific message classes (in a library). Use strings as names for referencing message type.
+// - Entity Creation: Create heirarchy of user components, such that controls conpoments can know about other types. // Scratch that
+// Make spawn component that can spawn other entities. Create interface for attaching spawn entiteis, if needed, but make entity library all the same and
+// make it easy for everyone else to create entities.
+
+
+
+
 //multiple windows; consider
 
 // make some way to check entity has been reigstered before refereing
@@ -244,14 +259,14 @@ int main()
 	// Main Loop
 	//------------------------
 
-	ContactManager contactManager;
-	contactManager.RegisterContact(&character_ent);
+	//ContactManager contactManager;
+	//contactManager.RegisterContact(&character_ent);
 	//contactManager.RegisterContact(&connection_ent);
 	//contactManager.RegisterContact(&temp_ent);
 	//contactManager.RegisterContact(&carConnect_ent);
 	//contactManager.RegisterContact(&balloonConnect_ent);
-	contactManager.RegisterFilter({ character_ent.GetID(), rocket_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID(), car_ent.GetID() });
-	Globals::world.SetContactListener(&contactManager);
+	//contactManager.RegisterFilter({ character_ent.GetID(), rocket_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID(), car_ent.GetID() });
+	//Globals::world.SetContactListener(&contactManager);
 
 	Globals::window.setFramerateLimit(60);
 

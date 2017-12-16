@@ -25,7 +25,7 @@ public:
 	void ComponentUpdate() {
 		tempCnt++;
 		if (tempCnt > 100) {
-			b2Vec2 point1 = this->body->GetWorldPoint(b2Vec2(0, 0));
+			b2Vec2 point1 = this->m_item->body->GetWorldPoint(b2Vec2(0, 0));
 			PhysicsRayCast ray;
 
 			for (int i = 0; i < 50; i++) {
@@ -33,9 +33,9 @@ public:
 				b2Vec2 unit_vec(sin(angle), cos(angle));
 				b2Vec2 point2 = point1 + (-100.0 * unit_vec);
 				Globals::world.RayCast(&ray, point1, point2);
-				ray.fixture->GetBody()->ApplyLinearImpulse(-3* unit_vec, ray.point, true);
+				ray.m_item.body->ApplyLinearImpulse(-3* unit_vec, ray.m_point, true);
 			}
-			Globals::world.DestroyBody(this->body);
+			Globals::world.DestroyBody(this->m_item->body);
 			EntityManager::DeRegisterEntity(this->GetEntityID());
 		}
 	}

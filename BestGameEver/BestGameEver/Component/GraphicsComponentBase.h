@@ -7,7 +7,6 @@
 #include "Factory/Item.h"
 #include "Globals/Globals.h"
 
-
 class GraphicsComponentBase : public ComponentBase
 {
 public:
@@ -26,5 +25,5 @@ protected:
 private:
 	void GraphicsComponentBase::GetWorldTransformation(b2Vec2 &translation, float &rotation, Item &item);
 	void GraphicsComponentBase::GetLocalTransformation(b2Vec2 &translation, float &rotation, Part &part);
-	void GraphicsComponentBase::Transform(b2Vec2 &localPoint, float &localRotation, float &rotation);
+	void GraphicsComponentBase::Transform2d(b2Vec2 &localPoint, float &localRotation, float &rotation);
 };

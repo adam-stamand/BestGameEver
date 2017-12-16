@@ -6,9 +6,11 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
+#include "Message/ComponentMessage.h"
 
 
 #undef SendMessage 
+
 
 
 class DebugManager
@@ -28,7 +30,11 @@ public:
 		SetConsoleTextAttribute(hConsole, 4);
 		std::cout << "ERROR: " + message << std::endl;
 	}
+
+
+	static const std::map<ComponentID, const char*> componentIDMap;
 };
+
 
 
 

@@ -26,7 +26,7 @@ void GraphicsComponentBase::Update()
 		GetLocalTransformation(translationPart, rotationPart, *item->parts.at(i));
 		
 		// Transform part into world coordinates
-		Transform(translationPart, rotationPart, rotationItem);
+		Transform2d(translationPart, rotationPart, rotationItem);
 		
 		// Translate part to item
 		translationPart += translationItem;
@@ -41,7 +41,7 @@ void GraphicsComponentBase::Update()
 }
 
 
-void GraphicsComponentBase::Transform(b2Vec2 &localPoint, float &localRotation, float &rotation) {
+void GraphicsComponentBase::Transform2d(b2Vec2 &localPoint, float &localRotation, float &rotation) {
 
 	// If the part is offcenter from item center, apply rotation matrix
 	if (localPoint.x || localPoint.y) {

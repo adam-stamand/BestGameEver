@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component/ControlsComponentBase.h"
+#include "Message/Message.h"
 #include "Manager/EntityManager.h"
 
 

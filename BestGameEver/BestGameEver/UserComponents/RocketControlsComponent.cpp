@@ -25,22 +25,28 @@ RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this)
 
 
 void RocketControlsComponent::MoveForward() {
-	ComponentMessage::Force force(-100, b2Vec2(0,1), b2Vec2(0, 0));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	ForceMessage comp_msg;
+	comp_msg.magnitude = -100;
+	comp_msg.unitVec = flVec2(0,1);
+	comp_msg.point = flVec2(0, 0);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
 
 
 void RocketControlsComponent::RotateClockwise() {
-	ComponentMessage::Force force(1, b2Vec2(1, 0), b2Vec2(0, -50));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	ForceMessage comp_msg;
+	comp_msg.magnitude = 1;
+	comp_msg.unitVec = flVec2(1, 0);
+	comp_msg.point = flVec2(0, -50);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
 
 
 void RocketControlsComponent::RotateCounterClockwise() {
-	ComponentMessage::Force force(1, b2Vec2(-1, 0), b2Vec2(0, -50));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::APPLY_FORCE, &force);
+	ForceMessage comp_msg;
+	comp_msg.magnitude = -1;
+	comp_msg.unitVec = flVec2(1, 0);
+	comp_msg.point = flVec2(0, -50);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
 }
 

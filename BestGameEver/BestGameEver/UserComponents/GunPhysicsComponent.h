@@ -21,14 +21,14 @@ public:
 
 	void ComponentUpdate() {
 		sf::Vector2i mousePos = sf::Mouse::getPosition(*this->window);
-		b2Vec2 bodyPos = this->body->GetPosition();
+		b2Vec2 bodyPos = this->m_item->body->GetPosition();
 		float angle = std::atan2((mousePos.y - BOX_2_SF(bodyPos.y)), (mousePos.x - BOX_2_SF(bodyPos.x)));
-		this->body->SetTransform(this->body->GetWorldPoint(b2Vec2(0,0)), angle + 1.571);
+		this->m_item->body->SetTransform(this->m_item->body->GetWorldPoint(b2Vec2(0,0)), angle + 1.571);
 	}
 
 
 	void ComponentMessageHandler(ComponentMessage &msg) {
-
+		/*
 		switch (msg.funcID) {
 
 		case ComponentMessage::FIRE: {
@@ -45,6 +45,7 @@ public:
 
 		}
 		}
+		*/
 	}
 };
 

@@ -5,6 +5,7 @@
 
 
 
+
 class GunControlsComponent : public ControlsComponentBase<GunControlsComponent>
 {
 public:

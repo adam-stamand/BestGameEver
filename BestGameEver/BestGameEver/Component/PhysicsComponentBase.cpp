@@ -7,8 +7,26 @@
 // use return value to determine whether to override following switch
 
 
-PhysicsComponentBase::PhysicsComponentBase(Item * item) : ComponentBase(PHYSICS){
-	this->body = item->body;
+void PhysicsComponentBase::MessageHandler(ComponentMessage &msg) {
+	//std::map<std::string, void(PhysicsComponentBase::*)(ComponentMessage &comp_msg)> tempmap({
+	//	{ "APPLY_FORCE", &PhysicsComponentBase::ApplyForceMessageHandler },
+	//	{ "APPLY_IMPULSE", &PhysicsComponentBase::ApplyImpulseMessageHandler },
+	//	{ "GET_ITEM", &PhysicsComponentBase::GetItemMessageHandler },
+	//	{ "TRANSFORM", &PhysicsComponentBase::TransformMessageHandler }
+	//});
+	//(this->*tempmap.find(msg.funcName)->second)(msg);
+	(this->*messageHandlerMap.find(msg.funcName)->second)(msg);
+}
+
+PhysicsComponentBase::PhysicsComponentBase(Item * item) : ComponentBase(PHYSICS),
+	messageHandlerMap({
+	{ "APPLY_FORCE", &PhysicsComponentBase::ApplyForceMessageHandler },
+	{ "APPLY_IMPULSE", &PhysicsComponentBase::ApplyImpulseMessageHandler },
+	{ "GET_ITEM", &PhysicsComponentBase::GetItemMessageHandler },
+	{ "TRANSFORM", &PhysicsComponentBase::TransformMessageHandler }
+	})
+{
+	this->m_item = item;
 	// attach entity id to body user data
 };
 
@@ -18,63 +36,49 @@ void PhysicsComponentBase::Update() {
 }
 
 
-void PhysicsComponentBase::MessageHandler(ComponentMessage &msg) {
+void PhysicsComponentBase::GetItemMessageHandler(ComponentMessage &comp_msg) {
+	ItemMessage *itemMessage = static_cast<ItemMessage*>(&comp_msg);
+	itemMessage->item = this->m_item;
+}
 
-	ComponentMessageHandler(msg); // use return value to determine whether to override following switch
-
-	switch (msg.funcID) {
-
-	case ComponentMessage::GET_TRANSFORM: {
-		ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
-		params->xPos = this->body->GetPosition().x;
-		params->yPos = this->body->GetPosition().y;
-		params->angle = this->body->GetAngle();
-		break;
+void PhysicsComponentBase::TransformMessageHandler(ComponentMessage &comp_msg) {
+	TransformMessage *transMessage = static_cast<TransformMessage*>(&comp_msg);
+	if (transMessage->GetDirection() == ComponentMessage::INPUT) {
+		this->m_item->body->SetTransform(transMessage->center, transMessage->angle);
 	}
+	else {
+		transMessage->center = this->m_item->body->GetWorldPoint(b2Vec2(0, 0));
+		transMessage->angle = this->m_item->body->GetAngle();
+		this->m_item->body->SetAwake(true);
+	}	
+}
 
-	case ComponentMessage::GET_BODY: {
-		b2Body ** body = (b2Body**)msg.params;
-		*body = this->body;
-		break;
-	}
+/*
+void PhysicsComponentBase::EnableBody(ComponentMessage &comp_msg) {
+	TransformMessage *transMessage = static_cast<TransformMessage*>(&comp_msg);
+	bool * state = (bool*)msg.params;
+	this->body->SetActive(*state);
+}
+*/
 
-	case ComponentMessage::SET_TRANSFORM: {
-		ComponentMessage::Transform * params = (ComponentMessage::Transform*)msg.params;
-		this->body->SetTransform(b2Vec2(params->xPos, params->yPos), params->angle);
-		this->body->SetAwake(true);
-		break;
-	}
+void PhysicsComponentBase::ApplyForceMessageHandler(ComponentMessage &comp_msg) {
+	ForceMessage *forceMessage = static_cast<ForceMessage*>(&comp_msg);
+	b2Vec2 unit_vec = this->m_item->body->GetWorldVector(forceMessage->unitVec);
+	this->m_item->body->ApplyForce((forceMessage->magnitude * unit_vec), this->m_item->body->GetWorldPoint(forceMessage->point), true);
+}
 
-	case ComponentMessage::ENABLE_BODY: {
-		bool * state = (bool*)msg.params;
-		this->body->SetActive(*state);
-		break;
-	}
-
-	case ComponentMessage::APPLY_FORCE: {
-		ComponentMessage::Force * params = (ComponentMessage::Force*)msg.params;
-		b2Vec2 unit_vec = this->body->GetWorldVector(params->vec);
-		this->body->ApplyForce((params->force * unit_vec), this->body->GetWorldPoint(params->point), true);
-		break;
-	}
-
-	case ComponentMessage::APPLY_IMPULSE: {
-		ComponentMessage::Force * params = (ComponentMessage::Force*)msg.params;
-		b2Vec2 unit_vec = this->body->GetWorldVector(params->vec);
-		this->body->ApplyLinearImpulse((params->force * unit_vec), this->body->GetWorldPoint(params->point), true);
-		break;
-	}
-
-	}
-	
+void PhysicsComponentBase::ApplyImpulseMessageHandler(ComponentMessage &comp_msg) {
+	ImpulseMessage *impulseMessage = static_cast<ImpulseMessage*>(&comp_msg);
+	b2Vec2 unit_vec = this->m_item->body->GetWorldVector(impulseMessage->unitVec);
+	this->m_item->body->ApplyLinearImpulse((impulseMessage->magnitude * unit_vec), this->m_item->body->GetWorldPoint(impulseMessage->point), true);
 }
 
 
 float32 PhysicsComponentBase::PhysicsRayCast::ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction)
 {
-	this->fixture = fixture;
-	this->point = point;
-	this->normal = normal;
+	this->m_item.body = fixture->GetBody();
+	this->m_point = point;
+	this->m_normal = normal;
 	return fraction;
 }
 

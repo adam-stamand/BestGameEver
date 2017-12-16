@@ -13,8 +13,13 @@ GunControlsComponent::GunControlsComponent() : ControlsComponentBase(this)
 
 
 void GunControlsComponent::FireGun(sf::Event &evnt) {
-	ComponentMessage::Force force(-100, b2Vec2(0, 1), b2Vec2(0, 0));
-	ComponentMessage comp_msg(PHYSICS, ComponentMessage::FIRE, &force);
+	/*
+	ForceMessage comp_msg;
+	comp_msg.magnitude = -100;
+	comp_msg.unitVec = flVec2(0, 1);
+	comp_msg.point = flVec2(0, 0);
 	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+	*/
+
 }
 

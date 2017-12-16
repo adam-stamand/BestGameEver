@@ -46,6 +46,9 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{39e9895c-2e5c-4922-9cae-0b0a5995fcfd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Message">
+      <UniqueIdentifier>{bb769779-bedc-4136-9e5d-5485c107f004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -202,9 +205,6 @@
     <ClCompile Include="UserComponents\CharacterControlsComponent.cpp">
       <Filter>UserComponents</Filter>
     </ClCompile>
-    <ClCompile Include="UserComponents\ConnectionControlsComponent .cpp">
-      <Filter>UserComponents</Filter>
-    </ClCompile>
     <ClCompile Include="UserComponents\GunControlsComponent.cpp">
       <Filter>UserComponents</Filter>
     </ClCompile>
@@ -223,13 +223,16 @@
     <ClCompile Include="Manager\EventManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="UserComponents\TempControlsComponent.cpp">
-      <Filter>UserComponents</Filter>
-    </ClCompile>
     <ClCompile Include="Factory\EntityFactory.cpp">
       <Filter>Factory</Filter>
     </ClCompile>
-    <ClCompile Include="ComponentID.cpp">
+    <ClCompile Include="Utils\StringHash.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ConnectionComponentBase.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ControlsComponentBase.cpp">
       <Filter>Component</Filter>
     </ClCompile>
     <ClCompile Include="Component\GraphicsComponentBase.cpp">
@@ -237,6 +240,9 @@
     </ClCompile>
     <ClCompile Include="Component\PhysicsComponentBase.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -411,9 +417,6 @@
     <ClInclude Include="Utils\RateLimiter.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="UserComponents\BalloonConnectionComponent.h">
-      <Filter>UserComponents</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponents\BasicGraphicsComponent.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
@@ -426,9 +429,6 @@
     <ClInclude Include="UserComponents\CharacterPhysicsComponent.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
-    <ClInclude Include="UserComponents\ConnectionControlsComponent.h">
-      <Filter>UserComponents</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponents\GunControlsComponent.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
@@ -438,32 +438,8 @@
     <ClInclude Include="UserComponents\RocketControlsComponent.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
-    <ClInclude Include="UserComponents\VehicleConnectionComponent.h">
-      <Filter>UserComponents</Filter>
-    </ClInclude>
     <ClInclude Include="Entity\Entity.h">
       <Filter>Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ComponentBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ComponentID.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ComponentMessage.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ConnectionComponentBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\ControlsComponentBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\GraphicsComponentBase.h">
-      <Filter>Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Component\PhysicsComponentBase.h">
-      <Filter>Component</Filter>
     </ClInclude>
     <ClInclude Include="Manager\ContactManager.h">
       <Filter>Manager</Filter>
@@ -483,12 +459,6 @@
     <ClInclude Include="UserComponents\UserComponents.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
-    <ClInclude Include="UserComponents\GroundConnectionComponent.h">
-      <Filter>UserComponents</Filter>
-    </ClInclude>
-    <ClInclude Include="UserComponents\TempControlsComponent.h">
-      <Filter>UserComponents</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponents\CharacterConnectionComponent.h">
       <Filter>UserComponents</Filter>
     </ClInclude>
@@ -497,9 +467,6 @@
     </ClInclude>
     <ClInclude Include="Factory\UserEntityType.h">
       <Filter>Factory</Filter>
-    </ClInclude>
-    <ClInclude Include="UserComponents\GrenadePhysicsComponent.h">
-      <Filter>UserComponents</Filter>
     </ClInclude>
     <ClInclude Include="Factory\EntityFactory.h">
       <Filter>Factory</Filter>
@@ -512,6 +479,43 @@
     </ClInclude>
     <ClInclude Include="Manager\DebugManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h" />
+    <ClInclude Include="Utils\StringHash.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\ComponentMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\ConnectionComponentMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\ControlsComponentMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\GraphicsComponentMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\Message.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Message\PhysicsComponentMessage.h">
+      <Filter>Message</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ComponentBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ConnectionComponentBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ControlsComponentBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\GraphicsComponentBase.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\PhysicsComponentBase.h">
+      <Filter>Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

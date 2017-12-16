@@ -1,12 +1,12 @@
 #pragma once
 
 #include <assert.h>
-
 #include "Component/ComponentBase.h"
 #include "Manager/EventManager.h"
 
 //--TODO--//
 //Make into generic I/O utility
+// Make component independent of sprite definition
 
 
 

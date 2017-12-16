@@ -74,7 +74,7 @@ public:
 	}
 
 	void ComponentMessageHandler(ComponentMessage &msg) {
-
+		/*
 		switch (msg.funcID) {
 
 		case ComponentMessage::JUMP: {
@@ -200,6 +200,7 @@ public:
 		}
 
 		}
+		*/
 	}
 
 
