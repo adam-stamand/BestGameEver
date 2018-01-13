@@ -5,13 +5,13 @@
 #include <stdlib.h>
 #include "SFML/Audio.hpp"
 
-
 #include "Globals/Globals.h"
 #include "Factory/Factory.h"
 #include "UserComponents/UserComponents.h"
 #include "Entity/Entity.h"
 #include "Manager/Manager.h"
 
+#include "Manager/ConnectionManager.h"
 
 // create fl namespace
 
@@ -259,6 +259,11 @@ int main()
 	// Main Loop
 	//------------------------
 
+	ConnectionManager connectionManager;
+	ConnectionManager::RegisterCollisionFilter(character_ent.GetID(), { rocket_ent.GetID(), car_ent.GetID() });
+	ConnectionManager::RegisterConnection(character_ent.GetID(),{ rocket_ent.GetID(), car_ent.GetID() }, "TEST_CONNECTION", true);
+
+
 	//ContactManager contactManager;
 	//contactManager.RegisterContact(&character_ent);
 	//contactManager.RegisterContact(&connection_ent);
@@ -266,8 +271,7 @@ int main()
 	//contactManager.RegisterContact(&carConnect_ent);
 	//contactManager.RegisterContact(&balloonConnect_ent);
 	//contactManager.RegisterFilter({ character_ent.GetID(), rocket_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID(), car_ent.GetID() });
-	//Globals::world.SetContactListener(&contactManager);
-
+	Globals::world.SetContactListener(&connectionManager);
 	Globals::window.setFramerateLimit(60);
 
 	while (Globals::window.isOpen())

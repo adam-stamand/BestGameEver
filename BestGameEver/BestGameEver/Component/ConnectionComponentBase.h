@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component/ComponentBase.h"
+#include "Component/Message/Message.h"
 //--TODO--//
 //Move into separate thing completely
 
@@ -25,8 +26,6 @@ public:
 	}
 	
 
-
-	virtual void ComponentMessageHandler(ComponentMessage &msg) {};
 	virtual void ComponentUpdate() {};
 
 

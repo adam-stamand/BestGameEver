@@ -2,7 +2,7 @@
 
 #include <math.h>
 #include <string.h>
-
+#include "Component/Message/Message.h"
 #include "Component/ComponentBase.h"
 #include "Factory/Item.h"
 #include "Globals/Globals.h"
@@ -16,7 +16,6 @@ public:
 	void Update();
 	void MessageHandler(ComponentMessage &msg);
 	virtual void ComponentUpdate() {};
-	virtual void ComponentMessageHandler(ComponentMessage &msg) {};
 
 protected:
 	void DrawSprite(sf::Sprite &sprite, b2Vec2 center, float  angle);

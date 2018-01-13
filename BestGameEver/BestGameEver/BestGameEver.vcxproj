@@ -61,23 +61,25 @@
     <ClCompile Include="Component\ControlsComponentBase.cpp" />
     <ClCompile Include="Component\GraphicsComponentBase.cpp" />
     <ClCompile Include="Component\PhysicsComponentBase.cpp" />
-    <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="Entity\Entity.cpp" />
     <ClCompile Include="Factory\EntityFactory.cpp" />
     <ClCompile Include="Factory\Factory.cpp" />
     <ClCompile Include="Factory\ItemShape.cpp" />
     <ClCompile Include="Globals\Globals.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager\ContactManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="Manager\ConnectionManager.cpp" />
+    <ClCompile Include="Manager\DebugManager.cpp" />
     <ClCompile Include="Manager\EntityManager.cpp" />
     <ClCompile Include="Manager\EventManager.cpp" />
-    <ClCompile Include="UserComponents\CharacterControlsComponent.cpp" />
-    <ClCompile Include="UserComponents\GunControlsComponent.cpp" />
-    <ClCompile Include="UserComponents\RocketControlsComponent.cpp" />
+    <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Character\CharacterConnectionComponent.cpp" />
+    <ClCompile Include="UserComponents\Character\CharacterControlsComponent.cpp" />
+    <ClCompile Include="UserComponents\Character\CharacterPhysicsComponent.cpp" />
+    <ClCompile Include="UserComponents\Gun\GunControlsComponent.cpp" />
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp" />
     <ClCompile Include="Utils\RateLimiter.cpp" />
-    <ClCompile Include="Utils\StringHash.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Box2D.h" />
@@ -131,6 +133,12 @@
     <ClInclude Include="Component\ConnectionComponentBase.h" />
     <ClInclude Include="Component\ControlsComponentBase.h" />
     <ClInclude Include="Component\GraphicsComponentBase.h" />
+    <ClInclude Include="Component\Message\ComponentMessage.h" />
+    <ClInclude Include="Component\Message\ConnectionComponentMessage.h" />
+    <ClInclude Include="Component\Message\ControlsComponentMessage.h" />
+    <ClInclude Include="Component\Message\GraphicsComponentMessage.h" />
+    <ClInclude Include="Component\Message\Message.h" />
+    <ClInclude Include="Component\Message\PhysicsComponentMessage.h" />
     <ClInclude Include="Component\PhysicsComponentBase.h" />
     <ClInclude Include="Entity\Entity.h" />
     <ClInclude Include="Factory\EntityFactory.h" />
@@ -146,31 +154,30 @@
     <ClInclude Include="Factory\UserItemType.h" />
     <ClInclude Include="Factory\UserMaterials.h" />
     <ClInclude Include="Globals\Globals.h" />
-    <ClInclude Include="Manager\ContactManager.h" />
+    <ClInclude Include="Manager\ConnectionManager.h" />
     <ClInclude Include="Manager\DebugManager.h" />
     <ClInclude Include="Manager\EntityManager.h" />
     <ClInclude Include="Manager\EventManager.h" />
     <ClInclude Include="Manager\JointManager.h" />
     <ClInclude Include="Manager\Manager.h" />
-    <ClInclude Include="Message\ComponentMessage.h" />
-    <ClInclude Include="Message\ConnectionComponentMessage.h" />
-    <ClInclude Include="Message\ControlsComponentMessage.h" />
-    <ClInclude Include="Message\GraphicsComponentMessage.h" />
-    <ClInclude Include="Message\Message.h" />
-    <ClInclude Include="Message\PhysicsComponentMessage.h" />
     <ClInclude Include="Types.h" />
-    <ClInclude Include="UserComponents\BasicGraphicsComponent.h" />
-    <ClInclude Include="UserComponents\BasicPhysicsComponent.h" />
-    <ClInclude Include="UserComponents\CharacterConnectionComponent.h" />
-    <ClInclude Include="UserComponents\CharacterControlsComponent.h" />
-    <ClInclude Include="UserComponents\CharacterPhysicsComponent.h" />
+    <ClInclude Include="UserComponents\Basic\BasicControlsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Basic\BasicGraphicsComponent.h" />
+    <ClInclude Include="UserComponents\Basic\BasicPhysicsComponent.h" />
+    <ClInclude Include="UserComponents\Character\CharacterConnectionComponent.h" />
+    <ClInclude Include="UserComponents\Character\CharacterControlsComponent.h" />
+    <ClInclude Include="UserComponents\Character\CharacterPhysicsComponent.h" />
     <ClInclude Include="UserComponents\GrenadePhysicsComponent2.h" />
+    <ClInclude Include="UserComponents\Gun\GunControlsComponent.h" />
+    <ClInclude Include="UserComponents\Gun\GunPhysicsComponent.h" />
+    <ClInclude Include="UserComponents\Message\CharacterMessage.h" />
+    <ClInclude Include="UserComponents\Message\Message.h" />
+    <ClInclude Include="UserComponents\Rocket\RocketConnectionComponent.h" />
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h" />
     <ClInclude Include="UserComponents\UserComponents.h" />
-    <ClInclude Include="UserComponents\GunControlsComponent.h" />
-    <ClInclude Include="UserComponents\GunPhysicsComponent.h" />
-    <ClInclude Include="UserComponents\RocketControlsComponent.h" />
     <ClInclude Include="Utils\RateLimiter.h" />
-    <ClInclude Include="Utils\StringHash.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

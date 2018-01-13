@@ -3,6 +3,7 @@
 #include "Box2D/Box2D.h"
 #include "Factory/Item.h"
 #include "Component/ComponentBase.h"
+#include "Component/Message/Message.h"
 #include "Factory/Item.h"
 #include "Utils/StringHash.h"
 
@@ -19,7 +20,6 @@ public:
 	
 	void Update();
 	void MessageHandler(ComponentMessage &msg);
-	virtual void ComponentMessageHandler(ComponentMessage &msg) {};
 	virtual void ComponentUpdate() {};
 
 	class PhysicsRayCast : public b2RayCastCallback {

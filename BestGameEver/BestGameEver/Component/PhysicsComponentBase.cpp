@@ -7,15 +7,16 @@
 // use return value to determine whether to override following switch
 
 
-void PhysicsComponentBase::MessageHandler(ComponentMessage &msg) {
-	//std::map<std::string, void(PhysicsComponentBase::*)(ComponentMessage &comp_msg)> tempmap({
-	//	{ "APPLY_FORCE", &PhysicsComponentBase::ApplyForceMessageHandler },
-	//	{ "APPLY_IMPULSE", &PhysicsComponentBase::ApplyImpulseMessageHandler },
-	//	{ "GET_ITEM", &PhysicsComponentBase::GetItemMessageHandler },
-	//	{ "TRANSFORM", &PhysicsComponentBase::TransformMessageHandler }
-	//});
-	//(this->*tempmap.find(msg.funcName)->second)(msg);
-	(this->*messageHandlerMap.find(msg.funcName)->second)(msg);
+void PhysicsComponentBase::MessageHandler(ComponentMessage &comp_msg) {
+	if (!this->ComponentMessageHandler(comp_msg)) {
+		auto iter = messageHandlerMap.find(comp_msg.funcName);
+		if (iter != messageHandlerMap.end()) {
+			(this->*iter->second)(comp_msg);
+		}
+		else {
+			assert(0); //temporary
+		}
+	}
 }
 
 PhysicsComponentBase::PhysicsComponentBase(Item * item) : ComponentBase(PHYSICS),

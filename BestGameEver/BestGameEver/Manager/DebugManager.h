@@ -6,7 +6,7 @@
 #include <string>
 #include <iostream>
 #include <Windows.h>
-#include "Message/ComponentMessage.h"
+#include "Component/Message/ComponentMessage.h"
 
 
 #undef SendMessage 

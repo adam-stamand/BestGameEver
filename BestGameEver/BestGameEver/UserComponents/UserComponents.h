@@ -1,15 +1,15 @@
 #pragma once
 
 #include "UserComponents/GrenadePhysicsComponent2.h"
-#include "UserComponents/BasicPhysicsComponent.h"
-#include "UserComponents/BasicGraphicsComponent.h"
-#include "UserComponents/CharacterControlsComponent.h"
-#include "UserComponents/CharacterPhysicsComponent.h"
-#include "UserComponents/GunPhysicsComponent.h"
-#include "UserComponents/GunControlsComponent.h"
-#include "UserComponents/RocketControlsComponent.h"
+#include "UserComponents/Basic/BasicPhysicsComponent.h"
+#include "UserComponents/Basic/BasicGraphicsComponent.h"
+#include "UserComponents/Character/CharacterControlsComponent.h"
+#include "UserComponents/Character/CharacterPhysicsComponent.h"
+#include "UserComponents/Gun/GunPhysicsComponent.h"
+#include "UserComponents/Gun/GunControlsComponent.h"
+#include "UserComponents/Rocket/RocketControlsComponent.h"
 #include "UserComponents/ConnectionControlsComponent.h"
 #include "UserComponents/TempControlsComponent.h"
-#include "UserComponents/CharacterConnectionComponent.h"
+#include "UserComponents/Character/CharacterConnectionComponent.h"
 
 

@@ -3,7 +3,7 @@
 #include <assert.h>
 #include "Component/ComponentBase.h"
 #include "Manager/EventManager.h"
-
+#include "Component/Message/Message.h"
 //--TODO--//
 //Make into generic I/O utility
 // Make component independent of sprite definition
@@ -28,7 +28,6 @@ public:
 	void MessageHandler(ComponentMessage &msg) {ComponentMessageHandler(msg);};
 	
 	virtual void ComponentUpdate() {};
-	virtual void ComponentMessageHandler(ComponentMessage &msg) {};
 	
 
 

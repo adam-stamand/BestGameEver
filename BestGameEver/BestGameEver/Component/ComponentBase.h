@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Message/ComponentMessage.h"
-#include "Message/Message.h"
-// USE TYPDEFS FOR ALL TYPES!!
+#include "Component/Message/ComponentMessage.h"
+
+
 // consider removing set entity ID function, or protecting it somehow; better than friend class // or not? // try friend function
 
-// Consider makeing template class for messaging map
+// Consider how to make message map a base member
 
 typedef uint32_t EntityID;
 
@@ -27,6 +27,9 @@ public:
 	bool IsEnabled() { return this->m_enabled; };
 	void Enable(bool state) { this->m_enabled = state; };
 	
+protected:
+	virtual bool ComponentMessageHandler(ComponentMessage &msg) { return false; };
+
 private:
 	void SetEntityID(EntityID entityID) { this->m_entityID = entityID; };
 	bool m_enabled = true;
