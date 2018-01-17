@@ -1,16 +1,14 @@
 #pragma once
 
-#include <stdio.h>
-#include "Component/PhysicsComponentBase.h"
+#include "BaseComponents/Box2DPhysics/Box2DPhysicsComponent.h"
 
 
 
-class BasicPhysicsComponent : public PhysicsComponentBase
+class BasicPhysicsComponent : public Box2DPhysicsComponent
 {
 public:
-	BasicPhysicsComponent(Item * item) : PhysicsComponentBase(item) {};
+  BasicPhysicsComponent(std::string name, b2Body * body) : Box2DPhysicsComponent(body, name) {}
 	~BasicPhysicsComponent() {};
-
 
 };
 

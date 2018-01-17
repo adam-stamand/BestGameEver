@@ -1,23 +1,15 @@
 #pragma once
-#include "Entity/ControlsComponentBase.h"
-#include "Entity/Entity.h"
-#include "Box2D/Box2D.h"
+#include "BaseComponents/SFMLControls/SFMLControlsComponent.h"
 
-class BasicControlsComponent : public ControlsComponentBase<BasicControlsComponent>
+class BasicControlsComponent : public SFMLControlsComponent<BasicControlsComponent>
 {
 public:
-	BasicControlsComponent();
+	BasicControlsComponent(std::string name);
 	~BasicControlsComponent() {};
 
-	void MessageHandler(ComponentMessage *msg) {
-		switch (msg->funcID) {
-		}
-	};	
-
-	void Teleport(sf::Event &evnt_p, Entity &entity);
-	void MoveUp(Entity &entity);
-	void MoveDown(Entity &entity);
-	void MoveLeft(Entity &entity);
-	void MoveRight(Entity &entity);
+	void MoveForward();
+  void MoveBackward();
+  void RotateLeft();
+  void RotateRight();
 
 };

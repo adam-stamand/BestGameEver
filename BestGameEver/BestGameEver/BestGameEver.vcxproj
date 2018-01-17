@@ -11,6 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.cpp" />
+    <ClCompile Include="BaseComponents\SFMLGraphics\SFMLGraphicsComponent.cpp" />
+    <ClCompile Include="BloxFW\core\Block.cpp" />
+    <ClCompile Include="BloxFW\core\Box.cpp" />
+    <ClCompile Include="BloxFW\core\ManagerBox.cpp" />
+    <ClCompile Include="BloxFW\tools\Debug.cpp" />
     <ClCompile Include="Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="Box2D\Collision\b2CollideCircle.cpp" />
     <ClCompile Include="Box2D\Collision\b2CollideEdge.cpp" />
@@ -57,31 +63,51 @@
     <ClCompile Include="Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="Component\ConnectionComponentBase.cpp" />
-    <ClCompile Include="Component\ControlsComponentBase.cpp" />
-    <ClCompile Include="Component\GraphicsComponentBase.cpp" />
-    <ClCompile Include="Component\PhysicsComponentBase.cpp" />
-    <ClCompile Include="Entity\Entity.cpp" />
-    <ClCompile Include="Factory\EntityFactory.cpp" />
-    <ClCompile Include="Factory\Factory.cpp" />
-    <ClCompile Include="Factory\ItemShape.cpp" />
-    <ClCompile Include="Globals\Globals.cpp" />
+    <ClCompile Include="Factory\Box2DFactory\Box2DFactory.cpp" />
+    <ClCompile Include="Factory\Box2DFactory\FixtureShapes.cpp" />
+    <ClCompile Include="Factory\ItemFactory\ItemFactory.cpp" />
+    <ClCompile Include="Factory\SFMLFactory\SFMLFactory.cpp" />
+    <ClCompile Include="FWInterface\Component.cpp" />
+    <ClCompile Include="FWInterface\Entity.cpp" />
+    <ClCompile Include="FWInterface\EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager\ConnectionManager.cpp" />
-    <ClCompile Include="Manager\DebugManager.cpp" />
-    <ClCompile Include="Manager\EntityManager.cpp" />
-    <ClCompile Include="Manager\EventManager.cpp" />
-    <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp">
+    <ClCompile Include="Manager\Box2DManager\Box2DManager.cpp" />
+    <ClCompile Include="Manager\SFMLManager\SFMLManager.cpp" />
+    <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp" />
+    <ClCompile Include="UserComponents\Character\CharacterControlsComponent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="UserComponents\Character\CharacterConnectionComponent.cpp" />
-    <ClCompile Include="UserComponents\Character\CharacterControlsComponent.cpp" />
-    <ClCompile Include="UserComponents\Character\CharacterPhysicsComponent.cpp" />
-    <ClCompile Include="UserComponents\Gun\GunControlsComponent.cpp" />
-    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp" />
-    <ClCompile Include="Utils\RateLimiter.cpp" />
+    <ClCompile Include="UserComponents\Gun\GunControlsComponent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Utils\DebugManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Utils\RateLimiter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Utils\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.h" />
+    <ClInclude Include="BaseComponents\Message.h" />
+    <ClInclude Include="BaseComponents\SFMLControls\SFMLControlsComponent.h" />
+    <ClInclude Include="BaseComponents\SFMLGraphics\SFMLGraphicsComponent.h" />
+    <ClInclude Include="BloxFW\BloxFW.h" />
+    <ClInclude Include="BloxFW\core\Block.h" />
+    <ClInclude Include="BloxFW\core\Box.h" />
+    <ClInclude Include="BloxFW\core\ManagerBox.h" />
+    <ClInclude Include="BloxFW\tools\Debug.h" />
+    <ClInclude Include="BloxFW\utils\container.h" />
+    <ClInclude Include="BloxFW\utils\labeled_container.h" />
+    <ClInclude Include="BloxFW\utils\types.h" />
     <ClInclude Include="Box2D\Box2D.h" />
     <ClInclude Include="Box2D\Collision\b2BroadPhase.h" />
     <ClInclude Include="Box2D\Collision\b2Collision.h" />
@@ -129,55 +155,61 @@
     <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h" />
     <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h" />
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
-    <ClInclude Include="Component\ComponentBase.h" />
-    <ClInclude Include="Component\ConnectionComponentBase.h" />
-    <ClInclude Include="Component\ControlsComponentBase.h" />
-    <ClInclude Include="Component\GraphicsComponentBase.h" />
-    <ClInclude Include="Component\Message\ComponentMessage.h" />
-    <ClInclude Include="Component\Message\ConnectionComponentMessage.h" />
-    <ClInclude Include="Component\Message\ControlsComponentMessage.h" />
-    <ClInclude Include="Component\Message\GraphicsComponentMessage.h" />
-    <ClInclude Include="Component\Message\Message.h" />
-    <ClInclude Include="Component\Message\PhysicsComponentMessage.h" />
-    <ClInclude Include="Component\PhysicsComponentBase.h" />
-    <ClInclude Include="Entity\Entity.h" />
-    <ClInclude Include="Factory\EntityFactory.h" />
-    <ClInclude Include="Factory\EntityFactoryInterface.h" />
-    <ClInclude Include="Factory\EntityType.h" />
+    <ClInclude Include="Factory\Box2DFactory\Box2DFactory.h" />
+    <ClInclude Include="Factory\Box2DFactory\FixtureShapes.h" />
+    <ClInclude Include="Factory\Box2DFactory\Material.h" />
+    <ClInclude Include="Factory\Box2DFactory\UserMaterials.h" />
     <ClInclude Include="Factory\Factory.h" />
-    <ClInclude Include="Factory\Item.h" />
-    <ClInclude Include="Factory\ItemShape.h" />
-    <ClInclude Include="Factory\ItemShapeType.h" />
-    <ClInclude Include="Factory\ItemType.h" />
-    <ClInclude Include="Factory\Material.h" />
-    <ClInclude Include="Factory\UserEntityType.h" />
-    <ClInclude Include="Factory\UserItemType.h" />
-    <ClInclude Include="Factory\UserMaterials.h" />
-    <ClInclude Include="Globals\Globals.h" />
-    <ClInclude Include="Manager\ConnectionManager.h" />
-    <ClInclude Include="Manager\DebugManager.h" />
-    <ClInclude Include="Manager\EntityManager.h" />
-    <ClInclude Include="Manager\EventManager.h" />
-    <ClInclude Include="Manager\JointManager.h" />
-    <ClInclude Include="Manager\Manager.h" />
-    <ClInclude Include="Types.h" />
-    <ClInclude Include="UserComponents\Basic\BasicControlsComponent.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    <ClInclude Include="Factory\ItemFactory\ItemFactory.h" />
+    <ClInclude Include="Factory\ItemFactory\ItemType.h" />
+    <ClInclude Include="Factory\ItemFactory\UserItems.h" />
+    <ClInclude Include="Factory\SFMLFactory\SFMLFactory.h" />
+    <ClInclude Include="FWInterface\Component.h" />
+    <ClInclude Include="FWInterface\Entity.h" />
+    <ClInclude Include="FWInterface\EntityManager.h" />
+    <ClInclude Include="FWInterface\FWInterface.h" />
+    <ClInclude Include="Manager\Box2DManager\Box2DManager.h" />
+    <ClInclude Include="Manager\Manager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="Manager\SFMLManager\SFMLManager.h" />
+    <ClInclude Include="Types.h" />
+    <ClInclude Include="UserComponents\Basic\BasicControlsComponent.h" />
     <ClInclude Include="UserComponents\Basic\BasicGraphicsComponent.h" />
     <ClInclude Include="UserComponents\Basic\BasicPhysicsComponent.h" />
-    <ClInclude Include="UserComponents\Character\CharacterConnectionComponent.h" />
-    <ClInclude Include="UserComponents\Character\CharacterControlsComponent.h" />
-    <ClInclude Include="UserComponents\Character\CharacterPhysicsComponent.h" />
-    <ClInclude Include="UserComponents\GrenadePhysicsComponent2.h" />
-    <ClInclude Include="UserComponents\Gun\GunControlsComponent.h" />
-    <ClInclude Include="UserComponents\Gun\GunPhysicsComponent.h" />
-    <ClInclude Include="UserComponents\Message\CharacterMessage.h" />
-    <ClInclude Include="UserComponents\Message\Message.h" />
-    <ClInclude Include="UserComponents\Rocket\RocketConnectionComponent.h" />
-    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h" />
-    <ClInclude Include="UserComponents\UserComponents.h" />
-    <ClInclude Include="Utils\RateLimiter.h" />
+    <ClInclude Include="UserComponents\Character\CharacterControlsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Gun\GunControlsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Gun\GunPhysicsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Message\Message.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="UserComponents\UserComponents.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Utils\DebugManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Utils\RateLimiter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="Utils\Timer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -233,7 +265,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>

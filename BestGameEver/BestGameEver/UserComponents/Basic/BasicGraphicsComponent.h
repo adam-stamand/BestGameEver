@@ -1,18 +1,12 @@
 #pragma once
 
-#include "Component/GraphicsComponentBase.h"
+#include "BaseComponents/SFMLGraphics/SFMLGraphicsComponent.h"
 
 
-class BasicGraphicsComponent : public GraphicsComponentBase
+class BasicGraphicsComponent : public SFMLGraphicsComponent
 {
 public:
-	BasicGraphicsComponent(sf::RenderWindow *window, Item * item) : GraphicsComponentBase(window, item) {};
-	BasicGraphicsComponent(sf::RenderWindow *window) : GraphicsComponentBase(window, NULL) {};
-
-	void Init(Item * item) {
-		this->item = item;
-	}
-
+	BasicGraphicsComponent(std::string name, std::vector<Sprite*> sprites, std::string windowName = "init") : SFMLGraphicsComponent(name, sprites, windowName) {};
 	~BasicGraphicsComponent() {};
 };
 

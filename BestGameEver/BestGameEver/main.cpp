@@ -1,17 +1,17 @@
-#include <SFML/Graphics.hpp>
-#include "Box2D/Box2D.h"
+
+
 #include <new> 
 #include <string> 
 #include <stdlib.h>
-#include "SFML/Audio.hpp"
 
-#include "Globals/Globals.h"
+
+#include "Utils/Timer.h"
+
+#include "FWInterface/FWInterface.h"
 #include "Factory/Factory.h"
 #include "UserComponents/UserComponents.h"
-#include "Entity/Entity.h"
 #include "Manager/Manager.h"
 
-#include "Manager/ConnectionManager.h"
 
 // create fl namespace
 
@@ -61,50 +61,68 @@
 // create AI component
 // Gun collides with walls first, causing it to move the joint // Consider masking it out, make uncollidable
 
-typedef std::vector<Part*> Parts;
 
-
-
-
-void MakeRocket(Entity &entity, Item **item);
-void MakeGun(Entity &entity, Item **item);
-void MakePlatform(Entity &entity, Item **item);
-void MakeBorder(Entity &entity, Item **item);
-void MakeCar(Entity &entity, Item **item);
-void MakeCharacter(Entity &entity, Item **item);
-void MakeBalloon(Entity &entity, Item **item);
-void MakeBackground(Entity &entity, Item **item);
-void MakeWheel1(Entity &entity, Item **item);
-void MakeWheel2(Entity &entity, Item **item);
-void MakeTree(Entity &entity, Item **item);
-void MakeString(Entity &entity, Item **item);
-void MakeRope(Entity &entity, Item **item);
 
 
 
 int main()
 {
-	//------------------------
-	// Init
-	//------------------------
 
-	Globals::entFactoryInterface = new EntityFactory;
-	sf::Clock deltaClock;
-	sf::Music music;
-	float32 timeStep = 1.0f / 60.0f;
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-
-	if (!music.openFromFile(MUSIC(BestGameEverMaster.wav))) {
-		return -1;
-	}
-	music.setLoop(true);
-	//music.play();
-
+  //SFMLManager::PlayBackgroundMusic(MUSIC(BestGameEverMaster.wav));
 
 	//------------------------
 	// Create Entites/Items
 	//------------------------
+  EntityManager Manager("Manager");
+  Entity Characters("Characters");
+  Entity Level("Level");
+  Entity Borders("Borders");
+  Entity Player("Player");
+
+  Manager.AddEntity(&Characters);
+  Manager.AddEntity(&Level);
+
+  Characters.AddEntity(&Player);
+  Level.AddEntity(&Borders);
+
+
+  ItemFactory::Item item;
+
+
+  // TODO Rename Border to Border_t and all others
+
+  item.Build(
+  {
+    ItemFactory::CreatePart<Border>(flVec2(800,600), flVec2(400,300), 0),
+  }, STATIC_BODY, "init");
+
+  Borders.AddComponents({
+    new BasicPhysicsComponent("BorderPhysics", item.body),
+  });
+
+
+  item.Build(
+  {
+    ItemFactory::CreatePart<Rocket>(flVec2(30,70), flVec2(0,0), 0),
+    ItemFactory::CreatePart<Tire>(flVec2(30,30), flVec2(0,30), 45), //TODO sprite drawing is fucked here
+    //ItemFactory::CreatePart<Box>(flVec2(30,30), flVec2(200,200), 0),
+  }, DYNAMIC_BODY, "init");
+
+  //TODO add to item interface?
+  item.body->SetTransform(flVec2(PIX_2_BOX(400), PIX_2_BOX(300)), 0);
+  item.body->SetGravityScale(1);
+
+  Player.AddComponents({
+    new BasicPhysicsComponent("Physics", item.body),
+    new BasicControlsComponent("Controls"),
+    new BasicGraphicsComponent("Graphics", item.sprites)
+  });
+
+
+  /*
+
+  
+
 
 	Entity background_ent("Background"); Item* background = 0;
 	MakeBackground(background_ent,& background);
@@ -259,330 +277,48 @@ int main()
 	// Main Loop
 	//------------------------
 
-	ConnectionManager connectionManager;
-	ConnectionManager::RegisterCollisionFilter(character_ent.GetID(), { rocket_ent.GetID(), car_ent.GetID() });
-	ConnectionManager::RegisterConnection(character_ent.GetID(),{ rocket_ent.GetID(), car_ent.GetID() }, "TEST_CONNECTION", true);
+
+	for (auto iter = SFMLManager::windows_begin(); iter != SFMLManager::windows_end(); iter++) {
+     iter->second->setFramerateLimit(60);
+  }
+
+  float32 timeStep = 1.0f / 60.0f;
+  int32 velocityIterations = 6;
+  int32 positionIterations = 2;
+
+  while (1) {
 
 
-	//ContactManager contactManager;
-	//contactManager.RegisterContact(&character_ent);
-	//contactManager.RegisterContact(&connection_ent);
-	//contactManager.RegisterContact(&temp_ent);
-	//contactManager.RegisterContact(&carConnect_ent);
-	//contactManager.RegisterContact(&balloonConnect_ent);
-	//contactManager.RegisterFilter({ character_ent.GetID(), rocket_ent.GetID(), gun_ent.GetID(), balloon_ent.GetID(), car_ent.GetID() });
-	Globals::world.SetContactListener(&connectionManager);
-	Globals::window.setFramerateLimit(60);
+    for (auto iter = SFMLManager::windows_begin(); iter != SFMLManager::windows_end(); iter++)
+    {
+      sf::RenderWindow * window = iter->second;
+      SFMLManager::GetEvents(window);
+      SFMLManager::ClearEvents();
+      window->clear();
+    }
 
-	while (Globals::window.isOpen())
-	{
-		Globals::window.clear();
-		Globals::IncrTimer();
-		EventManager::GetEvents(Globals::window);
-		EntityManager::Update(Globals::window);
-		Globals::world.Step(timeStep, velocityIterations, positionIterations);
-		EventManager::ClearEvents();
-		Globals::window.display();
 
-	}
+
+
+    Timer::IncrTimer();
+    Manager.Update();
+
+    for (auto iter = SFMLManager::windows_begin(); iter != SFMLManager::windows_end(); iter++) 
+    {
+      sf::RenderWindow * window = iter->second;
+      window->display();  
+    }
+
+    for (auto iter = Box2DManager::worlds_begin(); iter != Box2DManager::worlds_end(); iter++)
+    {
+      b2World * world = iter->second;
+      world->Step(timeStep, velocityIterations, positionIterations);
+    }
+
+
+  }
 
 	return 0;
 }
 
 
-
-
-
-
-
-
-
-void MakeRope(Entity &entity, Item  **item) {
-
-	Parts * segmentParts = new Parts({
-		Factory::CreatePart<Box>(b2Vec2(0,0),b2Vec2(.5,1.5)),
-	});
-	*item = Factory::CreateItem(*segmentParts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), 0);
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new BasicPhysicsComponent(*item) }
-	);
-	EntityManager::RegisterEntity(&entity);
-	
-}
-
-
-
-
-void MakeString(Entity &entity, Item **item) {
-
-	Parts segmentParts{
-		Factory::CreatePart<Box>(b2Vec2(0,0), b2Vec2(.1,.5))
-	};
-	*item = Factory::CreateItem(segmentParts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(600), SF_2_BOX(500)), 0);
-
-
-
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(200), SF_2_BOX(200)), 0);
-	(*item)->body->GetFixtureList()->SetSensor(true);
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new BasicPhysicsComponent(*item) }
-	);
-	EntityManager::RegisterEntity(&entity);
-}
-
-
-
-void MakeTree(Entity &entity, Item **item) {
-
-	Parts treeParts{
-		Factory::CreatePart<Tree>(b2Vec2(SF_2_BOX(( 100) + 50),SF_2_BOX(550)), b2Vec2(1,2))
-	};
-	(*item) = Factory::CreateItem(treeParts);
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item)
-	}
-	);
-	EntityManager::RegisterEntity(&entity);
-	
-}
-
-
-
-
-
-
-void MakeWheel1(Entity &entity, Item **item) {
-
-
-
-	Parts wheel1Parts{
-		Factory::CreatePart<Tire>(b2Vec2(0,0), b2Vec2(1,1))
-	};
-	(*item) = Factory::CreateItem(wheel1Parts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(600), SF_2_BOX(500)), 0);
-
-	entity.AddComponent(
-	{
-		new BasicPhysicsComponent(*item),
-		new BasicGraphicsComponent(&Globals::window, *item),
-	}
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-
-}
-
-
-void MakeWheel2(Entity &entity, Item **item) {
-
-
-	Parts wheel2Parts{
-		Factory::CreatePart<Tire>(b2Vec2(0,0), b2Vec2(1,1))
-	};
-	(*item) = Factory::CreateItem(wheel2Parts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(600), SF_2_BOX(500)), 0);
-
-	entity.AddComponent(
-	{
-		new BasicPhysicsComponent(*item),
-		new BasicGraphicsComponent(&Globals::window, *item),
-	}
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-}
-
-
- void MakeCharacter(Entity &entity, Item **item) {
-	std::vector<Part*> characterParts{
-		Factory::CreatePart<Character>(b2Vec2(0,0), b2Vec2(1,1))
-	};
-	(*item) = Factory::CreateItem(characterParts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(400), SF_2_BOX(400)), 0);
-	(*item)->body->SetFixedRotation(true);
-
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new CharacterPhysicsComponent(*item),
-		new CharacterControlsComponent() }
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-}
-
- void MakeRocket(Entity &entity, Item **item) {
-
-	std::vector<Part*> rocketParts{
-		Factory::CreatePart<Rocket>(b2Vec2(0,0), b2Vec2(1,2.5)),
-		//Factory::CreatePart<Box>(b2Vec2(0,1), b2Vec2(2,2), DEGREES_2_RAD(45)),
-		//Factory::CreatePart<Tire>(b2Vec2(0,-1), b2Vec2(1.5,1.5))
-	};
-	(*item) = Factory::CreateItem(rocketParts, DYNAMIC_BODY);
-	(*item)->body->SetAngularDamping(3);
-	(*item)->body->SetLinearDamping(0);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(200), SF_2_BOX(200)), 0);
-
-
-	entity.AddComponent(
-	{
-		new RocketControlsComponent(),
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new BasicPhysicsComponent(*item) }
-	);
-
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-}
-
- void MakeCar(Entity &entity, Item **item) {
-
-	Parts carParts{
-		Factory::CreatePart<Car>(b2Vec2(0,0), b2Vec2(5,1.75))
-	};
-	(*item) = Factory::CreateItem(carParts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(600), SF_2_BOX(500)), 0);
-
-	entity.AddComponent(
-	{
-		new RocketControlsComponent(),
-		new BasicPhysicsComponent(*item),
-		new BasicGraphicsComponent(&Globals::window, *item),
-
-	}
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-
-
-}
-
-
- void MakeGun(Entity &entity, Item **item) {
-
-	std::vector<Part*> gunParts{
-		Factory::CreatePart<Cannon>(b2Vec2(0,0), b2Vec2(.35,1)),
-	};
-	(*item) = Factory::CreateItem(gunParts, DYNAMIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(200), SF_2_BOX(200)), 0);
-
-
-	entity.AddComponent(
-	{
-		new GunControlsComponent(),
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new GunPhysicsComponent(*item, &Globals::window) }
-	);
-
-	(*item)->body->SetUserData(&entity); //use entity id instead of reference
-	EntityManager::RegisterEntity(&entity);
-}
-
- void MakeBackground(Entity &entity, Item **item) {
-
-	std::vector<Part*> backgroundParts{
-		Factory::CreatePart<Background>(b2Vec2(SF_2_BOX(400),SF_2_BOX(300)), b2Vec2(SF_2_BOX(800),SF_2_BOX(600)))
-	};
-	(*item) = Factory::CreateItem(backgroundParts);
-
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item)
-	}
-	);
-
-	EntityManager::RegisterEntity(&entity);
-}
-
-
- void MakeBox(Entity &entity, Item **item) {
-
-	std::vector<Part*> boxParts{
-		Factory::CreatePart<Box>(b2Vec2(0,0), b2Vec2(2,2))
-	};
-	(*item) = Factory::CreateItem(boxParts, DYNAMIC_BODY);
-	(*item)->body->SetAngularDamping(2);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), DEGREES_2_RAD(0));
-
-
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new BasicPhysicsComponent(*item) }
-	);
-
-	EntityManager::RegisterEntity(&entity);
-
-}
-
-
-
- void MakeBalloon(Entity &entity, Item **item) {
-
-	std::vector<Part*> balloonParts{
-		Factory::CreatePart<Balloon>(b2Vec2(0,0), b2Vec2(1,2))
-	};
-	(*item) = Factory::CreateItem(balloonParts, DYNAMIC_BODY);
-	(*item)->body->SetGravityScale(2);
-	(*item)->body->SetLinearDamping(1);
-	(*item)->body->SetAngularDamping(1);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(300), SF_2_BOX(300)), 0);
-	//balloon->SetCenterMass(b2Vec2(0, -.5));
-
-
-
-	entity.AddComponent(
-	{
-		new BasicGraphicsComponent(&Globals::window, *item),
-		new BasicPhysicsComponent(*item) }
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-
-}
-
- void MakePlatform(Entity &entity, Item **item) {
-
-	Parts platformParts{
-		Factory::CreatePart<Platform>(b2Vec2(0,0), b2Vec2(8,1))
-	};
-	(*item) = Factory::CreateItem(platformParts, STATIC_BODY);
-	(*item)->body->SetTransform(b2Vec2(SF_2_BOX(400), SF_2_BOX(200)), 0);
-
-
-
-	entity.AddComponent(
-	{
-		new BasicPhysicsComponent(*item),
-		new BasicGraphicsComponent(&Globals::window, *item),
-	}
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-
-
-
-}
-
- void MakeBorder(Entity &entity, Item **item) {
-	Parts borderParts{
-		Factory::CreatePart<Border>(b2Vec2(SF_2_BOX(400),SF_2_BOX(300)),b2Vec2(SF_2_BOX(800),SF_2_BOX(600)))
-	};
-	(*item) = Factory::CreateItem(borderParts, STATIC_BODY);
-
-
-	entity.AddComponent(
-	{
-		new BasicPhysicsComponent(*item)
-	}
-	);
-	(*item)->body->SetUserData(&entity);
-	EntityManager::RegisterEntity(&entity);
-}
