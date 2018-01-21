@@ -88,8 +88,20 @@
     <Filter Include="BaseComponents\SFMLGraphics">
       <UniqueIdentifier>{2b798504-fb79-467d-b733-d844ceaf93c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Factory\ItemFactory">
+    <Filter Include="UserComponents\Background">
+      <UniqueIdentifier>{69e0863a-920b-4352-bf47-b84371f0bc36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\EntityFactory">
+      <UniqueIdentifier>{84d83bfa-09b6-4fa3-bc8b-ec864e033a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\PartFactory">
       <UniqueIdentifier>{d48a5a96-565a-49a6-b22b-43bc5aedd223}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BaseComponents\FLBase">
+      <UniqueIdentifier>{ab8d3cf5-b11e-4cc9-91f3-68db3baa10ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UserComponents\Base">
+      <UniqueIdentifier>{7d3769d9-cb58-47e1-a84c-8dac339787e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -238,9 +250,6 @@
     <ClCompile Include="UserComponents\Character\CharacterControlsComponent.cpp">
       <Filter>UserComponents\Character</Filter>
     </ClCompile>
-    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp">
-      <Filter>UserComponents\Rocket</Filter>
-    </ClCompile>
     <ClCompile Include="UserComponents\Gun\GunControlsComponent.cpp">
       <Filter>UserComponents\Gun</Filter>
     </ClCompile>
@@ -292,11 +301,23 @@
     <ClCompile Include="FWInterface\Component.cpp">
       <Filter>FWInterface</Filter>
     </ClCompile>
-    <ClCompile Include="Factory\ItemFactory\ItemFactory.cpp">
-      <Filter>Factory\ItemFactory</Filter>
-    </ClCompile>
     <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp">
       <Filter>UserComponents\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory\PartFactory\PartFactory.cpp">
+      <Filter>Factory\PartFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseComponents\FLBase\FLBaseComponent.cpp">
+      <Filter>BaseComponents\FLBase</Filter>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Base\BaseComponent.cpp">
+      <Filter>UserComponents\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp">
+      <Filter>UserComponents\Rocket</Filter>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent-old.cpp">
+      <Filter>UserComponents\Rocket</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -454,9 +475,6 @@
     <ClInclude Include="UserComponents\Character\CharacterControlsComponent.h">
       <Filter>UserComponents\Character</Filter>
     </ClInclude>
-    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h">
-      <Filter>UserComponents\Rocket</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponents\Gun\GunControlsComponent.h">
       <Filter>UserComponents\Gun</Filter>
     </ClInclude>
@@ -541,15 +559,6 @@
     <ClInclude Include="Factory\Factory.h">
       <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="Factory\ItemFactory\ItemFactory.h">
-      <Filter>Factory\ItemFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="Factory\ItemFactory\ItemType.h">
-      <Filter>Factory\ItemFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="Factory\ItemFactory\UserItems.h">
-      <Filter>Factory\ItemFactory</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponents\Basic\BasicControlsComponent.h">
       <Filter>UserComponents\Basic</Filter>
     </ClInclude>
@@ -561,6 +570,36 @@
     </ClInclude>
     <ClInclude Include="BaseComponents\Message.h">
       <Filter>BaseComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Background\BackgroundGraphicsComponent.h">
+      <Filter>UserComponents\Background</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactory\EntityFactory.h">
+      <Filter>Factory\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\EntityFactory\UserEntity.h">
+      <Filter>Factory\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\PartFactory\PartFactory.h">
+      <Filter>Factory\PartFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\PartFactory\PartType.h">
+      <Filter>Factory\PartFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory\PartFactory\UserParts.h">
+      <Filter>Factory\PartFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseComponents\FLBase\FLBaseComponent.h">
+      <Filter>BaseComponents\FLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Base\BaseComponent.h">
+      <Filter>UserComponents\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h">
+      <Filter>UserComponents\Rocket</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent-old.h">
+      <Filter>UserComponents\Rocket</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

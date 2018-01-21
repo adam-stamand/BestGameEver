@@ -12,14 +12,14 @@ class Box2DPhysicsComponent : public Component
 {
 	
 public:
-  Box2DPhysicsComponent(b2Body * body, std::string name);
+  Box2DPhysicsComponent(std::string name, b2Body * body);
 	virtual ~Box2DPhysicsComponent() {};
 
   virtual void Init();
 
   virtual void Update() {};
+
 private:
-  
 
 	class RayCast : public b2RayCastCallback {
 	public:
@@ -34,10 +34,14 @@ private:
 
 protected:
 	b2Body * m_body;
+  std::map<std::string, b2Joint*> jointMap;
 
 
 private:
   void GetTransform(bx::Message &msg);
+  void SetTransform(bx::Message &msg);
   void ApplyImpulse(bx::Message &msg);
   void ApplyForce(bx::Message &msg);
+  void GetBody(bx::Message &msg);
+  void CreateRevoluteJoint(bx::Message &msg);
 };

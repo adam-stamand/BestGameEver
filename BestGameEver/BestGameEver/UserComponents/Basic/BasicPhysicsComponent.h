@@ -7,7 +7,7 @@
 class BasicPhysicsComponent : public Box2DPhysicsComponent
 {
 public:
-  BasicPhysicsComponent(std::string name, b2Body * body) : Box2DPhysicsComponent(body, name) {}
+  BasicPhysicsComponent(std::string name, b2Body * body) : Box2DPhysicsComponent(name, body) {}
 	~BasicPhysicsComponent() {};
 
 };

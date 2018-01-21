@@ -5,37 +5,9 @@
 //--TODO--//
 // Resolve the body user data issue
 
-Box2DPhysicsComponent::Box2DPhysicsComponent(b2Body * body, std::string name) : Component(name)
+Box2DPhysicsComponent::Box2DPhysicsComponent(std::string name, b2Body * body) : Component(name)
 {
-
-  // this->m_body = Box2DFactory::CreateBody(fixtures, bodyType);
-
-  // Define another box shape for our dynamic body.
-  b2PolygonShape dynamicBox;
-  b2Vec2 vec[3];
-
-
-  vec[0].Set(20, 10);
-  vec[1].Set(30, 50);
-  vec[2].Set(50, 10);
-  dynamicBox.Set(vec, 3);
-
-  // Define the dynamic body fixture.
-  b2FixtureDef fixtureDef;
-  fixtureDef.shape = &dynamicBox;
-
-  // Set the box density to be non-zero, so it will be dynamic.
-  fixtureDef.density = 1.0f;
-
-  // Override the default friction.
-  fixtureDef.friction = 3.0f;
-
-  // Add the shape to the body.
-  //body->CreateFixture(&fixtureDef);
-  this->m_body = body;//Box2DFactory::CreateBody({ &fixtureDef }, bodyType);
-
-  //this->m_body->SetFixedRotation(false);
-  // attach entity id to body user data
+  this->m_body  = body;
 };
 
 
@@ -43,6 +15,9 @@ void Box2DPhysicsComponent::Init() {
   SubscribeMessage(&Box2DPhysicsComponent::ApplyImpulse, "ApplyImpulse");
   SubscribeMessage(&Box2DPhysicsComponent::ApplyForce, "ApplyForce");
   SubscribeMessage(&Box2DPhysicsComponent::GetTransform, "GetTransform");
+  SubscribeMessage(&Box2DPhysicsComponent::SetTransform, "SetTransform");
+  SubscribeMessage(&Box2DPhysicsComponent::CreateRevoluteJoint, "CreateRevoluteJoint");
+  SubscribeMessage(&Box2DPhysicsComponent::GetBody, "GetBody");
 }
 
 void Box2DPhysicsComponent::ApplyForce(bx::Message &msg) {
@@ -64,6 +39,30 @@ void Box2DPhysicsComponent::GetTransform(bx::Message &msg) {
   TransformMessage *trans = static_cast<TransformMessage*>(&msg);
   trans->rotation = RAD_2_DEGREES(this->m_body->GetAngle());
   trans->translation = BOX_2_PIX(this->m_body->GetWorldPoint(b2Vec2(0, 0)));
+}
+
+
+void Box2DPhysicsComponent::SetTransform(bx::Message &msg) {
+  TransformMessage *trans = static_cast<TransformMessage*>(&msg);
+  b2Vec2 temp(PIX_2_BOX(trans->translation.x), PIX_2_BOX(trans->translation.y));
+  this->m_body->SetTransform(temp, DEGREES_2_RAD(trans->rotation));
+}
+
+
+
+void Box2DPhysicsComponent::GetBody(bx::Message &msg) {
+  BodyMessage *bodyMsg = static_cast<BodyMessage*>(&msg);
+  bodyMsg->body = this->m_body;
+}
+
+
+void Box2DPhysicsComponent::CreateRevoluteJoint(bx::Message &msg) {
+  RevoluteJointMessage *jointMsg = static_cast<RevoluteJointMessage*>(&msg);
+  Entity * ent = jointMsg->cfg.entityB;
+  BodyMessage bodyMsg;
+  int rv = PublishMessage(bodyMsg, "GetBody", ent->GetName());
+  b2Joint* joint = Box2DFactory::CreateJoint(this->m_body, bodyMsg.body, jointMsg->cfg);
+  //this->jointMap.insert(std::pair<std::string, b2Joint*>(jointMsg->name, joint));
 }
 
 

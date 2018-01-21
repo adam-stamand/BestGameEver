@@ -76,47 +76,138 @@ int main()
   EntityManager Manager("Manager");
   Entity Characters("Characters");
   Entity Level("Level");
-  Entity Borders("Borders");
-  Entity Player("Player");
+  Entity Backgrounds("Backgrounds");
+  Entity Objects("Objects");
 
+  Manager.AddEntity(&Objects);
+  Manager.AddEntity(&Backgrounds);
   Manager.AddEntity(&Characters);
   Manager.AddEntity(&Level);
 
-  Characters.AddEntity(&Player);
-  Level.AddEntity(&Borders);
+  /*
+  Entity * tree;
+  for (unsigned int i = 0; i < 6; i++) {
+    tree = EntityFactory::CreateEntity<Tree_ent>("Tree" + std::to_string(i));
+    Backgrounds.AddEntity(tree);
+  }
+
+  Entity * ent[20];
+  for (unsigned int i = 0; i < 20; i++) {
+    ent[i] = EntityFactory::CreateEntity<Rope_ent>("Rope" + std::to_string(i));
+    Objects.AddEntity(ent[i]);
+  }
 
 
-  ItemFactory::Item item;
+  Entity * Player = EntityFactory::CreateEntity<Player_ent>("Player");
+  Characters.AddEntity(Player);
+  Entity * Box = EntityFactory::CreateEntity<Box_ent>("Box");
+  Objects.AddEntity(Box);
+  Entity * Balloon = EntityFactory::CreateEntity<Balloon_ent>("Balloon");
+  Objects.AddEntity(Balloon);
+  Entity * Platform = EntityFactory::CreateEntity<Platform_ent>("Platform");
+  Backgrounds.AddEntity(Platform);
 
 
-  // TODO Rename Border to Border_t and all others
 
-  item.Build(
-  {
-    ItemFactory::CreatePart<Border>(flVec2(800,600), flVec2(400,300), 0),
-  }, STATIC_BODY, "init");
+  */
+  Entity * Rocket = EntityFactory::CreateEntity<Rocket_ent>("Rocket");
+  Characters.AddEntity(Rocket);
+  Entity * Border = EntityFactory::CreateEntity<Border_ent>("Border");
+  Level.AddEntity(Border);
+  Entity * Background = EntityFactory::CreateEntity<Background_ent>("Background");
+  Backgrounds.AddEntity(Background);
+  Entity * Cannon = EntityFactory::CreateEntity<Cannon_ent>("Cannon");
+  Objects.AddEntity(Cannon);
 
-  Borders.AddComponents({
-    new BasicPhysicsComponent("BorderPhysics", item.body),
+
+  BaseComponent Messenger("messenger"); //Consider directly publishing messages to entities/boxes
+  Manager.AddComponents({
+    &Messenger
   });
 
+  // Create Graphics list for drawing sprites in the order they are created and a manager call for drawing 
+  // consider removeing box2d dependency from user entity; use messenging to configure bodies and stuff
+  // Add interface to resize sprites after creation
+  // Set transform of each entity using messages, not inside part definition
+  // Consider interhirting entity into new child class that contains extra information for object drawn to screen; i.e. size, position, etc.
+  // specifically so you can attach a rope to the center of the platform, without hardcoding in sizes, as an example
 
-  item.Build(
-  {
-    ItemFactory::CreatePart<Rocket>(flVec2(30,70), flVec2(0,0), 0),
-    ItemFactory::CreatePart<Tire>(flVec2(30,30), flVec2(0,30), 45), //TODO sprite drawing is fucked here
-    //ItemFactory::CreatePart<Box>(flVec2(30,30), flVec2(200,200), 0),
-  }, DYNAMIC_BODY, "init");
 
-  //TODO add to item interface?
-  item.body->SetTransform(flVec2(PIX_2_BOX(400), PIX_2_BOX(300)), 0);
-  item.body->SetGravityScale(1);
 
-  Player.AddComponents({
-    new BasicPhysicsComponent("Physics", item.body),
-    new BasicControlsComponent("Controls"),
-    new BasicGraphicsComponent("Graphics", item.sprites)
-  });
+
+
+
+
+  RevoluteJointMessage revMsg;
+  RevoluteJointConfig revCfg;
+  /*
+
+  revCfg.pointA = flVec2(PIX_2_BOX(0), PIX_2_BOX(10));
+  revCfg.pointB = flVec2(PIX_2_BOX(-7), 0);
+
+  revCfg.entityA = Platform;
+  revCfg.entityB = ent[0];
+  revCfg.worldName = "init";
+  revCfg.collide = false;
+
+  revMsg.name = "rope";
+  revMsg.cfg = revCfg;
+
+  Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", "Platform");
+  */
+
+  revCfg.pointA = flVec2(PIX_2_BOX(0), PIX_2_BOX(-35));
+  revCfg.pointB = flVec2(PIX_2_BOX(0), PIX_2_BOX(12.5));
+
+  revCfg.entityA = Rocket;
+  revCfg.entityB = Cannon;
+  revCfg.worldName = "init";
+  revCfg.collide = false;
+
+  revMsg.name = "cannon";
+  revMsg.cfg = revCfg;
+
+  Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", "Rocket");
+
+  /*
+  for (unsigned int i = 1; i < 20; i++) {
+    
+
+    revCfg.pointA = flVec2(PIX_2_BOX(7), 0);
+    revCfg.pointB = flVec2(PIX_2_BOX(-7), 0);
+
+    revCfg.entityA = ent[i-1];
+    revCfg.entityB = ent[i];
+    revCfg.worldName = "init";
+    revCfg.collide = false;
+
+    revMsg.name = "rope";
+    revMsg.cfg = revCfg;
+
+    Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", ent[i-1]->GetName());
+  }
+
+*/  
+  
+
+  TransformMessage msg;
+  msg.rotation = 0;
+  msg.translation = flVec2(400, 300);
+  Messenger.PublishMessage(msg, "SetTransform", "Background");
+  
+  
+  /*
+  for (unsigned int i = 0; i < 6; i++) {
+    msg.rotation = 0;
+    msg.translation = flVec2(i * 100 + 50, 550);
+    Messenger.PublishMessage(msg, "SetTransform", "Tree" + std::to_string(i));
+  }
+
+  for (unsigned int i = 1; i < 20; i++) {
+    msg.rotation = 0;
+    msg.translation = flVec2(400, 350+i);
+    Messenger.PublishMessage(msg, "SetTransform", ent[i]->GetName());
+  }
 
 
   /*

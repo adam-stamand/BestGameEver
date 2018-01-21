@@ -1,6 +1,7 @@
 #pragma once
 #include "Box2D/Box2D.h"
 #include "Factory/Box2DFactory/UserMaterials.h"
+#include "FWInterface/FWInterface.h"
 #include <vector>
 
 #define DYNAMIC_BODY	b2BodyType::b2_dynamicBody
@@ -10,9 +11,13 @@
 
 
 struct RevoluteJointConfig {
+  Entity * entityA;
+  Entity * entityB;
+  std::string worldName;
   bool collide;
-  std::vector<b2Vec2> coordsA;
-  std::vector<b2Vec2> coordsB;
+  b2Vec2 pointA;
+  b2Vec2 pointB;
+
 };
 
 struct PulleyJointConfig {
@@ -28,10 +33,13 @@ struct RopeJointConfig {
 };
 
 struct WheelJointConfig {
+  Entity * entityA;
+  Entity * entityB;
+  std::string worldName;
   bool collide;
   b2Vec2 axis;
-  b2Vec2 coordsA;
-  b2Vec2 coordsB;
+  b2Vec2 pointA;
+  b2Vec2 pointB;
 
 };
 
@@ -55,6 +63,9 @@ public:
 
   static b2Body * CreateBody(std::vector<b2FixtureDef*> fixtures, b2BodyType bodyType = DYNAMIC_BODY, std::string worldName = "init");
   static b2FixtureDef * _CreateFixture(b2Shape * shape, Material *material, b2Vec2 size, b2Vec2 center, float angle);
+
+  static b2Joint* CreateJoint(b2Body * bodyA, b2Body * bodyB, RevoluteJointConfig config);
+  static b2Joint* CreateJoint(WheelJointConfig config);
 
 
 };

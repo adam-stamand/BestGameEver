@@ -46,7 +46,7 @@ void BasicControlsComponent::MoveBackward() {
 void BasicControlsComponent::RotateRight() {
 
   VectorMessage msg;
-  msg.magnitude = 3;
+  msg.magnitude = 5;
   msg.point = b2Vec2(0, -100);
   msg.unitVec = b2Vec2(1, 0);
   PublishMessage(msg, "ApplyForce");
@@ -56,7 +56,7 @@ void BasicControlsComponent::RotateRight() {
 void BasicControlsComponent::RotateLeft() {
 
   VectorMessage msg;
-  msg.magnitude = 3;
+  msg.magnitude = 5;
   msg.point = b2Vec2(0, -100);
   msg.unitVec = b2Vec2(-1, 0);
   PublishMessage(msg, "ApplyForce");

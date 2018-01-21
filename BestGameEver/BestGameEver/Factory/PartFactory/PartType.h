@@ -8,13 +8,13 @@
 
 
 
-class ItemType
+class PartType
 {
 public:
 
 
-	ItemType() {};
-	~ItemType() {};
+	PartType() {};
+	~PartType() {};
 
 	std::string file;
 	Material * material = NULL;

@@ -1,52 +1,51 @@
-#include "RocketControlsComponent.h"
+#include "UserComponents/Rocket/RocketControlsComponent.h"
+#include "BaseComponents/Message.h"
 
 
-RocketControlsComponent::RocketControlsComponent() : ControlsComponentBase(this)
+RocketControlsComponent::RocketControlsComponent(std::string name) : SFMLControlsComponent(this, name)
 {
-	
+
 	this->RegisterAction(
 		{ sf::Keyboard::W },
-		{ &ControlsComponent_t::MoveForward }
+		{ &RocketControlsComponent::MoveForward }
 	);
-
-	this->RegisterAction(
-		{ sf::Keyboard::D },
-		{ &ControlsComponent_t::RotateClockwise }
-	);
-
-	this->RegisterAction(
-		{ sf::Keyboard::A },
-		{ &ControlsComponent_t::RotateCounterClockwise }
-	);
-
+  this->RegisterAction(
+  { sf::Keyboard::D },
+  { &RocketControlsComponent::RotateRight }
+  );
+  this->RegisterAction(
+  { sf::Keyboard::A },
+  { &RocketControlsComponent::RotateLeft }
+  );
 }
-
 
 
 
 void RocketControlsComponent::MoveForward() {
-	ForceMessage comp_msg;
-	comp_msg.magnitude = -100;
-	comp_msg.unitVec = flVec2(0,1);
-	comp_msg.point = flVec2(0, 0);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+
+  VectorMessage msg;
+  msg.magnitude = 100;
+  msg.point = b2Vec2(0, 0);
+  msg.unitVec = b2Vec2(0, -1);
+  PublishMessage(msg, "ApplyForce");
 }
 
 
-void RocketControlsComponent::RotateClockwise() {
-	ForceMessage comp_msg;
-	comp_msg.magnitude = 1;
-	comp_msg.unitVec = flVec2(1, 0);
-	comp_msg.point = flVec2(0, -50);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+void RocketControlsComponent::RotateRight() {
+
+  VectorMessage msg;
+  msg.magnitude = 6;
+  msg.point = b2Vec2(0, -100);
+  msg.unitVec = b2Vec2(1, 0);
+  PublishMessage(msg, "ApplyForce");
 }
 
 
-void RocketControlsComponent::RotateCounterClockwise() {
-	ForceMessage comp_msg;
-	comp_msg.magnitude = -1;
-	comp_msg.unitVec = flVec2(1, 0);
-	comp_msg.point = flVec2(0, -50);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
-}
+void RocketControlsComponent::RotateLeft() {
 
+  VectorMessage msg;
+  msg.magnitude =6;
+  msg.point = b2Vec2(0, -100);
+  msg.unitVec = b2Vec2(-1, 0);
+  PublishMessage(msg, "ApplyForce");
+}

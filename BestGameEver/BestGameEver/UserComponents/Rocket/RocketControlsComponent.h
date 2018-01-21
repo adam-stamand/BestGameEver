@@ -1,18 +1,14 @@
 #pragma once
+#include "BaseComponents/SFMLControls/SFMLControlsComponent.h"
 
-#include "Component/ControlsComponentBase.h"
-#include "Manager/EntityManager.h"
-
-
-
-class RocketControlsComponent : public ControlsComponentBase<RocketControlsComponent>
+class RocketControlsComponent : public SFMLControlsComponent<RocketControlsComponent>
 {
 public:
-	RocketControlsComponent();
-	~RocketControlsComponent() {}
+	RocketControlsComponent(std::string name);
+	~RocketControlsComponent() {};
 
-	void RocketControlsComponent::MoveForward();
-	void RocketControlsComponent::RotateClockwise();
-	void RocketControlsComponent::RotateCounterClockwise();
+	void MoveForward();
+  void RotateLeft();
+  void RotateRight();
+
 };
-

@@ -35,3 +35,14 @@ public:
 
 };
 
+
+class Feather : public Material {
+
+public:
+  Feather() {
+    this->density = 1.5f;
+    this->friction = 30.0f;
+    this->resitution = .2f;
+  };
+
+};

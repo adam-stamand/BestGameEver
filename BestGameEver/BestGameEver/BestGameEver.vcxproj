@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.cpp" />
+    <ClCompile Include="BaseComponents\FLBase\FLBaseComponent.cpp" />
     <ClCompile Include="BaseComponents\SFMLGraphics\SFMLGraphicsComponent.cpp" />
     <ClCompile Include="BloxFW\core\Block.cpp" />
     <ClCompile Include="BloxFW\core\Box.cpp" />
@@ -65,7 +66,7 @@
     <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
     <ClCompile Include="Factory\Box2DFactory\Box2DFactory.cpp" />
     <ClCompile Include="Factory\Box2DFactory\FixtureShapes.cpp" />
-    <ClCompile Include="Factory\ItemFactory\ItemFactory.cpp" />
+    <ClCompile Include="Factory\PartFactory\PartFactory.cpp" />
     <ClCompile Include="Factory\SFMLFactory\SFMLFactory.cpp" />
     <ClCompile Include="FWInterface\Component.cpp" />
     <ClCompile Include="FWInterface\Entity.cpp" />
@@ -73,19 +74,20 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Manager\Box2DManager\Box2DManager.cpp" />
     <ClCompile Include="Manager\SFMLManager\SFMLManager.cpp" />
+    <ClCompile Include="UserComponents\Base\BaseComponent.cpp" />
     <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp" />
     <ClCompile Include="UserComponents\Character\CharacterControlsComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="UserComponents\Gun\GunControlsComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent-old.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp" />
     <ClCompile Include="Utils\DebugManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -97,6 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.h" />
+    <ClInclude Include="BaseComponents\FLBase\FLBaseComponent.h" />
     <ClInclude Include="BaseComponents\Message.h" />
     <ClInclude Include="BaseComponents\SFMLControls\SFMLControlsComponent.h" />
     <ClInclude Include="BaseComponents\SFMLGraphics\SFMLGraphicsComponent.h" />
@@ -159,10 +162,12 @@
     <ClInclude Include="Factory\Box2DFactory\FixtureShapes.h" />
     <ClInclude Include="Factory\Box2DFactory\Material.h" />
     <ClInclude Include="Factory\Box2DFactory\UserMaterials.h" />
+    <ClInclude Include="Factory\EntityFactory\EntityFactory.h" />
+    <ClInclude Include="Factory\EntityFactory\UserEntity.h" />
     <ClInclude Include="Factory\Factory.h" />
-    <ClInclude Include="Factory\ItemFactory\ItemFactory.h" />
-    <ClInclude Include="Factory\ItemFactory\ItemType.h" />
-    <ClInclude Include="Factory\ItemFactory\UserItems.h" />
+    <ClInclude Include="Factory\PartFactory\PartFactory.h" />
+    <ClInclude Include="Factory\PartFactory\PartType.h" />
+    <ClInclude Include="Factory\PartFactory\UserParts.h" />
     <ClInclude Include="Factory\SFMLFactory\SFMLFactory.h" />
     <ClInclude Include="FWInterface\Component.h" />
     <ClInclude Include="FWInterface\Entity.h" />
@@ -175,29 +180,31 @@
     </ClInclude>
     <ClInclude Include="Manager\SFMLManager\SFMLManager.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="UserComponents\Background\BackgroundGraphicsComponent.h" />
+    <ClInclude Include="UserComponents\Base\BaseComponent.h" />
     <ClInclude Include="UserComponents\Basic\BasicControlsComponent.h" />
     <ClInclude Include="UserComponents\Basic\BasicGraphicsComponent.h" />
     <ClInclude Include="UserComponents\Basic\BasicPhysicsComponent.h" />
     <ClInclude Include="UserComponents\Character\CharacterControlsComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="UserComponents\Gun\GunControlsComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="UserComponents\Gun\GunPhysicsComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="UserComponents\Message\Message.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent-old.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h" />
     <ClInclude Include="UserComponents\UserComponents.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

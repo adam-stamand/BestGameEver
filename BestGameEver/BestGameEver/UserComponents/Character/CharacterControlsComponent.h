@@ -1,18 +1,12 @@
 #pragma once
 
-#include "Box2D/Box2D.h"
-//#include "Component/ControlsComponentBase.h"
-#include "Manager/EntityManager.h"
-#include "Utils/RateLimiter.h"
-#include "Factory/Factory.h"
-#include "Factory/EntityFactory.h"
-#include "UserComponents/Message/Message.h"
+#include "BaseComponents/SFMLControls/SFMLControlsComponent.h"
 
-class CharacterControlsComponent : public ControlsComponentBase<CharacterControlsComponent>
+class CharacterControlsComponent : public SFMLControlsComponent<CharacterControlsComponent>
 {
 public:
-	RateLimiter rateLimiter;
-	CharacterControlsComponent();
+	//RateLimiter rateLimiter;
+	CharacterControlsComponent(std::string name);
 	~CharacterControlsComponent() {};
 
 private:

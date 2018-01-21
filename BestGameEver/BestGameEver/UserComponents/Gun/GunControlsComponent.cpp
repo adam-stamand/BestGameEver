@@ -2,8 +2,9 @@
 
 
 
-GunControlsComponent::GunControlsComponent() : ControlsComponentBase(this)
+GunControlsComponent::GunControlsComponent(std::string name) : SFMLControlsComponent(this, name)
 {
+  SFMLManager::GetWindow("init", window);
 	this->RegisterAction(
 		{ sf::Event::MouseButtonPressed },
 		{ &ControlsComponent_t::FireGun }

@@ -1,8 +1,8 @@
 #include "CharacterControlsComponent.h"
+#include "BaseComponents/Message.h"
 
 
-
-CharacterControlsComponent::CharacterControlsComponent() : ControlsComponentBase(this), rateLimiter(30)
+CharacterControlsComponent::CharacterControlsComponent(std::string name) : SFMLControlsComponent(this, name)//, rateLimiter(30)
 {
 
 	this->RegisterAction(
@@ -31,38 +31,28 @@ CharacterControlsComponent::CharacterControlsComponent() : ControlsComponentBase
 
 
 void CharacterControlsComponent::Grenade() {
-	uint32_t id = Globals::entFactoryInterface->CreateEntity(EntityFactory::GRENADE_ENT);
 
-	TransformMessage comp_msg;
-	comp_msg.SetDirection(ComponentMessage::INPUT);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
-	comp_msg.SetDirection(ComponentMessage::OUTPUT);
-	EntityManager::SendMessage(id, comp_msg);
 }
 
 void CharacterControlsComponent::MoveRight() {
-	ForceMessage comp_msg;
-	comp_msg.magnitude = 50;
-	comp_msg.unitVec = flVec2(1, 0);
-	comp_msg.point = flVec2(0, 0);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+  VectorMessage msg;
+  msg.magnitude = 50;
+  msg.point = b2Vec2(0, 0);
+  msg.unitVec = b2Vec2(1, 0);
+  PublishMessage(msg, "ApplyForce");
 }
 
 
 void CharacterControlsComponent::MoveLeft() {
-	ForceMessage comp_msg;
-	comp_msg.magnitude = 50;
-	comp_msg.unitVec = flVec2(-1, 0);
-	comp_msg.point = flVec2(0, 0);
-	EntityManager::SendMessage(this->GetEntityID(), comp_msg);
+  VectorMessage msg;
+  msg.magnitude = 50;
+  msg.point = b2Vec2(0, 0);
+  msg.unitVec = b2Vec2(-1, 0);
+  PublishMessage(msg, "ApplyForce");
 }
 
 
 void CharacterControlsComponent::Enter() {
-	if (rateLimiter.Check()) {
-		TestMessage comp_msg;
-		comp_msg.str = "HELLO WORLD";
-		EntityManager::SendMessage(this->GetEntityID(), comp_msg);
-	}
+
 }
 
