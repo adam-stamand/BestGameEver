@@ -84,7 +84,7 @@ int main()
   Manager.AddEntity(&Characters);
   Manager.AddEntity(&Level);
 
-  /*
+  
   Entity * tree;
   for (unsigned int i = 0; i < 6; i++) {
     tree = EntityFactory::CreateEntity<Tree_ent>("Tree" + std::to_string(i));
@@ -109,7 +109,7 @@ int main()
 
 
 
-  */
+  
   Entity * Rocket = EntityFactory::CreateEntity<Rocket_ent>("Rocket");
   Characters.AddEntity(Rocket);
   Entity * Border = EntityFactory::CreateEntity<Border_ent>("Border");
@@ -140,7 +140,7 @@ int main()
 
   RevoluteJointMessage revMsg;
   RevoluteJointConfig revCfg;
-  /*
+  
 
   revCfg.pointA = flVec2(PIX_2_BOX(0), PIX_2_BOX(10));
   revCfg.pointB = flVec2(PIX_2_BOX(-7), 0);
@@ -154,7 +154,7 @@ int main()
   revMsg.cfg = revCfg;
 
   Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", "Platform");
-  */
+  
 
   revCfg.pointA = flVec2(PIX_2_BOX(0), PIX_2_BOX(-35));
   revCfg.pointB = flVec2(PIX_2_BOX(0), PIX_2_BOX(12.5));
@@ -169,7 +169,7 @@ int main()
 
   Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", "Rocket");
 
-  /*
+ 
   for (unsigned int i = 1; i < 20; i++) {
     
 
@@ -187,7 +187,7 @@ int main()
     Messenger.PublishMessage(revMsg, "CreateRevoluteJoint", ent[i-1]->GetName());
   }
 
-*/  
+
   
 
   TransformMessage msg;
@@ -196,7 +196,7 @@ int main()
   Messenger.PublishMessage(msg, "SetTransform", "Background");
   
   
-  /*
+  
   for (unsigned int i = 0; i < 6; i++) {
     msg.rotation = 0;
     msg.translation = flVec2(i * 100 + 50, 550);
