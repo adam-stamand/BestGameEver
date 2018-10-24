@@ -1,0 +1,3 @@
+[submodule "BestGameEver/BestGameEver/Box2D"]
+	path = BestGameEver/BestGameEver/Box2D
+	url = https://github.com/erincatto/Box2D.git
