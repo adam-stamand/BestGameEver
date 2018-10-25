@@ -12,7 +12,7 @@ public:
 
 
 
-  static b2World * RemoveWorld(std::string name);
+  static void RemoveWorld(std::string name);
   static void AddWorld(std::string name, b2World * world);
   static int GetWorld(std::string name, b2World * &world);
   static std::map<std::string, b2World*>::const_iterator worlds_begin();

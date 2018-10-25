@@ -12,7 +12,7 @@ public:
   static void DisplayWindows();
   static void ClearWindows();
 
-  static sf::RenderWindow * RemoveWindow(std::string name);
+  static void RemoveWindow(std::string name);
   static void AddWindow(std::string name, sf::RenderWindow * window);
   static int GetWindow(std::string name, sf::RenderWindow * &window);
   static std::map<std::string, sf::RenderWindow*>::const_iterator windows_begin();

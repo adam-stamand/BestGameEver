@@ -33,7 +33,7 @@ void SFMLManager::GetEvents(sf::Window * window) {
 
 
 
-sf::RenderWindow * SFMLManager::RemoveWindow(std::string name) {
+void SFMLManager::RemoveWindow(std::string name) {
   auto iter = windowMap.erase(name);
 }
 

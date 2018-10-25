@@ -15,7 +15,7 @@ Box2DManager::~Box2DManager()
 std::map<std::string, b2World*> Box2DManager::worldMap = { {"init", new b2World(b2Vec2(0.0, 4.0)) } };
 
 
-b2World * Box2DManager::RemoveWorld(std::string name) {
+void Box2DManager::RemoveWorld(std::string name) {
   auto iter = worldMap.erase(name);
 }
 

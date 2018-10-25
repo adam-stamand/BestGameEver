@@ -11,68 +11,32 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.cpp" />
+    <ClCompile Include="BaseComponents\Box2DPhysics\Box2DPhysicsComponent.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="BaseComponents\FLBase\FLBaseComponent.cpp" />
     <ClCompile Include="BaseComponents\SFMLGraphics\SFMLGraphicsComponent.cpp" />
     <ClCompile Include="BloxFW\core\Block.cpp" />
     <ClCompile Include="BloxFW\core\Box.cpp" />
     <ClCompile Include="BloxFW\core\ManagerBox.cpp" />
     <ClCompile Include="BloxFW\tools\Debug.cpp" />
-    <ClCompile Include="Box2D\Collision\b2BroadPhase.cpp" />
-    <ClCompile Include="Box2D\Collision\b2CollideCircle.cpp" />
-    <ClCompile Include="Box2D\Collision\b2CollideEdge.cpp" />
-    <ClCompile Include="Box2D\Collision\b2CollidePolygon.cpp" />
-    <ClCompile Include="Box2D\Collision\b2Collision.cpp" />
-    <ClCompile Include="Box2D\Collision\b2Distance.cpp" />
-    <ClCompile Include="Box2D\Collision\b2DynamicTree.cpp" />
-    <ClCompile Include="Box2D\Collision\b2TimeOfImpact.cpp" />
-    <ClCompile Include="Box2D\Collision\Shapes\b2ChainShape.cpp" />
-    <ClCompile Include="Box2D\Collision\Shapes\b2CircleShape.cpp" />
-    <ClCompile Include="Box2D\Collision\Shapes\b2EdgeShape.cpp" />
-    <ClCompile Include="Box2D\Collision\Shapes\b2PolygonShape.cpp" />
-    <ClCompile Include="Box2D\Common\b2BlockAllocator.cpp" />
-    <ClCompile Include="Box2D\Common\b2Draw.cpp" />
-    <ClCompile Include="Box2D\Common\b2Math.cpp" />
-    <ClCompile Include="Box2D\Common\b2Settings.cpp" />
-    <ClCompile Include="Box2D\Common\b2StackAllocator.cpp" />
-    <ClCompile Include="Box2D\Common\b2Timer.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2Body.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2ContactManager.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2Fixture.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2Island.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2World.cpp" />
-    <ClCompile Include="Box2D\Dynamics\b2WorldCallbacks.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2ChainAndCircleContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2CircleContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2Contact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2ContactSolver.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Contacts\b2PolygonContact.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2DistanceJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2FrictionJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2GearJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2Joint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2MotorJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2MouseJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2PrismaticJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2PulleyJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2RevoluteJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2RopeJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
-    <ClCompile Include="Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
-    <ClCompile Include="Box2D\Rope\b2Rope.cpp" />
-    <ClCompile Include="Factory\Box2DFactory\Box2DFactory.cpp" />
-    <ClCompile Include="Factory\Box2DFactory\FixtureShapes.cpp" />
-    <ClCompile Include="Factory\PartFactory\PartFactory.cpp" />
+    <ClCompile Include="Factory\Box2DFactory\Box2DFactory.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Factory\Box2DFactory\FixtureShapes.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Factory\PartFactory\PartFactory.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Factory\SFMLFactory\SFMLFactory.cpp" />
     <ClCompile Include="FWInterface\Component.cpp" />
     <ClCompile Include="FWInterface\Entity.cpp" />
     <ClCompile Include="FWInterface\EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager\Box2DManager\Box2DManager.cpp" />
+    <ClCompile Include="Manager\Box2DManager\Box2DManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Manager\SFMLManager\SFMLManager.cpp" />
     <ClCompile Include="UserComponents\Base\BaseComponent.cpp" />
     <ClCompile Include="UserComponents\Basic\BasicControlsComponent.cpp" />
@@ -86,6 +50,7 @@
     </ClCompile>
     <ClCompile Include="UserComponents\Rocket\RocketControlsComponent-old.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="UserComponents\Rocket\RocketControlsComponent.cpp" />
     <ClCompile Include="Utils\DebugManager.cpp">
@@ -111,53 +76,6 @@
     <ClInclude Include="BloxFW\utils\container.h" />
     <ClInclude Include="BloxFW\utils\labeled_container.h" />
     <ClInclude Include="BloxFW\utils\types.h" />
-    <ClInclude Include="Box2D\Box2D.h" />
-    <ClInclude Include="Box2D\Collision\b2BroadPhase.h" />
-    <ClInclude Include="Box2D\Collision\b2Collision.h" />
-    <ClInclude Include="Box2D\Collision\b2Distance.h" />
-    <ClInclude Include="Box2D\Collision\b2DynamicTree.h" />
-    <ClInclude Include="Box2D\Collision\b2TimeOfImpact.h" />
-    <ClInclude Include="Box2D\Collision\Shapes\b2ChainShape.h" />
-    <ClInclude Include="Box2D\Collision\Shapes\b2CircleShape.h" />
-    <ClInclude Include="Box2D\Collision\Shapes\b2EdgeShape.h" />
-    <ClInclude Include="Box2D\Collision\Shapes\b2PolygonShape.h" />
-    <ClInclude Include="Box2D\Collision\Shapes\b2Shape.h" />
-    <ClInclude Include="Box2D\Common\b2BlockAllocator.h" />
-    <ClInclude Include="Box2D\Common\b2Draw.h" />
-    <ClInclude Include="Box2D\Common\b2GrowableStack.h" />
-    <ClInclude Include="Box2D\Common\b2Math.h" />
-    <ClInclude Include="Box2D\Common\b2Settings.h" />
-    <ClInclude Include="Box2D\Common\b2StackAllocator.h" />
-    <ClInclude Include="Box2D\Common\b2Timer.h" />
-    <ClInclude Include="Box2D\Dynamics\b2Body.h" />
-    <ClInclude Include="Box2D\Dynamics\b2ContactManager.h" />
-    <ClInclude Include="Box2D\Dynamics\b2Fixture.h" />
-    <ClInclude Include="Box2D\Dynamics\b2Island.h" />
-    <ClInclude Include="Box2D\Dynamics\b2TimeStep.h" />
-    <ClInclude Include="Box2D\Dynamics\b2World.h" />
-    <ClInclude Include="Box2D\Dynamics\b2WorldCallbacks.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2ChainAndCircleContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2ChainAndPolygonContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2CircleContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2Contact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2ContactSolver.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2EdgeAndCircleContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2EdgeAndPolygonContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2PolygonAndCircleContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Contacts\b2PolygonContact.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2DistanceJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2FrictionJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2GearJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2Joint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2MotorJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2MouseJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2PrismaticJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2PulleyJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2RevoluteJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2RopeJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2WeldJoint.h" />
-    <ClInclude Include="Box2D\Dynamics\Joints\b2WheelJoint.h" />
-    <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="Factory\Box2DFactory\Box2DFactory.h" />
     <ClInclude Include="Factory\Box2DFactory\FixtureShapes.h" />
     <ClInclude Include="Factory\Box2DFactory\Material.h" />
@@ -173,7 +91,6 @@
     <ClInclude Include="FWInterface\Entity.h" />
     <ClInclude Include="FWInterface\EntityManager.h" />
     <ClInclude Include="FWInterface\FWInterface.h" />
-    <ClInclude Include="Manager\Box2DManager\Box2DManager.h" />
     <ClInclude Include="Manager\Manager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -204,7 +121,6 @@
     <ClInclude Include="UserComponents\Rocket\RocketControlsComponent-old.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="UserComponents\Rocket\RocketControlsComponent.h" />
     <ClInclude Include="UserComponents\UserComponents.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
@@ -222,7 +138,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{BBEFA104-18D4-4C86-A8C3-EC46B889BFCB}</ProjectGuid>
     <RootNamespace>BestGameEver</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -251,12 +167,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(ProjectDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Library\SFML-2.4.2\lib;</LibraryPath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)\Box2D;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\SFML-2.5.1\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)\SFML-2.5.1\lib;</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(ProjectDir);$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Library\SFML-2.4.2\include;</IncludePath>
-    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;C:\Library\SFML-2.4.2\lib;</LibraryPath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)\Box2D;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(ProjectDir)\SFML-2.5.1\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(ProjectDir)\SFML-2.5.1\lib;</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -266,7 +182,7 @@
       <PreprocessorDefinitions>SFML_STATIC;_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;openal32.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;jpeg.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-audio-s-d.lib;openal32.lib;sfml-system-s-d.lib;opengl32.lib;freetype.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -281,7 +197,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-network-s.lib;sfml-audio-s.lib;openal32.lib;opengl32.lib;flac.lib;freetype.lib;ogg.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;jpeg.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-graphics-s.lib;sfml-window-s.lib;sfml-system-s.lib;sfml-network-s.lib;sfml-audio-s.lib;openal32.lib;opengl32.lib;flac.lib;freetype.lib;ogg.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>
       </SubSystem>
     </Link>

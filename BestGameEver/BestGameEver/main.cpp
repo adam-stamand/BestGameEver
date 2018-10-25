@@ -84,7 +84,7 @@ int main()
   Manager.AddEntity(&Characters);
   Manager.AddEntity(&Level);
 
-  
+  /*
   Entity * tree;
   for (unsigned int i = 0; i < 6; i++) {
     tree = EntityFactory::CreateEntity<Tree_ent>("Tree" + std::to_string(i));
@@ -316,7 +316,7 @@ int main()
 	Factory::CreateJoints(car, wheel2, wheelConfig);
 
 
-
+	*/
 
 	//------------------------
 	// Create Connections
@@ -379,7 +379,7 @@ int main()
 
   while (1) {
 
-
+	  /*
     for (auto iter = SFMLManager::windows_begin(); iter != SFMLManager::windows_end(); iter++)
     {
       sf::RenderWindow * window = iter->second;
@@ -387,7 +387,7 @@ int main()
       SFMLManager::ClearEvents();
       window->clear();
     }
-
+	*/
 
 
 
@@ -399,13 +399,13 @@ int main()
       sf::RenderWindow * window = iter->second;
       window->display();  
     }
-
+	/*
     for (auto iter = Box2DManager::worlds_begin(); iter != Box2DManager::worlds_end(); iter++)
     {
       b2World * world = iter->second;
       world->Step(timeStep, velocityIterations, positionIterations);
     }
-
+	*/
 
   }
 
