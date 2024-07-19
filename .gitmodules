@@ -1,0 +1,6 @@
+[submodule "BestGameEver/BestGameEver/Box2D"]
+	path = BestGameEver/BestGameEver/Box2D
+	url = https://github.com/erincatto/Box2D.git
+[submodule "BestGameEver/BestGameEver/BloxFW"]
+	path = BestGameEver/BestGameEver/BloxFW
+	url = https://github.com/adam-stamand/BloxFW.git

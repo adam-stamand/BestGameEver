@@ -6,4 +6,7 @@ dist*
 .cabal*
 cabal.sandbox.config
 *.exe
-
+Debug/
+x64/
+*.user
+.vs/
